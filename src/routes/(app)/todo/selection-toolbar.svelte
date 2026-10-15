@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { pluralize } from '#lib/text.ts';
-	import CheckCheckIcon from '@lucide/svelte/icons/check-check';
-	import UndoIcon from '@lucide/svelte/icons/undo-2';
-	import XIcon from '@lucide/svelte/icons/x';
+	import { DoneAll as DoneAllIcon } from '@material-symbols-svg/svelte/rounded/icons/done-all';
+	import { Undo as UndoIcon } from '@material-symbols-svg/svelte/rounded/icons/undo';
+	import { Close as CloseIcon } from '@material-symbols-svg/svelte/rounded/icons/close';
 
 	let {
 		count,
@@ -24,22 +24,33 @@
 	} = $props();
 </script>
 
+<!-- M3 Expressive floating toolbar -->
 <div
-	class="fixed bottom-6 left-1/2 z-20 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 flex-wrap items-center gap-2 rounded-xl border bg-popover px-3 py-2 text-sm text-popover-foreground shadow-lg ring-1 ring-foreground/10 md:left-[calc(50%+var(--sidebar-width,0px)/2)]"
+	class="fixed bottom-6 left-1/2 z-20 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 animate-in flex-wrap items-center gap-1 rounded-full bg-primary-container py-2 pr-2 pl-5 text-on-primary-container shadow-xl duration-300 ease-spring fade-in-0 slide-in-from-bottom-6 md:left-[calc(50%+var(--sidebar-width,0px)/2)]"
 	role="toolbar"
 	aria-label="Selection actions"
 >
-	<span class="font-medium tabular-nums">{pluralize(count, 'assignment')} selected</span>
-	<span class="hidden text-muted-foreground sm:inline">·</span>
-	<Button size="sm" disabled={!turnInable || busy} onclick={onTurnIn}>
-		<CheckCheckIcon data-icon="inline-start" />Mark {turnInable === count
+	<span class="mr-2 text-label-lg tabular-nums">{pluralize(count, 'assignment')} selected</span>
+	<Button disabled={!turnInable || busy} onclick={onTurnIn}>
+		<DoneAllIcon data-icon="inline-start" />Mark {turnInable === count
 			? 'as done'
 			: `${turnInable} as done`}
 	</Button>
-	<Button size="sm" variant="outline" disabled={!reclaimable || busy} onclick={onReclaim}>
+	<Button
+		variant="ghost"
+		class="text-on-primary-container"
+		disabled={!reclaimable || busy}
+		onclick={onReclaim}
+	>
 		<UndoIcon data-icon="inline-start" />Unsubmit{reclaimable !== count ? ` ${reclaimable}` : ''}
 	</Button>
-	<Button size="sm" variant="ghost" onclick={onClear} aria-label="Clear selection">
-		<XIcon data-icon="inline-start" />Clear
+	<Button
+		size="icon"
+		variant="ghost"
+		class="text-on-primary-container"
+		onclick={onClear}
+		aria-label="Clear selection"
+	>
+		<CloseIcon />
 	</Button>
 </div>

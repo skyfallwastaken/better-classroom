@@ -6,8 +6,8 @@
 	import CourseDot from '#lib/components/course-dot.svelte';
 	import { dueDayStart, formatDate, formatTime, startOfDay } from '#lib/format.ts';
 	import type { WorkSummary } from '#lib/work.ts';
-	import ChevronLeftIcon from '@lucide/svelte/icons/chevron-left';
-	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
+	import { ChevronLeft as ChevronLeftIcon } from '@material-symbols-svg/svelte/rounded/icons/chevron-left';
+	import { ChevronRight as ChevronRightIcon } from '@material-symbols-svg/svelte/rounded/icons/chevron-right';
 
 	let { rows }: { rows: WorkSummary[] } = $props();
 
@@ -53,22 +53,22 @@
 </script>
 
 <div class="mt-6 flex flex-wrap items-center justify-between gap-2">
-	<h2 class="text-base font-semibold tracking-tight">{weekLabel}</h2>
+	<h2 class="text-headline-sm">{weekLabel}</h2>
 	<div class="flex items-center gap-1">
-		<Button variant="ghost" size="icon-sm" aria-label="Previous week" onclick={() => weekOffset--}
+		<Button variant="ghost" size="icon" aria-label="Previous week" onclick={() => weekOffset--}
 			><ChevronLeftIcon /></Button
 		>
-		<Button variant="outline" size="sm" disabled={weekOffset === 0} onclick={() => (weekOffset = 0)}
+		<Button variant="outline" disabled={weekOffset === 0} onclick={() => (weekOffset = 0)}
 			>Today</Button
 		>
-		<Button variant="ghost" size="icon-sm" aria-label="Next week" onclick={() => weekOffset++}
+		<Button variant="ghost" size="icon" aria-label="Next week" onclick={() => weekOffset++}
 			><ChevronRightIcon /></Button
 		>
 	</div>
 </div>
 {#if week.overdue.length}
-	<section class="mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2">
-		<h3 class="text-sm font-medium text-destructive">Overdue from before this week</h3>
+	<section class="mt-4 rounded-2xl bg-error-container/60 px-4 py-3">
+		<h3 class="text-title-sm text-on-error-container">Overdue from before this week</h3>
 		<div class="mt-1 flex flex-col">
 			{#each week.overdue as w (w.id)}<WorkItem work={w} />{/each}
 		</div>
@@ -80,10 +80,10 @@
 		{@const isToday = day === today}
 		{@const past = day < today}
 		<section
-			class={`min-w-0 rounded-lg border p-2 ${isToday ? 'border-foreground/30 bg-accent/40' : ''} ${past ? 'opacity-60' : ''}`}
+			class={`min-w-0 rounded-xl p-2 ${isToday ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container-low'} ${past ? 'opacity-60' : ''}`}
 		>
 			<h3 class="flex items-baseline justify-between text-sm">
-				<span class={isToday ? 'font-semibold' : 'font-medium text-muted-foreground'}
+				<span class={isToday ? 'text-title-sm' : 'text-title-sm text-on-surface-variant'}
 					>{dayFmt.format(day)}</span
 				>
 				<span class="text-xs text-muted-foreground tabular-nums">{numFmt.format(day)}</span>
@@ -96,14 +96,14 @@
 					<li>
 						<a
 							href={`/courses/${w.courseId}/work/${w.id}`}
-							class="block rounded-md border bg-card px-2 py-1.5 text-xs hover:bg-accent"
+							class="state-layer block rounded-md bg-surface-container-highest px-2 py-1.5 text-xs text-on-surface transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-lg"
 						>
 							<span class="flex items-center gap-1.5">
 								<CourseDot id={w.courseId} class="shrink-0" />
 								<span class="truncate text-muted-foreground">{w.courseName}</span>
 							</span>
 							<span class="mt-0.5 line-clamp-2 font-medium">{w.title}</span>
-							<span class="mt-1 flex items-center gap-1">
+							<span class="mt-1 flex flex-wrap items-center gap-1">
 								{#if w.hasDueTime && w.dueAt}<span class="text-muted-foreground tabular-nums"
 										>{formatTime(w.dueAt)}</span
 									>{/if}
@@ -120,7 +120,7 @@
 </div>
 {#if week.undated.length}
 	<section class="mt-6">
-		<h3 class="text-sm font-medium text-muted-foreground">No due date</h3>
+		<h3 class="text-title-sm text-on-surface-variant">No due date</h3>
 		<div class="mt-1 flex flex-col">
 			{#each week.undated as w (w.id)}<WorkItem work={w} />{/each}
 		</div>

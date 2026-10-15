@@ -3,31 +3,34 @@
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import StatusBadge from '#lib/components/status-badge.svelte';
 	import { formatDue } from '#lib/format.ts';
-	import CourseDot from '#lib/components/course-dot.svelte';
+	import CourseAvatar from '#lib/components/course-avatar.svelte';
 	import { isNew, type WorkSummary } from '#lib/work.ts';
-	import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
-	import MessageCircleQuestionIcon from '@lucide/svelte/icons/message-circle-question';
+	import { Assignment as AssignmentIcon } from '@material-symbols-svg/svelte/rounded/icons/assignment';
+	import { Help as HelpIcon } from '@material-symbols-svg/svelte/rounded/icons/help';
 
 	let { work, showCourse = true }: { work: WorkSummary; showCourse?: boolean } = $props();
 	const isQuestion = $derived(work.workType.endsWith('QUESTION'));
 </script>
 
-<Item.Root variant="default" size="sm" class="-mx-3">
+<Item.Root
+	variant="default"
+	size="sm"
+	class="state-layer gap-4 border-0 px-4 py-3 transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-xl [a]:hover:bg-transparent"
+>
 	{#snippet child({ props })}
 		<a href={`/courses/${work.courseId}/work/${work.id}`} {...props}>
-			<Item.Media variant="icon" class="text-muted-foreground">
-				{#if isQuestion}<MessageCircleQuestionIcon />{:else}<ClipboardListIcon />{/if}
-			</Item.Media>
+			<CourseAvatar id={work.courseId}>
+				{#if isQuestion}<HelpIcon />{:else}<AssignmentIcon />{/if}
+			</CourseAvatar>
 			<Item.Content>
-				<Item.Title class="line-clamp-1">
+				<Item.Title class="line-clamp-1 text-title-sm">
 					{work.title}{#if isNew(work)}<Badge
 							variant="secondary"
 							class="ml-2 align-middle text-[10px]">New</Badge
 						>{/if}
 				</Item.Title>
-				<Item.Description class="flex items-center gap-1.5">
+				<Item.Description class="flex items-center gap-1.5 text-body-md text-on-surface-variant">
 					{#if showCourse}
-						<CourseDot id={work.courseId} class="shrink-0" />
 						<span class="truncate">{work.courseName}</span>
 						<span aria-hidden="true">·</span>
 					{/if}
