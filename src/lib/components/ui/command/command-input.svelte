@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Command as CommandPrimitive } from 'bits-ui';
 	import * as InputGroup from '#lib/components/ui/input-group/index.js';
-	import SearchIcon from '@lucide/svelte/icons/search';
+	import { Search as SearchIcon } from '@material-symbols-svg/svelte/rounded/icons/search';
 	import { cn } from '#lib/utils.js';
 
 	let {
@@ -14,7 +14,7 @@
 
 <div data-slot="command-input-wrapper" class="p-1 pb-0">
 	<InputGroup.Root
-		class="h-8! rounded-lg! border-input/30 bg-input/30 shadow-none! *:data-[slot=input-group-addon]:pl-2!"
+		class="h-14! rounded-full! border-transparent! bg-surface-container-highest shadow-none! *:data-[slot=input-group-addon]:pl-4!"
 	>
 		<CommandPrimitive.Input
 			{value}

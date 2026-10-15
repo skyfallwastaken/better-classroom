@@ -1,18 +1,19 @@
 <script lang="ts" module>
-	import { tv, type VariantProps } from 'tailwind-variants';
+	import type { VariantProps } from 'tailwind-variants';
+	import { tv } from '#lib/utils.js';
 
 	export const sidebarMenuButtonVariants = tv({
-		base: 'gap-2 rounded-md p-2 text-left text-sm ring-sidebar-ring transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:font-medium data-active:text-sidebar-accent-foreground peer/menu-button group/menu-button flex w-full items-center overflow-hidden outline-hidden disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate',
+		base: 'state-layer gap-3 rounded-full px-4 text-left text-label-lg font-medium text-on-surface-variant transition-[background-color,color,border-radius] duration-300 ease-spring-gentle group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-has-data-[sidebar=menu-badge]/menu-item:pr-12 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:p-2! focus-visible:outline-2 focus-visible:outline-primary active:rounded-lg data-active:bg-secondary-container data-active:text-on-secondary-container peer/menu-button group/menu-button flex w-full items-center overflow-hidden outline-hidden disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:size-6 [&_svg]:shrink-0 [&>span:last-child]:truncate',
 		variants: {
 			variant: {
-				default: 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+				default: '',
 				outline:
 					'bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]'
 			},
 			size: {
-				default: 'h-8 text-sm',
-				sm: 'h-7 text-xs',
-				lg: 'h-12 text-sm group-data-[collapsible=icon]:p-0!'
+				default: 'h-12',
+				sm: 'h-9 text-label-md',
+				lg: 'h-14 group-data-[collapsible=icon]:p-0!'
 			}
 		},
 		defaultVariants: {

@@ -1,18 +1,19 @@
 <script lang="ts" module>
-	import { type VariantProps, tv } from 'tailwind-variants';
+	import type { VariantProps } from 'tailwind-variants';
+	import { tv } from '#lib/utils.js';
 
 	export const toggleVariants = tv({
-		base: "gap-1 rounded-lg text-sm font-medium transition-all hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 aria-pressed:bg-muted data-[state=on]:bg-muted dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 group/toggle inline-flex items-center justify-center whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+		base: "state-layer gap-1.5 rounded-full text-label-lg font-medium text-on-surface-variant transition-[border-radius,background-color,color] duration-300 ease-spring-gentle focus-visible:outline-2 focus-visible:outline-primary aria-pressed:bg-secondary-container aria-pressed:text-on-secondary-container data-[state=on]:bg-secondary-container data-[state=on]:text-on-secondary-container [&_svg:not([class*='size-'])]:size-[1.125rem] group/toggle inline-flex items-center justify-center whitespace-nowrap outline-none disabled:pointer-events-none disabled:opacity-[0.38] [&_svg]:pointer-events-none [&_svg]:shrink-0",
 		variants: {
 			variant: {
 				default: 'bg-transparent',
-				outline: 'border border-input bg-transparent hover:bg-muted'
+				outline: 'bg-surface-container-high'
 			},
 			size: {
 				default:
-					'h-8 min-w-8 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
-				sm: "h-7 min-w-7 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-				lg: 'h-9 min-w-9 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2'
+					'h-10 min-w-10 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3',
+				sm: "h-8 min-w-8 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-4",
+				lg: 'h-12 min-w-12 px-5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4'
 			}
 		},
 		defaultVariants: {

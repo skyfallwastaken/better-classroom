@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PanelLeftIcon from '@lucide/svelte/icons/panel-left';
+	import { Menu as MenuIcon } from '@material-symbols-svg/svelte/rounded/icons/menu';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { cn } from '#lib/utils.js';
 	import { useSidebar } from './context.svelte.js';
@@ -22,7 +22,7 @@
 	data-sidebar="trigger"
 	data-slot="sidebar-trigger"
 	variant="ghost"
-	size="icon-sm"
+	size="icon"
 	class={cn('cn-sidebar-trigger', className)}
 	type="button"
 	onclick={(e) => {
@@ -31,6 +31,6 @@
 	}}
 	{...restProps}
 >
-	<PanelLeftIcon />
+	<MenuIcon />
 	<span class="sr-only">Toggle Sidebar</span>
 </Button>
