@@ -7,8 +7,8 @@
 	import { withAuthUser } from '#lib/link-authuser.svelte.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import type { Submission } from '#lib/shared/types.ts';
-	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
-	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
+	import { OpenInNew as OpenInNewIcon } from '@material-symbols-svg/svelte/rounded/icons/open-in-new';
+	import { ProgressActivity as LoaderIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
 
 	let { work, submission }: { work: WorkSummary; submission: Submission } = $props();
 	const blocker = $derived(handInBlocker(work));
@@ -37,37 +37,32 @@
 	}
 </script>
 
-<div class="mt-4 flex flex-wrap gap-2">
+<div class="mt-3 flex flex-col gap-2">
 	{#if isOpen(work) && blocker}
-		<Button size="sm" href={withAuthUser(work.alternateLink)} target="_blank" rel="noreferrer">
-			Complete in Classroom <ExternalLinkIcon data-icon="inline-end" />
+		<Button href={withAuthUser(work.alternateLink)} target="_blank" rel="noreferrer">
+			Complete in Classroom <OpenInNewIcon data-icon="inline-end" />
 		</Button>
-		<p class="basis-full text-sm text-muted-foreground">{blocker}</p>
+		<p class="text-body-sm text-on-surface-variant">{blocker}</p>
 	{:else if isOpen(work)}
-		<Button size="sm" onclick={() => submit('turnIn')} disabled={acting !== null}>
+		<Button onclick={() => submit('turnIn')} disabled={acting !== null}>
 			{#if acting === 'turnIn'}<LoaderIcon data-icon="inline-start" class="animate-spin" />{/if}
 			{submission.attachments.length ? 'Hand in' : 'Mark as done'}
 		</Button>
 	{:else if work.status === 'turnedIn'}
-		<Button
-			variant="outline"
-			size="sm"
-			onclick={() => submit('reclaim')}
-			disabled={acting !== null}
-		>
+		<Button variant="outline" onclick={() => submit('reclaim')} disabled={acting !== null}>
 			{#if acting === 'reclaim'}<LoaderIcon data-icon="inline-start" class="animate-spin" />{/if}
 			Unsubmit
 		</Button>
 	{/if}
 	{#if submission.alternateLink}
 		<Button
-			variant="outline"
-			size="sm"
+			variant="ghost"
+			class="text-primary"
 			href={withAuthUser(submission.alternateLink)}
 			target="_blank"
 			rel="noreferrer"
 		>
-			Manage submission <ExternalLinkIcon data-icon="inline-end" />
+			Manage submission <OpenInNewIcon data-icon="inline-end" />
 		</Button>
 	{/if}
 </div>
