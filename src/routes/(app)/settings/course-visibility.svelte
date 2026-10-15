@@ -6,9 +6,9 @@
 	import { setCourseHidden } from '#lib/course-actions.ts';
 	import CourseDot from '#lib/components/course-dot.svelte';
 	import { Button } from '#lib/components/ui/button/index.js';
-	import EyeIcon from '@lucide/svelte/icons/eye';
-	import EyeOffIcon from '@lucide/svelte/icons/eye-off';
-	import PencilIcon from '@lucide/svelte/icons/pencil';
+	import { Visibility as VisibilityIcon } from '@material-symbols-svg/svelte/rounded/icons/visibility';
+	import { VisibilityOff as VisibilityOffIcon } from '@material-symbols-svg/svelte/rounded/icons/visibility-off';
+	import { Edit as EditIcon } from '@material-symbols-svg/svelte/rounded/icons/edit';
 
 	const courseQuery = useLiveQuery({ query: (q) => q.from({ c: courses }) });
 	const sorted = $derived(courseQuery.data.slice().sort(byDisplayName));
@@ -30,13 +30,13 @@
 					>{/if}</span
 			>
 			<Button variant="ghost" size="icon-sm" aria-label="Edit" onclick={() => editCourse(course)}
-				><PencilIcon /></Button
+				><EditIcon /></Button
 			>
 			<Button
 				variant="ghost"
 				size="icon-sm"
 				aria-label="Hide"
-				onclick={() => setCourseHidden(course, true)}><EyeOffIcon /></Button
+				onclick={() => setCourseHidden(course, true)}><VisibilityOffIcon /></Button
 			>
 		</li>
 	{:else}
@@ -51,7 +51,7 @@
 				<CourseDot id={course.id} size="lg" class="shrink-0" />
 				<span class="min-w-0 flex-1 truncate text-sm">{displayName(course)}</span>
 				<Button variant="outline" size="sm" onclick={() => setCourseHidden(course, false)}
-					><EyeIcon data-icon="inline-start" />Show</Button
+					><VisibilityIcon data-icon="inline-start" />Show</Button
 				>
 			</li>
 		{/each}

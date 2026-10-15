@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { authClient } from '#lib/auth-client.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
-	import LogOutIcon from '@lucide/svelte/icons/log-out';
+	import { Logout as LogoutIcon } from '@material-symbols-svg/svelte/rounded/icons/logout';
 	import SettingsCard from './settings-card.svelte';
 
 	let signingOut = $state(false);
@@ -24,6 +24,6 @@
 		</p>
 	</div>
 	<Button variant="outline" size="sm" onclick={signOut} disabled={signingOut}>
-		<LogOutIcon data-icon="inline-start" />Sign out
+		<LogoutIcon data-icon="inline-start" />Sign out
 	</Button>
 </SettingsCard>

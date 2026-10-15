@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { live } from '#lib/db/live.svelte.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
-	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
-	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
-	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
+	import { ProgressActivity as ProgressActivityIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
+	import { Warning as WarningIcon } from '@material-symbols-svg/svelte/rounded/icons/warning';
+	import { Sync as SyncIcon } from '@material-symbols-svg/svelte/rounded/icons/sync';
 
 	const sync = $derived(live.sync);
 	const unsynced = $derived(sync !== null && !sync.syncedAt);
@@ -32,13 +32,13 @@
 		class="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-yellow-500 bg-yellow-300 px-4 py-2 text-sm font-medium text-yellow-950 dark:bg-yellow-400"
 	>
 		{#if running}
-			<LoaderIcon class="size-4 shrink-0 animate-spin" />
+			<ProgressActivityIcon class="size-4 shrink-0 animate-spin" />
 			<span>
 				Not synced yet. Your first sync is running{progress ? ` (${progress})` : ''}. Courses and
 				work will appear as they load.
 			</span>
 		{:else if failed}
-			<TriangleAlertIcon class="size-4 shrink-0" />
+			<WarningIcon class="size-4 shrink-0" />
 			<span class="min-w-0 flex-1">
 				Not synced yet. The first sync failed{sync?.error ? `: ${sync.error.split('\n')[0]}` : '.'}
 			</span>
@@ -49,11 +49,11 @@
 				disabled={starting}
 				onclick={syncNow}
 			>
-				<RefreshCwIcon data-icon="inline-start" class={starting ? 'animate-spin' : ''} />
+				<SyncIcon data-icon="inline-start" class={starting ? 'animate-spin' : ''} />
 				Retry
 			</Button>
 		{:else}
-			<TriangleAlertIcon class="size-4 shrink-0" />
+			<WarningIcon class="size-4 shrink-0" />
 			<span class="min-w-0 flex-1">
 				Not synced yet. Nothing from Classroom has been pulled in for this account.
 			</span>
@@ -64,7 +64,7 @@
 				disabled={starting}
 				onclick={syncNow}
 			>
-				<RefreshCwIcon data-icon="inline-start" class={starting ? 'animate-spin' : ''} />
+				<SyncIcon data-icon="inline-start" class={starting ? 'animate-spin' : ''} />
 				Sync now
 			</Button>
 		{/if}

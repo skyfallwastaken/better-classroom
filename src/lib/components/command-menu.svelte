@@ -5,11 +5,11 @@
 	import { formatDue } from '#lib/format.ts';
 	import { displayName, type CourseRef as Course } from '#lib/course.ts';
 	import CourseDot from '#lib/components/course-dot.svelte';
-	import HouseIcon from '@lucide/svelte/icons/house';
-	import ListChecksIcon from '@lucide/svelte/icons/list-checks';
-	import InboxIcon from '@lucide/svelte/icons/inbox';
-	import SettingsIcon from '@lucide/svelte/icons/settings';
-	import SearchIcon from '@lucide/svelte/icons/search';
+	import { Home as HomeIcon } from '@material-symbols-svg/svelte/rounded/icons/home';
+	import { Checklist as ChecklistIcon } from '@material-symbols-svg/svelte/rounded/icons/checklist';
+	import { Inbox as InboxIcon } from '@material-symbols-svg/svelte/rounded/icons/inbox';
+	import { Settings as SettingsIcon } from '@material-symbols-svg/svelte/rounded/icons/settings';
+	import { Search as SearchIcon } from '@material-symbols-svg/svelte/rounded/icons/search';
 
 	let { open = $bindable(false), courses }: { open?: boolean; courses: Course[] } = $props();
 
@@ -19,9 +19,9 @@
 	const hits = $derived(search.hits);
 	const loading = $derived(search.loading);
 	const pages = [
-		{ href: '/', label: 'Home', icon: HouseIcon },
+		{ href: '/', label: 'Home', icon: HomeIcon },
 		{ href: '/inbox', label: 'Inbox', icon: InboxIcon },
-		{ href: '/todo', label: 'To-do', icon: ListChecksIcon },
+		{ href: '/todo', label: 'To-do', icon: ChecklistIcon },
 		{ href: '/settings', label: 'Settings', icon: SettingsIcon }
 	];
 	const matches = (label: string) => {

@@ -1,7 +1,7 @@
 import type { SearchHit } from '#lib/shared/types.ts';
-import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
-import BookOpenIcon from '@lucide/svelte/icons/book-open';
-import MegaphoneIcon from '@lucide/svelte/icons/megaphone';
+import { Assignment as AssignmentIcon } from '@material-symbols-svg/svelte/rounded/icons/assignment';
+import { MenuBook as MenuBookIcon } from '@material-symbols-svg/svelte/rounded/icons/menu-book';
+import { Campaign as CampaignIcon } from '@material-symbols-svg/svelte/rounded/icons/campaign';
 
 export function createSearch(query: () => string, limit: number) {
 	let hits = $state<SearchHit[]>([]);
@@ -37,10 +37,10 @@ export function createSearch(query: () => string, limit: number) {
 }
 
 export const kindIcon = {
-	work: ClipboardListIcon,
-	material: BookOpenIcon,
-	announcement: MegaphoneIcon,
-	course: BookOpenIcon
+	work: AssignmentIcon,
+	material: MenuBookIcon,
+	announcement: CampaignIcon,
+	course: MenuBookIcon
 } as const;
 
 export const kindLabel = {

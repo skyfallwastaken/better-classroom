@@ -4,9 +4,9 @@
 	import { Progress } from '#lib/components/ui/progress/index.js';
 	import { pluralize } from '#lib/text.ts';
 	import type { Progress as ItemProgress } from '#lib/submissions.ts';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import XIcon from '@lucide/svelte/icons/x';
-	import Loader2Icon from '@lucide/svelte/icons/loader-2';
+	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
+	import { Close as CloseIcon } from '@material-symbols-svg/svelte/rounded/icons/close';
+	import { ProgressActivity as ProgressActivityIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
 
 	let {
 		open = $bindable(false),
@@ -37,9 +37,9 @@
 			{#each items as item (item.id)}
 				<li class="flex items-start gap-2 rounded-md px-1 py-1">
 					<span class="mt-0.5 grid size-4 shrink-0 place-content-center">
-						{#if item.state === 'done'}<CheckIcon class="size-4 text-emerald-600" />
-						{:else if item.state === 'failed'}<XIcon class="size-4 text-destructive" />
-						{:else if item.state === 'running'}<Loader2Icon
+						{#if item.state === 'done'}<CheckIcon class="size-4 text-success" />
+						{:else if item.state === 'failed'}<CloseIcon class="size-4 text-destructive" />
+						{:else if item.state === 'running'}<ProgressActivityIcon
 								class="size-4 animate-spin text-muted-foreground"
 							/>
 						{:else}<span class="size-1.5 rounded-full bg-muted-foreground/40"></span>{/if}

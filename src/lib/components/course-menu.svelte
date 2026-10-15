@@ -6,10 +6,10 @@
 	import { withAuthUser } from '#lib/link-authuser.svelte.ts';
 	import type { CourseRef as Course } from '#lib/course.ts';
 	import type { Snippet } from 'svelte';
-	import PencilIcon from '@lucide/svelte/icons/pencil';
-	import EyeOffIcon from '@lucide/svelte/icons/eye-off';
-	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
-	import RotateCcwIcon from '@lucide/svelte/icons/rotate-ccw';
+	import { Edit as EditIcon } from '@material-symbols-svg/svelte/rounded/icons/edit';
+	import { VisibilityOff as VisibilityOffIcon } from '@material-symbols-svg/svelte/rounded/icons/visibility-off';
+	import { OpenInNew as OpenInNewIcon } from '@material-symbols-svg/svelte/rounded/icons/open-in-new';
+	import { RestartAlt as RestartAltIcon } from '@material-symbols-svg/svelte/rounded/icons/restart-alt';
 
 	let {
 		course,
@@ -35,17 +35,17 @@
 	</ContextMenu.Trigger>
 	<ContextMenu.Content class="w-52">
 		<ContextMenu.Item onSelect={() => onRename(course)}
-			><PencilIcon />Rename or recolor…</ContextMenu.Item
+			><EditIcon />Rename or recolor…</ContextMenu.Item
 		>
 		{#if course.nickname}
-			<ContextMenu.Item onSelect={resetName}><RotateCcwIcon />Use original name</ContextMenu.Item>
+			<ContextMenu.Item onSelect={resetName}><RestartAltIcon />Use original name</ContextMenu.Item>
 		{/if}
-		<ContextMenu.Item onSelect={hide}><EyeOffIcon />Hide course</ContextMenu.Item>
+		<ContextMenu.Item onSelect={hide}><VisibilityOffIcon />Hide course</ContextMenu.Item>
 		{#if course.alternateLink}
 			<ContextMenu.Separator />
 			<ContextMenu.Item
 				onSelect={() => window.open(withAuthUser(course.alternateLink), '_blank', 'noreferrer')}
-				><ExternalLinkIcon />Open in Classroom</ContextMenu.Item
+				><OpenInNewIcon />Open in Classroom</ContextMenu.Item
 			>
 		{/if}
 	</ContextMenu.Content>

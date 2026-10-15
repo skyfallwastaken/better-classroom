@@ -3,12 +3,12 @@
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Input } from '#lib/components/ui/input/index.js';
 	import CopyBlock from './copy-block.svelte';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
-	import ArrowRightIcon from '@lucide/svelte/icons/arrow-right';
-	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
-	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
-	import PartyPopperIcon from '@lucide/svelte/icons/party-popper';
+	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
+	import { ArrowBack as ArrowBackIcon } from '@material-symbols-svg/svelte/rounded/icons/arrow-back';
+	import { ArrowForward as ArrowForwardIcon } from '@material-symbols-svg/svelte/rounded/icons/arrow-forward';
+	import { OpenInNew as OpenInNewIcon } from '@material-symbols-svg/svelte/rounded/icons/open-in-new';
+	import { ProgressActivity as ProgressActivityIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
+	import { Celebration as CelebrationIcon } from '@material-symbols-svg/svelte/rounded/icons/celebration';
 
 	let { data } = $props();
 
@@ -98,7 +98,7 @@
 		</p>
 		{#if data.configured && !done}
 			<p
-				class="mt-3 rounded-lg border border-amber-300/60 bg-amber-50 px-3 py-2 text-xs text-amber-900 dark:bg-amber-950/40 dark:text-amber-200"
+				class="mt-3 rounded-xl bg-warning-container px-4 py-3 text-body-sm text-on-warning-container"
 			>
 				Already connected. Finishing this replaces the current connection.
 				<a href="/settings" class="ml-1 font-medium underline underline-offset-2"
@@ -109,48 +109,48 @@
 	</div>
 
 	{#if !done}
-		<ol class="mb-6 flex items-center gap-2 text-xs">
+		<ol class="mb-6 flex items-center gap-2 text-label-lg">
 			{#each steps as s, i (i)}
 				{@const state = i < step ? 'done' : i === step ? 'current' : 'todo'}
 				<li class="flex items-center gap-2">
 					<button
 						type="button"
-						class={`flex items-center gap-1.5 rounded-full py-1 pr-2.5 pl-1 transition-colors ${
+						class={`flex h-8 items-center gap-2 rounded-full pr-3 pl-1 transition-colors ${
 							state === 'current'
-								? 'bg-foreground text-background'
+								? 'bg-secondary-container text-on-secondary-container'
 								: state === 'done'
-									? 'text-foreground hover:bg-muted'
-									: 'text-muted-foreground'
+									? 'text-on-surface hover:bg-surface-container-high'
+									: 'text-on-surface-variant'
 						}`}
 						disabled={state === 'todo'}
 						onclick={() => (step = i)}
 					>
 						<span
-							class={`flex size-5 items-center justify-center rounded-full text-[10px] font-semibold tabular-nums ${
+							class={`flex size-6 items-center justify-center rounded-full text-label-md tabular-nums ${
 								state === 'current'
-									? 'bg-background/20'
+									? 'bg-primary text-on-primary'
 									: state === 'done'
-										? 'bg-emerald-500 text-white'
-										: 'bg-muted'
+										? 'bg-success text-on-success'
+										: 'bg-surface-container-highest'
 							}`}
 						>
 							{#if state === 'done'}<CheckIcon class="size-3" />{:else}{i + 1}{/if}
 						</span>
 						{s.short}
 					</button>
-					{#if i < steps.length - 1}<span class="h-px w-4 bg-border"></span>{/if}
+					{#if i < steps.length - 1}<span class="h-px w-6 bg-outline-variant"></span>{/if}
 				</li>
 			{/each}
 		</ol>
 	{/if}
 
-	<div class="rounded-xl bg-card p-5 ring-1 ring-foreground/10 sm:p-6">
+	<div class="rounded-3xl bg-surface-container-low p-6 sm:p-8">
 		{#if done && result?.ok}
 			<div class="flex flex-col items-center py-6 text-center">
 				<span
-					class="flex size-12 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
+					class="flex size-16 items-center justify-center rounded-[40%] bg-success-container text-on-success-container"
 				>
-					<PartyPopperIcon class="size-6" />
+					<CelebrationIcon class="size-6" />
 				</span>
 				<p class="mt-4 font-medium">{result.name ?? 'Connected'}</p>
 				{#if result.email}<p class="text-sm text-muted-foreground">{result.email}</p>{/if}
@@ -158,7 +158,7 @@
 					Syncing {result.courseCount} active {result.courseCount === 1 ? 'course' : 'courses'}.
 				</p>
 				<Button class="mt-6" onclick={() => (window.location.href = '/')}>
-					Open Classroom<ArrowRightIcon data-icon="inline-end" />
+					Open Classroom<ArrowForwardIcon data-icon="inline-end" />
 				</Button>
 			</div>
 		{:else if step === 0}
@@ -176,7 +176,7 @@
 							target="_blank"
 							rel="noreferrer"
 							class="inline-flex items-center gap-0.5 font-medium underline underline-offset-2"
-							>script.google.com<ExternalLinkIcon class="size-3" /></a
+							>script.google.com<OpenInNewIcon class="size-3" /></a
 						>
 						with your school account. It creates a new project for you.
 					</div>
@@ -295,7 +295,7 @@
 					class="font-mono text-xs sm:text-xs"
 				/>
 				<Button type="submit" disabled={testing || !url} class="shrink-0">
-					{#if testing}<LoaderIcon
+					{#if testing}<ProgressActivityIcon
 							data-icon="inline-start"
 							class="animate-spin"
 						/>Checking{:else}Test and connect{/if}
@@ -322,11 +322,11 @@
 	{#if !done}
 		<div class="mt-4 flex items-center justify-between">
 			<Button variant="ghost" size="sm" disabled={step === 0} onclick={() => step--}>
-				<ArrowLeftIcon data-icon="inline-start" />Back
+				<ArrowBackIcon data-icon="inline-start" />Back
 			</Button>
 			{#if step < steps.length - 1}
 				<Button size="sm" onclick={() => step++}>
-					{step === 0 ? 'I’ve pasted both' : 'I have the URL'}<ArrowRightIcon
+					{step === 0 ? 'I’ve pasted both' : 'I have the URL'}<ArrowForwardIcon
 						data-icon="inline-end"
 					/>
 				</Button>

@@ -10,8 +10,8 @@
 	import { notify } from '#lib/toast.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Badge } from '#lib/components/ui/badge/index.js';
-	import BellIcon from '@lucide/svelte/icons/bell';
-	import BellOffIcon from '@lucide/svelte/icons/bell-off';
+	import { Notifications as NotificationsIcon } from '@material-symbols-svg/svelte/rounded/icons/notifications';
+	import { NotificationsOff as NotificationsOffIcon } from '@material-symbols-svg/svelte/rounded/icons/notifications-off';
 	import SettingsCard from './settings-card.svelte';
 
 	$effect(() => {
@@ -106,9 +106,9 @@
 				disabled={busy}
 				onclick={toggleNotifications}
 			>
-				{#if notifications.enabled}<BellIcon data-icon="inline-start" />On{:else}<BellOffIcon
+				{#if notifications.enabled}<NotificationsIcon
 						data-icon="inline-start"
-					/>Off{/if}
+					/>On{:else}<NotificationsOffIcon data-icon="inline-start" />Off{/if}
 			</Button>
 		{/if}
 	</div>

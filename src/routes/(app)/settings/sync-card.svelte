@@ -4,9 +4,9 @@
 	import { formatDateTime, formatRelative } from '#lib/format.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Badge } from '#lib/components/ui/badge/index.js';
-	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
-	import PlugZapIcon from '@lucide/svelte/icons/plug-zap';
-	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
+	import { Sync as SyncIcon } from '@material-symbols-svg/svelte/rounded/icons/sync';
+	import { Power as PowerIcon } from '@material-symbols-svg/svelte/rounded/icons/power';
+	import { ProgressActivity as ProgressActivityIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
 	import SettingsCard from './settings-card.svelte';
 
 	let { connection }: { connection: { url: string; keyHint: string } } = $props();
@@ -59,17 +59,17 @@
 			<h2 class="text-base font-semibold tracking-tight">Connection</h2>
 			{#if running}<Badge variant="secondary">Syncing · {status?.pending} left</Badge>
 			{:else if status?.status === 'error'}<Badge variant="destructive">Error</Badge>
-			{:else}<Badge variant="outline" class="text-emerald-700 dark:text-emerald-400">Healthy</Badge
-				>{/if}
+			{:else}<Badge variant="outline" class="text-success">Healthy</Badge>{/if}
 		</div>
 		<div class="flex items-center gap-2">
 			<Button variant="outline" size="sm" onclick={test} disabled={testing}>
-				{#if testing}<LoaderIcon data-icon="inline-start" class="animate-spin" />{:else}<PlugZapIcon
+				{#if testing}<ProgressActivityIcon
 						data-icon="inline-start"
-					/>{/if}Test
+						class="animate-spin"
+					/>{:else}<PowerIcon data-icon="inline-start" />{/if}Test
 			</Button>
 			<Button size="sm" onclick={syncNow} disabled={syncing || running}>
-				<RefreshCwIcon data-icon="inline-start" class={syncing || running ? 'animate-spin' : ''} />
+				<SyncIcon data-icon="inline-start" class={syncing || running ? 'animate-spin' : ''} />
 				Sync now
 			</Button>
 		</div>

@@ -9,7 +9,7 @@
 	import { formatDue, formatRelative } from '#lib/format.ts';
 	import CourseDot from '#lib/components/course-dot.svelte';
 	import PageHeader from '#lib/components/page-header.svelte';
-	import SearchIcon from '@lucide/svelte/icons/search';
+	import { Search as SearchIcon } from '@material-symbols-svg/svelte/rounded/icons/search';
 
 	let { data } = $props();
 	let query = $state(untrack(() => data.q));

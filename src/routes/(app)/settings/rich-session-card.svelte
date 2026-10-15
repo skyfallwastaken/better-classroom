@@ -4,9 +4,9 @@
 	import { formatRelative } from '#lib/format.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import { Badge } from '#lib/components/ui/badge/index.js';
-	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
-	import PlugZapIcon from '@lucide/svelte/icons/plug-zap';
-	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
+	import { Sync as SyncIcon } from '@material-symbols-svg/svelte/rounded/icons/sync';
+	import { Power as PowerIcon } from '@material-symbols-svg/svelte/rounded/icons/power';
+	import { ProgressActivity as ProgressActivityIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
 	import SettingsCard from './settings-card.svelte';
 
 	let { initial }: { initial: PageData['rich'] } = $props();
@@ -84,12 +84,12 @@
 			{:else if rich.status && !rich.status.ok}<Badge variant="destructive"
 					>{rich.status.expired ? 'Session expired' : 'Error'}</Badge
 				>
-			{:else}<Badge variant="outline" class="text-emerald-700 dark:text-emerald-400">On</Badge>{/if}
+			{:else}<Badge variant="outline" class="text-success">On</Badge>{/if}
 		</div>
 		{#if rich.configured}
 			<div class="flex items-center gap-2">
 				<Button variant="outline" size="sm" onclick={refreshRich}>
-					<RefreshCwIcon data-icon="inline-start" />Refresh
+					<SyncIcon data-icon="inline-start" />Refresh
 				</Button>
 				<Button variant="outline" size="sm" onclick={() => (cookieOpen = !cookieOpen)}>
 					{cookieOpen ? 'Cancel' : 'Replace cookie'}
@@ -166,10 +166,10 @@
 			></textarea>
 			<div class="flex items-center gap-2">
 				<Button size="sm" onclick={saveCookie} disabled={savingCookie || !cookieDraft.trim()}>
-					{#if savingCookie}<LoaderIcon
+					{#if savingCookie}<ProgressActivityIcon
 							data-icon="inline-start"
 							class="animate-spin"
-						/>{:else}<PlugZapIcon data-icon="inline-start" />{/if}Save and test
+						/>{:else}<PowerIcon data-icon="inline-start" />{/if}Save and test
 				</Button>
 				<span class="text-xs text-muted-foreground"
 					>The app keeps the session alive itself. Paste a fresh one when the badge says expired.</span

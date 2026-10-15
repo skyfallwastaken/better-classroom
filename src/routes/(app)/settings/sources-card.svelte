@@ -17,9 +17,7 @@
 				{#if provider.state === 'off'}<Badge variant="outline">Off</Badge>
 				{:else if provider.state === 'expired'}<Badge variant="destructive">Expired</Badge>
 				{:else if provider.state === 'error'}<Badge variant="destructive">Error</Badge>
-				{:else if provider.active}<Badge
-						variant="outline"
-						class="text-emerald-700 dark:text-emerald-400"
+				{:else if provider.active}<Badge variant="outline" class="text-success"
 						>{provider.role === 'records' ? 'Primary' : 'On'}</Badge
 					>
 				{:else}<Badge variant="secondary">Standby</Badge>{/if}

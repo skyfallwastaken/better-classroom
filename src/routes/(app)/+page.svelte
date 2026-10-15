@@ -11,7 +11,7 @@
 	import { dayLabel, dueDayStart } from '#lib/format.ts';
 	import { displayName } from '#lib/course.ts';
 	import { greeting, pluralize } from '#lib/text.ts';
-	import PartyPopperIcon from '@lucide/svelte/icons/party-popper';
+	import { Celebration as CelebrationIcon } from '@material-symbols-svg/svelte/rounded/icons/celebration';
 
 	let { data } = $props();
 	const now = Date.now();
@@ -58,27 +58,27 @@
 <div class="mt-10 grid gap-12 *:min-w-0 lg:grid-cols-[3fr_2fr]">
 	<section>
 		<div class="flex items-baseline justify-between">
-			<h2 class="text-lg font-semibold tracking-tight">Up next</h2>
-			<Button variant="link" size="sm" href="/todo" class="px-0">View all</Button>
+			<h2 class="text-headline-sm">Up next</h2>
+			<Button variant="ghost" size="sm" href="/todo" class="text-primary">View all</Button>
 		</div>
 		{#if groups.length === 0}
-			<Empty.Root class="mt-4 border border-dashed">
+			<Empty.Root class="mt-4 bg-surface-container-low">
 				<Empty.Header>
-					<Empty.Media variant="icon"><PartyPopperIcon /></Empty.Media>
+					<Empty.Media variant="icon"><CelebrationIcon /></Empty.Media>
 					<Empty.Title>All caught up</Empty.Title>
 					<Empty.Description>No upcoming or overdue work. Enjoy the break.</Empty.Description>
 				</Empty.Header>
 			</Empty.Root>
 		{:else}
-			<div class="mt-2 divide-y divide-border/60">
+			<div class="mt-2 flex flex-col gap-5">
 				{#each groups as group (group.key)}
-					<div class="py-4">
+					<div>
 						<h3
-							class={`text-sm font-medium ${group.key === 'missing' ? 'text-destructive' : 'text-muted-foreground'}`}
+							class={`px-1 text-title-sm ${group.key === 'missing' ? 'text-error' : 'text-on-surface-variant'}`}
 						>
 							{group.label}
 						</h3>
-						<div class="mt-1 flex flex-col">
+						<div class="mt-2 segmented">
 							{#each group.items as item (item.id)}
 								<WorkItem work={item} />
 							{/each}
@@ -89,12 +89,12 @@
 		{/if}
 	</section>
 	<section>
-		<h2 class="text-lg font-semibold tracking-tight">Stream</h2>
-		<div class="mt-2 divide-y divide-border/60">
+		<h2 class="text-headline-sm">Stream</h2>
+		<div class="mt-4 flex flex-col gap-3 *:rounded-2xl *:bg-surface-container-low *:px-5">
 			{#each stream.data as row (row.a.id)}
 				<Announcement item={row.a} course={row.c} clamp />
 			{:else}
-				<p class="py-4 text-sm text-muted-foreground">No announcements yet.</p>
+				<p class="py-4 text-body-md text-on-surface-variant">No announcements yet.</p>
 			{/each}
 		</div>
 	</section>

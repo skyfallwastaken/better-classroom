@@ -2,15 +2,15 @@ import { toast } from 'svelte-sonner';
 
 export type Tone = 'sky' | 'amber' | 'emerald' | 'rose' | 'violet' | 'pink';
 
+// Neutral tones use the M3 snackbar (inverse surface); outcomes use tonal containers.
+const SNACKBAR = '!bg-inverse-surface !text-inverse-on-surface !border-transparent';
 const tones: Record<Tone, string> = {
-	sky: '!bg-sky-100 !text-sky-950 !border-sky-300 dark:!bg-sky-300 dark:!text-sky-950',
-	amber: '!bg-amber-100 !text-amber-950 !border-amber-300 dark:!bg-amber-200 dark:!text-amber-950',
-	emerald:
-		'!bg-emerald-100 !text-emerald-950 !border-emerald-300 dark:!bg-emerald-200 dark:!text-emerald-950',
-	rose: '!bg-rose-100 !text-rose-950 !border-rose-300 dark:!bg-rose-200 dark:!text-rose-950',
-	violet:
-		'!bg-violet-100 !text-violet-950 !border-violet-300 dark:!bg-violet-200 dark:!text-violet-950',
-	pink: '!bg-pink-100 !text-pink-950 !border-pink-300 dark:!bg-pink-200 dark:!text-pink-950'
+	sky: SNACKBAR,
+	violet: SNACKBAR,
+	pink: SNACKBAR,
+	amber: '!bg-warning-container !text-on-warning-container !border-transparent',
+	emerald: '!bg-success-container !text-on-success-container !border-transparent',
+	rose: '!bg-error-container !text-on-error-container !border-transparent'
 };
 
 export function notify(
@@ -27,7 +27,8 @@ export function notify(
 		duration: options.duration ?? 5000,
 		class: tones[tone],
 		descriptionClass: '!text-inherit opacity-80',
-		actionButtonStyle: 'background: rgb(0 0 0 / 0.12); color: inherit; font-weight: 500;',
+		actionButtonStyle:
+			'background: transparent; color: inherit; font-weight: 600; border-radius: 9999px; text-decoration: underline; text-underline-offset: 3px;',
 		action: options.action
 			? { label: options.action.label, onClick: () => void options.action!.onClick() }
 			: undefined

@@ -23,12 +23,12 @@
 
 <article
 	id={`a-${item.id}`}
-	class="-mx-3 flex scroll-mt-20 gap-3 rounded-lg px-3 py-4 transition-colors target:bg-accent/60"
+	class="flex scroll-mt-24 gap-4 py-4 transition-colors target:bg-secondary-container!"
 >
-	<UserAvatar src={author?.photoUrl} name={author?.name} class="size-8" fallbackClass="text-xs" />
+	<UserAvatar src={author?.photoUrl} name={author?.name} class="size-10" />
 	<div class="min-w-0 flex-1">
-		<div class="flex flex-wrap items-baseline gap-x-2 text-sm">
-			<span class="font-medium">{author?.name ?? 'Teacher'}</span>
+		<div class="flex flex-wrap items-baseline gap-x-2 text-body-md">
+			<span class="text-title-sm text-on-surface">{author?.name ?? 'Teacher'}</span>
 			{#if showCourse}
 				<a
 					href={`/courses/${item.courseId}`}
@@ -57,19 +57,19 @@
 		<RichText
 			text={item.text}
 			html={item.html}
-			class={`mt-1 text-sm text-pretty break-words ${long && !expanded ? 'line-clamp-6' : ''}`}
+			class={`mt-2 text-body-lg text-pretty break-words text-on-surface ${long && !expanded ? 'line-clamp-6' : ''}`}
 		/>
 		{#if long}
 			<button
 				type="button"
-				class="mt-1 text-sm text-muted-foreground hover:text-foreground"
+				class="mt-1 text-label-lg text-primary hover:underline"
 				onclick={() => (expanded = !expanded)}
 			>
 				{expanded ? 'Show less' : 'Show more'}
 			</button>
 		{/if}
 		{#if item.materials.length}
-			<div class="mt-3 max-w-md"><Attachments items={item.materials} /></div>
+			<div class="mt-3 max-w-2xl"><Attachments items={item.materials} /></div>
 		{/if}
 	</div>
 </article>
