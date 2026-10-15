@@ -1,35 +1,43 @@
 <script lang="ts">
-	import { theme, setMode, setTheme, previewTheme, endPreview } from '#lib/theme.svelte.ts';
-	import { LIGHT_THEMES, DARK_THEMES } from '#lib/themes.ts';
-	import ThemeCard from '#lib/components/theme-card.svelte';
+	import { theme, setMode, setColors } from '#lib/theme.svelte.ts';
+	import { SEEDS, VARIANTS, swatch } from '#lib/themes.ts';
 	import * as ToggleGroup from '#lib/components/ui/toggle-group/index.js';
-	import { Badge } from '#lib/components/ui/badge/index.js';
-	import SunIcon from '@lucide/svelte/icons/sun';
-	import MoonIcon from '@lucide/svelte/icons/moon';
-	import MonitorIcon from '@lucide/svelte/icons/monitor';
+	import { BrightnessAuto as BrightnessAutoIcon } from '@material-symbols-svg/svelte/rounded/icons/brightness-auto';
+	import { LightMode as LightModeIcon } from '@material-symbols-svg/svelte/rounded/icons/light-mode';
+	import { DarkMode as DarkModeIcon } from '@material-symbols-svg/svelte/rounded/icons/dark-mode';
+	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
+	import { Colorize as ColorizeIcon } from '@material-symbols-svg/svelte/rounded/icons/colorize';
 	import SettingsCard from './settings-card.svelte';
 
-	let previewTimer: ReturnType<typeof setTimeout> | undefined;
-	function stickyPreview(id: Parameters<typeof previewTheme>[0]) {
-		clearTimeout(previewTimer);
-		previewTheme(id);
-	}
-	function leaveGroup() {
-		clearTimeout(previewTimer);
-		previewTimer = setTimeout(endPreview, 150);
-	}
-	function focusOutGroup(e: FocusEvent) {
-		const group = e.currentTarget as HTMLElement;
-		if (!group.contains(e.relatedTarget as Node | null)) leaveGroup();
-	}
+	const dark = $derived(theme.resolved === 'dark');
+	const custom = $derived(!SEEDS.some((s) => s.hex === theme.seed));
 </script>
 
+{#snippet dot(seed: string, selected: boolean)}
+	{@const [a, b, c] = swatch({ seed, variant: theme.variant }, dark)}
+	<!-- Android-style wallpaper swatch: primary on top, secondary and tertiary below. -->
+	<span
+		class="relative grid size-full grid-cols-2 grid-rows-2 overflow-hidden rounded-[inherit]"
+		aria-hidden="true"
+	>
+		<span class="col-span-2" style:background={a}></span>
+		<span style:background={b}></span>
+		<span style:background={c}></span>
+		{#if selected}
+			<span
+				class="absolute inset-0 m-auto flex size-7 items-center justify-center rounded-full bg-primary-container text-on-primary-container"
+				><CheckIcon class="size-5" /></span
+			>
+		{/if}
+	</span>
+{/snippet}
+
 <SettingsCard class="max-w-3xl">
-	<div class="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+	<div class="flex flex-wrap items-center justify-between gap-4 px-6 py-5">
 		<div>
-			<h2 class="text-base font-semibold tracking-tight">Mode</h2>
-			<p class="mt-1 text-sm text-muted-foreground">
-				System switches between your light and dark themes with your OS.
+			<h2 class="text-title-lg">Mode</h2>
+			<p class="mt-1 text-body-md text-on-surface-variant">
+				System follows your device's light or dark setting.
 			</p>
 		</div>
 		<ToggleGroup.Root
@@ -39,47 +47,95 @@
 			onValueChange={(v) => v && setMode(v as typeof theme.mode)}
 		>
 			<ToggleGroup.Item value="system" aria-label="System"
-				><MonitorIcon data-icon="inline-start" />System</ToggleGroup.Item
+				><BrightnessAutoIcon data-icon="inline-start" />System</ToggleGroup.Item
 			>
 			<ToggleGroup.Item value="light" aria-label="Light"
-				><SunIcon data-icon="inline-start" />Light</ToggleGroup.Item
+				><LightModeIcon data-icon="inline-start" />Light</ToggleGroup.Item
 			>
 			<ToggleGroup.Item value="dark" aria-label="Dark"
-				><MoonIcon data-icon="inline-start" />Dark</ToggleGroup.Item
+				><DarkModeIcon data-icon="inline-start" />Dark</ToggleGroup.Item
 			>
 		</ToggleGroup.Root>
 	</div>
-	{#each [['light', LIGHT_THEMES], ['dark', DARK_THEMES]] as const as [mode, list] (mode)}
-		{@const active = theme.resolved === mode}
-		<div
-			class="border-t px-5 py-4 transition-opacity {active ? '' : 'opacity-60 hover:opacity-100'}"
-		>
-			<div class="flex items-center gap-2">
-				<h3 class="text-sm font-semibold tracking-tight">
-					{mode === 'light' ? 'Light theme' : 'Dark theme'}
-				</h3>
-				{#if active}<Badge variant="secondary">Active</Badge>{/if}
-			</div>
-			<div
-				role="radiogroup"
-				aria-label="{mode} theme"
-				class="mt-3 grid grid-cols-[repeat(auto-fill,minmax(8.5rem,1fr))] gap-3"
-				tabindex="-1"
-				onmouseleave={leaveGroup}
-				onfocusout={focusOutGroup}
+
+	<div class="border-t px-6 py-5">
+		<h2 class="text-title-lg">Colour</h2>
+		<p class="mt-1 text-body-md text-on-surface-variant">
+			Material You builds every surface, button and accent from the colour you pick.
+		</p>
+		<div role="radiogroup" aria-label="Theme colour" class="mt-4 flex flex-wrap gap-2">
+			{#each SEEDS as seed (seed.hex)}
+				{@const selected = theme.seed === seed.hex}
+				<button
+					type="button"
+					role="radio"
+					aria-checked={selected}
+					aria-label={seed.name}
+					title={seed.name}
+					class="size-14 rounded-full outline-offset-2 outline-primary transition-[border-radius,transform] duration-500 ease-spring hover:scale-105 focus-visible:outline-2 active:scale-95 aria-checked:rounded-xl"
+					onclick={() => setColors({ seed: seed.hex })}
+				>
+					{@render dot(seed.hex, selected)}
+				</button>
+			{/each}
+			<label
+				class="relative size-14 cursor-pointer overflow-hidden rounded-full outline-offset-2 outline-primary transition-[border-radius,transform] duration-500 ease-spring hover:scale-105 has-focus-visible:outline-2 {custom
+					? 'rounded-xl'
+					: 'bg-surface-container-highest'}"
+				title="Custom colour"
 			>
-				{#each list as t (t.id)}
-					<ThemeCard
-						theme={t}
-						selected={theme[mode] === t.id}
-						onselect={() => setTheme(t.id)}
-						onpreview={() => stickyPreview(t.id)}
-					/>
-				{/each}
-			</div>
+				{#if custom}
+					{@render dot(theme.seed, true)}
+				{:else}
+					<span class="flex size-full items-center justify-center text-on-surface-variant"
+						><ColorizeIcon class="size-6" /></span
+					>
+				{/if}
+				<input
+					type="color"
+					class="absolute inset-0 cursor-pointer opacity-0"
+					aria-label="Custom colour"
+					value={theme.seed}
+					onchange={(e) => setColors({ seed: e.currentTarget.value })}
+				/>
+			</label>
 		</div>
-	{/each}
-	<p class="border-t px-5 py-3 text-xs text-muted-foreground">
-		Hover a theme to try it on. Saved for this browser only.
+	</div>
+
+	<div class="border-t px-6 py-5">
+		<h2 class="text-title-lg">Style</h2>
+		<p class="mt-1 text-body-md text-on-surface-variant">
+			How the colour is spread across the palette.
+		</p>
+		<div role="radiogroup" aria-label="Colour style" class="mt-4 grid gap-2 sm:grid-cols-2">
+			{#each VARIANTS as v (v.id)}
+				{@const selected = theme.variant === v.id}
+				{@const [a, b, c] = swatch({ seed: theme.seed, variant: v.id }, dark)}
+				<button
+					type="button"
+					role="radio"
+					aria-checked={selected}
+					class="state-layer flex items-center gap-4 rounded-xl bg-surface-container px-4 py-3 text-left transition-[border-radius,background-color] duration-300 ease-spring-gentle focus-visible:outline-2 focus-visible:outline-primary active:rounded-2xl aria-checked:bg-secondary-container aria-checked:text-on-secondary-container"
+					onclick={() => setColors({ variant: v.id })}
+				>
+					<span class="flex shrink-0 -space-x-2" aria-hidden="true">
+						{#each [a, b, c] as color, i (i)}
+							<span
+								class="size-6 rounded-full ring-2 ring-surface-container-low"
+								style:background={color}
+							></span>
+						{/each}
+					</span>
+					<span class="min-w-0 flex-1">
+						<span class="block text-title-sm">{v.name}</span>
+						<span class="block text-body-sm opacity-80">{v.description}</span>
+					</span>
+					{#if selected}<CheckIcon class="size-5 shrink-0" />{/if}
+				</button>
+			{/each}
+		</div>
+	</div>
+	<p class="border-t px-6 py-3 text-body-sm text-on-surface-variant">
+		Saved for this browser only.
 	</p>
 </SettingsCard>

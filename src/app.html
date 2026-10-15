@@ -17,7 +17,13 @@
 							? 'dark'
 							: 'light';
 				d.dataset.mode = mode;
-				d.dataset.theme = localStorage.getItem('theme.' + mode) || mode;
+				var css = localStorage.getItem('theme.css');
+				if (css) {
+					var s = document.createElement('style');
+					s.id = 'theme-custom';
+					s.textContent = css;
+					document.head.appendChild(s);
+				}
 			} catch (e) {}
 		</script>
 		%sveltekit.head%
