@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ContextMenu as ContextMenuPrimitive } from 'bits-ui';
 	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
+	import { Remove as RemoveIcon } from '@material-symbols-svg/svelte/rounded/icons/remove';
 	import { cn, type WithoutChildrenOrChild } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 
@@ -30,11 +31,15 @@
 	)}
 	{...restProps}
 >
-	{#snippet children({ checked })}
+	{#snippet children({ checked, indeterminate })}
 		<span class="pointer-events-none flex size-5 shrink-0 items-center justify-center">
-			{#if checked}
+			{#if checked || indeterminate}
 				<span class="flex animate-in duration-150 ease-standard fade-in-0 zoom-in-50">
-					<CheckIcon />
+					{#if indeterminate}
+						<RemoveIcon />
+					{:else}
+						<CheckIcon />
+					{/if}
 				</span>
 			{/if}
 		</span>
