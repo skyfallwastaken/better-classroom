@@ -188,56 +188,61 @@
 		<WindowVirtualizer bind:this={virtualizer} data={visible} getKey={(i) => i.key} ssrCount={12}>
 			{#snippet children(item, index)}
 				{@const isDone = dismissed.has(item.key)}
-				<div
-					role="listitem"
-					class={`group mb-3 flex gap-3 rounded-2xl px-5 py-1 transition-colors ${isDone ? 'opacity-50' : ''} ${index === selected ? 'bg-secondary-container' : 'bg-surface-container-low'}`}
-				>
-					<div class="min-w-0 flex-1">
-						{#if item.kind === 'announcement'}
-							<Announcement item={item.announcement} course={item.course} clamp />
-						{:else}
-							<div class="flex items-start gap-3 py-2">
-								<span
-									class="flex size-10 shrink-0 items-center justify-center rounded-full bg-tertiary-container text-on-tertiary-container"
-									><MenuBookIcon class="size-6" /></span
-								>
-								<div class="min-w-0 flex-1">
-									<div class="flex flex-wrap items-center gap-2">
-										<a
-											href={`/courses/${item.course.id}/material/${item.material.id}`}
-											class="text-title-sm hover:underline">{item.material.title}</a
-										>
-										<Badge variant="secondary">Material</Badge>
-									</div>
-									<p
-										class="mt-0.5 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
+				<!-- Spacing lives inside the measured row so the virtualizer offsets stay exact. -->
+				<div role="listitem" class="pb-3">
+					<div
+						class={`group flex gap-3 rounded-2xl px-5 py-1 transition-colors ${isDone ? 'opacity-50' : ''} ${index === selected ? 'bg-secondary-container' : 'bg-surface-container-low'}`}
+					>
+						<div class="min-w-0 flex-1">
+							{#if item.kind === 'announcement'}
+								<Announcement item={item.announcement} course={item.course} clamp />
+							{:else}
+								<div class="flex items-start gap-3 py-2">
+									<span
+										class="flex size-10 shrink-0 items-center justify-center rounded-full bg-tertiary-container text-on-tertiary-container"
+										><MenuBookIcon class="size-6" /></span
 									>
-										<CourseDot id={item.course.id} />
-										<a href={`/courses/${item.course.id}`} class="hover:text-foreground"
-											>{displayName(item.course)}</a
-										>
-										<span aria-hidden="true">·</span>
-										<span>posted {formatRelative(item.material.createdAt)}</span>
-									</p>
-									{#if item.material.materials.length}
-										<div class="mt-3 max-w-2xl">
-											<Attachments items={item.material.materials.slice(0, 3)} />
+									<div class="min-w-0 flex-1">
+										<div class="flex flex-wrap items-center gap-2">
+											<a
+												href={`/courses/${item.course.id}/material/${item.material.id}`}
+												class="text-title-sm hover:underline">{item.material.title}</a
+											>
+											<Badge variant="secondary">Material</Badge>
 										</div>
-									{/if}
+										<p
+											class="mt-0.5 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
+										>
+											<CourseDot id={item.course.id} />
+											<a href={`/courses/${item.course.id}`} class="hover:text-foreground"
+												>{displayName(item.course)}</a
+											>
+											<span aria-hidden="true">·</span>
+											<span>posted {formatRelative(item.material.createdAt)}</span>
+										</p>
+										{#if item.material.materials.length}
+											<div class="mt-3 max-w-2xl">
+												<Attachments items={item.material.materials.slice(0, 3)} />
+											</div>
+										{/if}
+									</div>
 								</div>
-							</div>
-						{/if}
-					</div>
-					<div class="shrink-0 pt-4">
-						{#if isDone}
-							<Button variant="ghost" size="sm" onclick={() => undo(item)}
-								><UndoIcon data-icon="inline-start" />Undo</Button
-							>
-						{:else}
-							<Button variant="outline" size="sm" onclick={() => done(item)} aria-label="Mark done"
-								><CheckIcon data-icon="inline-start" />Done</Button
-							>
-						{/if}
+							{/if}
+						</div>
+						<div class="shrink-0 pt-4">
+							{#if isDone}
+								<Button variant="ghost" size="sm" onclick={() => undo(item)}
+									><UndoIcon data-icon="inline-start" />Undo</Button
+								>
+							{:else}
+								<Button
+									variant="outline"
+									size="sm"
+									onclick={() => done(item)}
+									aria-label="Mark done"><CheckIcon data-icon="inline-start" />Done</Button
+								>
+							{/if}
+						</div>
 					</div>
 				</div>
 			{/snippet}

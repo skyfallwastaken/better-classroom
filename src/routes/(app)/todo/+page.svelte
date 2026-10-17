@@ -4,6 +4,7 @@
 	import { createHotkey } from '@tanstack/svelte-hotkeys';
 	import { setSearchParam } from '#lib/navigation.ts';
 	import { workWithContext } from '#lib/db/queries.ts';
+	import { courses } from '#lib/db/collections.ts';
 	import { displayName } from '#lib/course.ts';
 	import { pluralize } from '#lib/text.ts';
 	import { notify } from '#lib/toast.ts';
@@ -28,9 +29,12 @@
 	const all = $derived(
 		workQuery.data.map((r) => summarize(r.w, r.s ?? undefined, displayName(r.c))).sort(byDue)
 	);
+	// Every visible course, so a class with nothing set yet can still be picked and shows the empty state.
+	const coursesQuery = useLiveQuery({ query: (q) => q.from({ c: courses }) });
 	const classes = $derived(
-		[...new Map(all.map((w) => [w.courseId, w.courseName])).entries()]
-			.map(([id, name]) => ({ id, name }))
+		coursesQuery.data
+			.filter((c) => !c.hidden)
+			.map((c) => ({ id: c.id, name: displayName(c) }))
 			.sort((a, b) => a.name.localeCompare(b.name))
 	);
 
@@ -43,7 +47,9 @@
 
 	let tab = $state<TodoTab>(readTab(page.url.searchParams.get('filter')));
 	let view = $state<View>(readView(page.url.searchParams.get('view')));
-	let course = $state(page.url.searchParams.get('course') ?? 'all');
+	let courseParam = $state(page.url.searchParams.get('course') ?? 'all');
+	// A stale or unknown ?course= falls back to every class instead of an empty page.
+	const course = $derived(classes.some((c) => c.id === courseParam) ? courseParam : 'all');
 
 	const inClass = $derived(course === 'all' ? all : all.filter((w) => w.courseId === course));
 	const buckets = $derived(bucketize(tab, inClass));
@@ -67,8 +73,8 @@
 		setSearchParam('view', view, 'list');
 	}
 	function setCourse(v: string) {
-		course = v || 'all';
-		setSearchParam('course', course, 'all');
+		courseParam = v || 'all';
+		setSearchParam('course', courseParam, 'all');
 	}
 
 	const selection = createSelection(() => rows.map((r) => r.id));

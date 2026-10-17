@@ -27,8 +27,12 @@
 	} = $props();
 
 	async function copyLink() {
-		await navigator.clipboard.writeText(location.href);
-		notify('sky', 'Link copied');
+		try {
+			await navigator.clipboard.writeText(location.href);
+			notify('sky', 'Link copied');
+		} catch {
+			notify('rose', "Couldn't copy the link");
+		}
 	}
 </script>
 

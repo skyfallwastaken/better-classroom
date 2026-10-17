@@ -101,7 +101,7 @@
 						aria-label={`Select ${w.title}`}
 						class="absolute top-1/2 left-4 flex size-10 -translate-y-1/2 items-center justify-center rounded-full transition-[opacity,border-radius,background-color] duration-300 ease-spring focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-primary {selected
 							? 'rounded-xl bg-primary text-on-primary opacity-100'
-							: `bg-surface-container-highest text-on-surface-variant ${selection.size ? 'opacity-100' : 'opacity-0 group-hover/row:opacity-100'}`}"
+							: `bg-surface-container-highest text-on-surface-variant ${selection.size ? 'opacity-100' : 'pointer-events-none opacity-0 group-hover/row:pointer-events-auto group-hover/row:opacity-100 focus-visible:pointer-events-auto'}`}"
 						onclick={(e) => selection.toggle(indexOf(w.id), e.shiftKey)}
 					>
 						{#if selected}<CheckIcon class="size-6" />{:else}<span

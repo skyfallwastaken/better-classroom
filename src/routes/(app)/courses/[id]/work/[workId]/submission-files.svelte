@@ -101,6 +101,8 @@
 				</li>
 			{/each}
 		</ul>
+	{:else}
+		<p class="mb-3 text-body-md text-on-surface-variant">Nothing attached yet.</p>
 	{/if}
 	{#if isOpen(work)}
 		<label
@@ -111,7 +113,7 @@
 			{#if uploading}<LoaderIcon data-icon="inline-start" class="animate-spin" />{:else}<AddIcon
 					data-icon="inline-start"
 				/>{/if}
-			{uploading ? 'Uploading…' : 'Add or create'}
+			{uploading ? 'Uploading…' : 'Add file'}
 			<input type="file" class="sr-only" disabled={uploading} onchange={uploadFile} />
 		</label>
 	{/if}

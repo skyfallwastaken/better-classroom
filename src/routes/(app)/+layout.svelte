@@ -111,7 +111,7 @@
 				class="flex shrink-0 items-center gap-2.5 rounded-full py-1 pr-3 pl-1.5 text-title-lg text-on-surface-variant hover:text-on-surface"
 			>
 				<img src={logo} alt="" class="size-8" />
-				<span class="max-sm:hidden">Classroom</span>
+				<span class="max-sm:sr-only">Classroom</span>
 			</a>
 			{#if crumbs.length}
 				<Breadcrumb.Root class="min-w-0 max-sm:hidden">

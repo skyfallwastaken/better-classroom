@@ -47,15 +47,16 @@
 
 	/** The status Classroom shows at the top right of "Your work". */
 	function workState(w: WorkSummary): { text: string; tone: string } {
+		const late = w.late ? ' · late' : '';
 		if (w.status === 'graded' && w.assignedGrade !== undefined)
 			return {
-				text: w.maxPoints ? `${w.assignedGrade}/${w.maxPoints}` : String(w.assignedGrade),
+				text: (w.maxPoints ? `${w.assignedGrade}/${w.maxPoints}` : String(w.assignedGrade)) + late,
 				tone: 'text-primary'
 			};
 		if (w.status === 'missing') return { text: 'Missing', tone: 'text-error' };
 		if (w.status === 'turnedIn' && w.late) return { text: 'Done late', tone: 'text-warning' };
 		if (w.status === 'turnedIn' || w.status === 'returned')
-			return { text: statusLabel[w.status], tone: 'text-success' };
+			return { text: statusLabel[w.status] + late, tone: 'text-success' };
 		return { text: 'Assigned', tone: 'text-on-surface-variant' };
 	}
 </script>
