@@ -38,7 +38,7 @@
 			oninput={onInput}
 			placeholder="Search assignments, materials, announcements…"
 			aria-label="Search"
-			class="h-12 rounded-full border-0 bg-surface-container-highest pl-12 text-body-lg"
+			class="h-12 rounded-full border-0 bg-surface-container-highest pl-12 text-body-lg md:text-body-lg"
 			autofocus
 		/>
 	</div>

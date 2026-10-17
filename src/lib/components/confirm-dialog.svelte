@@ -1,6 +1,8 @@
 <script lang="ts">
 	import * as Dialog from '#lib/components/ui/dialog/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
+	import { errorMessage } from '#lib/api.ts';
+	import { notify } from '#lib/toast.ts';
 
 	/** Asks before a destructive action that can't be undone. Cancel is the default choice. */
 	let {
@@ -17,15 +19,13 @@
 		onConfirm: () => void | Promise<void>;
 	} = $props();
 
-	let busy = $state(false);
-
+	// Close first: the caller shows progress on the row itself, and its state is free for the next prompt.
 	async function confirm() {
-		busy = true;
+		open = false;
 		try {
 			await onConfirm();
-			open = false;
-		} finally {
-			busy = false;
+		} catch (err) {
+			notify('rose', `Couldn't ${confirmLabel.toLowerCase()}`, { description: errorMessage(err) });
 		}
 	}
 </script>
@@ -38,7 +38,7 @@
 		</Dialog.Header>
 		<Dialog.Footer>
 			<Button variant="outline" onclick={() => (open = false)}>Cancel</Button>
-			<Button variant="destructive" disabled={busy} onclick={confirm}>{confirmLabel}</Button>
+			<Button variant="destructive" onclick={confirm}>{confirmLabel}</Button>
 		</Dialog.Footer>
 	</Dialog.Content>
 </Dialog.Root>

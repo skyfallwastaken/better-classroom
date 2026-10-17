@@ -3,7 +3,7 @@
 	import { tv } from '#lib/utils.js';
 
 	export const tabsListVariants = tv({
-		base: 'rounded-full p-1 group-data-horizontal/tabs:h-10 data-[variant=line]:rounded-none data-[variant=line]:p-0 data-[variant=line]:group-data-horizontal/tabs:h-12 group/tabs-list inline-flex w-fit items-center justify-center text-muted-foreground group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col',
+		base: 'rounded-full p-1 group-data-horizontal/tabs:h-10 data-[variant=line]:max-w-full data-[variant=line]:overflow-x-auto data-[variant=line]:overflow-y-hidden data-[variant=line]:rounded-none data-[variant=line]:p-0 data-[variant=line]:[scrollbar-width:none] data-[variant=line]:group-data-horizontal/tabs:h-12 group/tabs-list inline-flex w-fit items-center justify-center text-muted-foreground group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col',
 		variants: {
 			variant: {
 				default: 'cn-tabs-list-variant-default bg-surface-container-high',

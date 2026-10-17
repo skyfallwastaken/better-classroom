@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from 'svelte';
 	import type { PageData } from './$types';
 	import { notify } from '#lib/toast.ts';
 	import { formatRelative } from '#lib/format.ts';
@@ -20,6 +21,7 @@
 	// svelte-ignore state_referenced_locally
 	let cookieOpen = $state(!initial.configured);
 	let forgetOpen = $state(false);
+	let cookieField = $state<HTMLTextAreaElement | null>(null);
 
 	async function saveCookie() {
 		if (!cookieDraft.trim()) return;
@@ -64,6 +66,7 @@
 	}
 	async function forgetCookie() {
 		const res = await fetch('/api/rich', { method: 'DELETE' });
+		if (!res.ok) throw new Error(`Request failed (${res.status})`);
 		rich = (await res.json()) as typeof rich;
 		cookieOpen = true;
 		notify('amber', 'Classroom session removed', {
@@ -99,9 +102,11 @@
 				<Button
 					variant="outline"
 					size="sm"
-					aria-expanded={cookieOpen}
-					disabled={cookieOpen}
-					onclick={() => (cookieOpen = true)}
+					onclick={async () => {
+						cookieOpen = true;
+						await tick();
+						cookieField?.focus();
+					}}
 				>
 					Replace cookie
 				</Button>
@@ -169,6 +174,7 @@
 				</li>
 			</ol>
 			<Textarea
+				bind:ref={cookieField}
 				bind:value={cookieDraft}
 				rows={4}
 				spellcheck="false"

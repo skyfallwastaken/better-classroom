@@ -135,8 +135,9 @@
 	title="Delete comment?"
 	description="This can't be undone."
 	confirmLabel="Delete"
-	onConfirm={async () => {
-		if (confirmDelete) await removeComment(confirmDelete);
+	onConfirm={() => {
+		const id = confirmDelete;
 		confirmDelete = null;
+		if (id) return removeComment(id);
 	}}
 />

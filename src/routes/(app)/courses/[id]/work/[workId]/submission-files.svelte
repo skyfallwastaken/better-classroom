@@ -130,8 +130,9 @@
 	title="Remove file?"
 	description="It will be detached from your submission. You can add it again later."
 	confirmLabel="Remove"
-	onConfirm={async () => {
-		if (confirmRemove) await removeFile(confirmRemove);
+	onConfirm={() => {
+		const id = confirmRemove;
 		confirmRemove = null;
+		if (id) return removeFile(id);
 	}}
 />
