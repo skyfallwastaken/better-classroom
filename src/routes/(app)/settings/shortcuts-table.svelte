@@ -14,13 +14,13 @@
 	] as const;
 </script>
 
-<dl class="grid max-w-md grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
+<dl class="grid max-w-md grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-body-md">
 	{#each shortcuts as [keys, label] (label)}
 		<dt>
 			<KbdGroup
 				>{#each keys as k (k)}<Kbd>{k}</Kbd>{/each}</KbdGroup
 			>
 		</dt>
-		<dd class="text-muted-foreground">{label}</dd>
+		<dd class="text-on-surface-variant">{label}</dd>
 	{/each}
 </dl>

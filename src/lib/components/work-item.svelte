@@ -24,9 +24,8 @@
 			</CourseAvatar>
 			<Item.Content>
 				<Item.Title class="line-clamp-1 text-title-sm">
-					{work.title}{#if isNew(work)}<Badge
-							variant="secondary"
-							class="ml-2 align-middle text-[10px]">New</Badge
+					{work.title}{#if isNew(work)}<Badge variant="secondary" class="ml-2 align-middle"
+							>New</Badge
 						>{/if}
 				</Item.Title>
 				<Item.Description class="flex items-center gap-1.5 text-body-md text-on-surface-variant">

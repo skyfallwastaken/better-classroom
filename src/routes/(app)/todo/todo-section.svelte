@@ -34,7 +34,7 @@
 		if (w.status === 'graded' && w.assignedGrade !== undefined)
 			return {
 				text: w.maxPoints ? `${w.assignedGrade}/${w.maxPoints}` : String(w.assignedGrade),
-				tone: 'text-primary font-medium'
+				tone: 'font-medium text-on-surface'
 			};
 		if (w.status === 'returned') return { text: 'Returned', tone: 'text-on-surface-variant' };
 		return {
@@ -47,15 +47,13 @@
 <section>
 	<button
 		type="button"
-		class="state-layer flex h-16 w-full items-center gap-4 rounded-2xl px-4 text-left transition-[border-radius] duration-300 ease-spring-gentle active:rounded-lg disabled:cursor-default disabled:before:hidden"
+		class="state-layer flex h-12 w-full items-center gap-4 rounded-2xl px-4 text-left transition-[border-radius] duration-300 ease-spring-gentle active:rounded-lg disabled:cursor-default disabled:before:hidden"
 		aria-expanded={open}
 		disabled={count === 0}
 		onclick={() => (open = !open)}
 	>
-		<h2 class="flex-1 text-headline-sm text-on-surface">{bucket.label}</h2>
-		<span class="text-title-md tabular-nums {count ? 'text-primary' : 'text-on-surface-variant'}"
-			>{count}</span
-		>
+		<h2 class="flex-1 text-title-lg text-on-surface">{bucket.label}</h2>
+		<span class="text-title-md text-on-surface-variant tabular-nums">{count}</span>
 		<ChevronIcon
 			class="size-6 text-on-surface-variant transition-transform duration-500 ease-spring {open
 				? 'rotate-180'
@@ -67,17 +65,19 @@
 		<!-- M3 Expressive segmented list: big outer corners, small inner ones, 2px gaps -->
 		<ul
 			role="list"
-			class="mt-1 mb-3 flex flex-col gap-0.5"
+			class="mt-1 mb-3 segmented"
 			transition:slide={{ duration: 300, easing: cubicOut }}
 		>
 			{#each bucket.items as w (w.id)}
 				{@const s = status(w)}
 				{@const selected = selection.has(w.id)}
-				<li class="group/row relative">
+				<li
+					class="group/row relative transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-xl"
+				>
 					<a
 						href={`/courses/${w.courseId}/work/${w.id}`}
-						class="state-layer flex min-h-18 items-center gap-4 rounded-sm bg-surface-container-low py-3 pr-5 pl-4 transition-[border-radius,background-color] duration-300 ease-spring-gentle group-first/row:rounded-t-2xl group-last/row:rounded-b-2xl hover:rounded-xl {selected
-							? 'bg-secondary-container! text-on-secondary-container'
+						class="state-layer flex min-h-18 items-center gap-4 rounded-[inherit] px-4 py-3 transition-[background-color] duration-300 ease-spring-gentle {selected
+							? 'bg-secondary-container text-on-secondary-container'
 							: ''}"
 					>
 						<CourseAvatar id={w.courseId}>
@@ -93,7 +93,8 @@
 						</span>
 						<span class="shrink-0 text-right text-body-md tabular-nums {s.tone}">{s.text}</span>
 					</a>
-					<!-- Like Gmail: the avatar turns into a checkbox on hover or once anything is selected. -->
+					<!-- Like Gmail: the avatar turns into a checkbox on hover or once anything is selected.
+					     On touch (coarse pointer) it stays transparent but tappable, so tapping the avatar starts a selection. -->
 					<button
 						type="button"
 						role="checkbox"
@@ -101,7 +102,7 @@
 						aria-label={`Select ${w.title}`}
 						class="absolute top-1/2 left-4 flex size-10 -translate-y-1/2 items-center justify-center rounded-full transition-[opacity,border-radius,background-color] duration-300 ease-spring focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-primary {selected
 							? 'rounded-xl bg-primary text-on-primary opacity-100'
-							: `bg-surface-container-highest text-on-surface-variant ${selection.size ? 'opacity-100' : 'pointer-events-none opacity-0 group-hover/row:pointer-events-auto group-hover/row:opacity-100 focus-visible:pointer-events-auto'}`}"
+							: `bg-surface-container-highest text-on-surface-variant ${selection.size ? 'opacity-100' : 'pointer-events-none opacity-0 group-hover/row:pointer-events-auto group-hover/row:opacity-100 focus-visible:pointer-events-auto pointer-coarse:pointer-events-auto'}`}"
 						onclick={(e) => selection.toggle(indexOf(w.id), e.shiftKey)}
 					>
 						{#if selected}<CheckIcon class="size-6" />{:else}<span

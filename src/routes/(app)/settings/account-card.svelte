@@ -13,14 +13,12 @@
 	}
 </script>
 
-<SettingsCard class="mb-6 flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+<SettingsCard class="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
 	<div class="min-w-0">
-		<h2 class="text-base font-semibold tracking-tight">Account</h2>
-		<p class="truncate text-sm text-muted-foreground">
+		<h2 class="text-title-md">Account</h2>
+		<p class="truncate text-body-md text-on-surface-variant">
 			Signed in as {page.data.user?.name || page.data.user?.email}
-			{#if page.data.user?.name}<span class="text-muted-foreground/70"
-					>· {page.data.user.email}</span
-				>{/if}
+			{#if page.data.user?.name}<span>· {page.data.user.email}</span>{/if}
 		</p>
 	</div>
 	<Button variant="outline" size="sm" onclick={signOut} disabled={signingOut}>

@@ -54,9 +54,11 @@
 </script>
 
 <SettingsCard>
-	<div class="flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
+	<div
+		class="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant px-5 py-4"
+	>
 		<div class="flex items-center gap-3">
-			<h2 class="text-base font-semibold tracking-tight">Connection</h2>
+			<h2 class="text-title-md">Connection</h2>
 			{#if running}<Badge variant="secondary">Syncing · {status?.pending} left</Badge>
 			{:else if status?.status === 'error'}<Badge variant="destructive">Error</Badge>
 			{:else}<Badge variant="outline" class="text-success">Healthy</Badge>{/if}
@@ -74,47 +76,47 @@
 			</Button>
 		</div>
 	</div>
-	<dl class="grid grid-cols-2 gap-x-4 gap-y-4 px-5 py-4 text-sm sm:grid-cols-4">
+	<dl class="grid grid-cols-2 gap-x-4 gap-y-4 px-5 py-4 text-body-md sm:grid-cols-4">
 		<div>
-			<dt class="text-muted-foreground">Last synced</dt>
-			<dd class="mt-1 font-medium tabular-nums">
+			<dt class="text-on-surface-variant">Last synced</dt>
+			<dd class="mt-1 text-title-sm tabular-nums">
 				{status?.finishedAt ? formatRelative(status.finishedAt) : '–'}
 			</dd>
-			{#if status?.finishedAt}<dd class="text-xs text-muted-foreground tabular-nums">
+			{#if status?.finishedAt}<dd class="text-body-sm text-on-surface-variant tabular-nums">
 					{formatDateTime(status.finishedAt)}
 				</dd>{/if}
 		</div>
 		<div>
-			<dt class="text-muted-foreground">Courses</dt>
-			<dd class="mt-1 font-medium tabular-nums">{status?.courseCount ?? 0}</dd>
+			<dt class="text-on-surface-variant">Courses</dt>
+			<dd class="mt-1 text-title-sm tabular-nums">{status?.courseCount ?? 0}</dd>
 		</div>
 		<div>
-			<dt class="text-muted-foreground">Schedule</dt>
-			<dd class="mt-1 font-medium">Every {status?.intervalMinutes ?? 5} min</dd>
+			<dt class="text-on-surface-variant">Schedule</dt>
+			<dd class="mt-1 text-title-sm">Every {status?.intervalMinutes ?? 5} min</dd>
 		</div>
 		<div>
-			<dt class="text-muted-foreground">Key</dt>
-			<dd class="mt-1 font-mono text-xs">••••{connection.keyHint}</dd>
+			<dt class="text-on-surface-variant">Key</dt>
+			<dd class="mt-1 font-mono text-body-sm">••••{connection.keyHint}</dd>
 		</div>
 	</dl>
 	{#if errors.length}
 		<ul
 			role="list"
-			class="mx-5 mb-4 divide-y divide-destructive/20 rounded-lg bg-destructive/10 text-sm text-destructive"
+			class="mx-5 mb-4 divide-y divide-on-error-container/20 rounded-xl bg-error-container text-body-md text-on-error-container"
 		>
 			{#each errors as line, i (i)}
 				{@const [where, what] = splitError(line)}
-				<li class="px-3 py-2">
-					{#if where}<span class="font-semibold">{where}</span> ·
+				<li class="px-4 py-3">
+					{#if where}<span class="font-medium">{where}</span> ·
 					{/if}{what}
 				</li>
 			{/each}
 		</ul>
 	{/if}
 	<div
-		class="flex flex-wrap items-center justify-between gap-2 border-t px-5 py-3 text-xs text-muted-foreground"
+		class="flex flex-wrap items-center justify-between gap-2 border-t border-outline-variant px-5 py-3 text-body-sm text-on-surface-variant"
 	>
 		<span class="truncate font-mono" title={connection.url}>{shortUrl}</span>
-		<a href="/setup" class="font-medium text-foreground underline underline-offset-2">Reconnect</a>
+		<a href="/setup" class="font-medium text-on-surface underline underline-offset-2">Reconnect</a>
 	</div>
 </SettingsCard>

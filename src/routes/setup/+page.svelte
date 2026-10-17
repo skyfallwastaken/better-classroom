@@ -86,10 +86,10 @@
 
 <div class="mx-auto flex min-h-svh w-full max-w-xl flex-col px-4 py-10 sm:px-6">
 	<div class="mb-8">
-		<h1 class="mt-1 text-2xl font-semibold tracking-tight text-balance">
+		<h1 class="text-headline-md text-balance text-on-surface">
 			{done ? 'You’re connected' : 'Connect your Google Classroom'}
 		</h1>
-		<p class="mt-1 max-w-[60ch] text-sm text-pretty text-muted-foreground">
+		<p class="mt-2 max-w-[60ch] text-body-lg text-pretty text-on-surface-variant">
 			{#if done}
 				Your first sync is running in the background. It takes a minute or two.
 			{:else}
@@ -98,7 +98,7 @@
 		</p>
 		{#if data.configured && !done}
 			<p
-				class="mt-3 rounded-xl bg-warning-container px-4 py-3 text-body-sm text-on-warning-container"
+				class="mt-3 rounded-xl bg-warning-container px-4 py-3 text-body-md text-on-warning-container"
 			>
 				Already connected. Finishing this replaces the current connection.
 				<a href="/settings" class="ml-1 font-medium underline underline-offset-2"
@@ -152,9 +152,9 @@
 				>
 					<CelebrationIcon class="size-6" />
 				</span>
-				<p class="mt-4 font-medium">{result.name ?? 'Connected'}</p>
-				{#if result.email}<p class="text-sm text-muted-foreground">{result.email}</p>{/if}
-				<p class="mt-3 text-sm text-muted-foreground">
+				<p class="mt-4 text-title-md">{result.name ?? 'Connected'}</p>
+				{#if result.email}<p class="text-body-md text-on-surface-variant">{result.email}</p>{/if}
+				<p class="mt-3 text-body-md text-on-surface-variant">
 					Syncing {result.courseCount} active {result.courseCount === 1 ? 'course' : 'courses'}.
 				</p>
 				<Button class="mt-6" onclick={() => (window.location.href = '/')}>
@@ -162,11 +162,11 @@
 				</Button>
 			</div>
 		{:else if step === 0}
-			<h2 class="font-semibold">{steps[0].title}</h2>
-			<ol class="mt-4 space-y-4 text-sm">
+			<h2 class="text-title-lg">{steps[0].title}</h2>
+			<ol class="mt-4 space-y-4 text-body-md">
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>1</span
 					>
 					<div>
@@ -183,23 +183,23 @@
 				</li>
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>2</span
 					>
 					<div>
-						Click the gear <span class="text-muted-foreground">(Project settings)</span> and tick
+						Click the gear <span class="text-on-surface-variant">(Project settings)</span> and tick
 						<strong>Show “appsscript.json” manifest file in editor</strong>.
 					</div>
 				</li>
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>3</span
 					>
 					<div class="min-w-0 flex-1 space-y-2">
 						<p>
 							Back in the editor, replace everything in <code
-								class="rounded bg-muted px-1 py-0.5 text-xs">Code.gs</code
+								class="rounded bg-surface-container-high px-1 py-0.5 text-body-sm">Code.gs</code
 							> with this:
 						</p>
 						<CopyBlock name="Code.gs" source={codeSource} />
@@ -207,12 +207,13 @@
 				</li>
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>4</span
 					>
 					<div class="min-w-0 flex-1 space-y-2">
 						<p>
-							Then replace everything in <code class="rounded bg-muted px-1 py-0.5 text-xs"
+							Then replace everything in <code
+								class="rounded bg-surface-container-high px-1 py-0.5 text-body-sm"
 								>appsscript.json</code
 							> with this:
 						</p>
@@ -221,60 +222,60 @@
 				</li>
 			</ol>
 		{:else if step === 1}
-			<h2 class="font-semibold">{steps[1].title}</h2>
-			<p class="mt-1 text-sm text-muted-foreground">
+			<h2 class="text-title-lg">{steps[1].title}</h2>
+			<p class="mt-1 text-body-md text-on-surface-variant">
 				Deploying turns the script into a private URL this app can call.
 			</p>
-			<ol class="mt-4 space-y-4 text-sm">
+			<ol class="mt-4 space-y-4 text-body-md">
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>1</span
 					>
 					<div>Press <strong>Deploy</strong> (top right) → <strong>New deployment</strong>.</div>
 				</li>
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>2</span
 					>
 					<div>Click the gear next to “Select type” and choose <strong>Web app</strong>.</div>
 				</li>
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>3</span
 					>
 					<div>
 						Set <strong>Execute as</strong> to <em>Me</em> and <strong>Who has access</strong> to
 						<em>Anyone</em>.
-						<span class="text-muted-foreground">Not “Anyone with Google account”.</span>
+						<span class="text-on-surface-variant">Not “Anyone with Google account”.</span>
 					</div>
 				</li>
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>4</span
 					>
 					<div>
 						Press <strong>Deploy</strong>, then <strong>Authorize access</strong> and approve the
 						permissions.
-						<span class="text-muted-foreground"
+						<span class="text-on-surface-variant"
 							>If Google says the app isn’t verified, click Advanced → Go to Untitled project.</span
 						>
 					</div>
 				</li>
 				<li class="flex gap-3">
 					<span
-						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground tabular-nums"
+						class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-label-sm text-on-surface-variant tabular-nums"
 						>5</span
 					>
 					<div>Copy the <strong>Web app URL</strong>. You’ll paste it in the next step.</div>
 				</li>
 			</ol>
 		{:else}
-			<h2 class="font-semibold">{steps[2].title}</h2>
-			<p class="mt-1 text-sm text-muted-foreground">
+			<h2 class="text-title-lg">{steps[2].title}</h2>
+			<p class="mt-1 text-body-md text-on-surface-variant">
 				Paste the web app URL. We’ll call the script once to check it answers as you.
 			</p>
 			<form
@@ -292,7 +293,7 @@
 					autocomplete="off"
 					spellcheck={false}
 					aria-invalid={result && !result.ok ? true : undefined}
-					class="font-mono text-xs sm:text-xs"
+					class="font-mono text-body-sm md:text-body-sm"
 				/>
 				<Button type="submit" disabled={testing || !url} class="shrink-0">
 					{#if testing}<ProgressActivityIcon
@@ -303,12 +304,14 @@
 			</form>
 			{#if result && !result.ok}
 				{@const target = fixStep[result.code]}
-				<div class="mt-3 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+				<div
+					class="mt-3 rounded-xl bg-error-container px-4 py-3 text-body-md text-on-error-container"
+				>
 					<p>{result.message}</p>
 					{#if target !== undefined}
 						<button
 							type="button"
-							class="mt-1 text-xs font-medium underline underline-offset-2"
+							class="mt-1 text-label-lg underline underline-offset-2"
 							onclick={() => (step = target)}
 						>
 							Go back to step {target + 1}

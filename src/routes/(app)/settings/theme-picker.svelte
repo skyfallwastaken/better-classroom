@@ -33,10 +33,10 @@
 	</span>
 {/snippet}
 
-<SettingsCard class="max-w-3xl">
-	<div class="flex flex-wrap items-center justify-between gap-4 px-6 py-5">
+<SettingsCard>
+	<div class="flex flex-wrap items-center justify-between gap-4 px-5 py-4">
 		<div>
-			<h2 class="text-title-lg">Mode</h2>
+			<h2 class="text-title-md">Mode</h2>
 			<p class="mt-1 text-body-md text-on-surface-variant">
 				System follows your device's light or dark setting.
 			</p>
@@ -59,8 +59,8 @@
 		</ToggleGroup.Root>
 	</div>
 
-	<div class="border-t px-6 py-5">
-		<h2 class="text-title-lg">Colour</h2>
+	<div class="border-t border-outline-variant px-5 py-4">
+		<h2 class="text-title-md">Colour</h2>
 		<p class="mt-1 text-body-md text-on-surface-variant">
 			Material You builds every surface, button and accent from the colour you pick.
 		</p>
@@ -109,8 +109,8 @@
 		</div>
 	</div>
 
-	<div class="border-t px-6 py-5">
-		<h2 class="text-title-lg">Style</h2>
+	<div class="border-t border-outline-variant px-5 py-4">
+		<h2 class="text-title-md">Style</h2>
 		<p class="mt-1 text-body-md text-on-surface-variant">
 			How the colour is spread across the palette.
 		</p>
@@ -144,7 +144,7 @@
 			{/each}
 		</RadioGroup.Root>
 	</div>
-	<p class="border-t px-6 py-3 text-body-sm text-on-surface-variant">
+	<p class="border-t border-outline-variant px-5 py-3 text-body-sm text-on-surface-variant">
 		Saved for this browser only.
 	</p>
 </SettingsCard>

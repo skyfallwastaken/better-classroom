@@ -103,7 +103,7 @@
 	<!-- Classroom's class banner, drawn with the course's tonal colours and M3 Expressive shapes -->
 	<div
 		data-course-color={courseColorName(course.id)}
-		class="relative isolate flex min-h-48 flex-wrap items-end justify-between gap-4 overflow-hidden rounded-3xl bg-course-container p-6 text-on-course-container sm:p-8"
+		class="relative isolate flex min-h-32 flex-wrap items-end justify-between gap-4 overflow-hidden rounded-3xl bg-course-container p-5 text-on-course-container sm:p-6"
 	>
 		<span
 			class="absolute -top-16 -right-10 -z-10 size-64 rotate-12 rounded-[38%] bg-course opacity-25"
@@ -114,7 +114,7 @@
 			aria-hidden="true"
 		></span>
 		<div class="min-w-0">
-			<h1 class="text-display-sm text-balance sm:text-display-md">{displayName(course)}</h1>
+			<h1 class="text-headline-lg text-balance sm:text-display-sm">{displayName(course)}</h1>
 			<p class="mt-2 text-title-md opacity-80">
 				{[course.nickname ? course.name : undefined, courseLabel(course.section), course.room]
 					.filter(Boolean)
@@ -136,11 +136,11 @@
 	</div>
 
 	<Tabs.Root value={tab} onValueChange={setTab} class="mt-6">
-		<Tabs.List variant="line">
-			<Tabs.Trigger value="classwork">Classwork</Tabs.Trigger>
-			<Tabs.Trigger value="stream">Stream</Tabs.Trigger>
-			<Tabs.Trigger value="people">People</Tabs.Trigger>
-			<Tabs.Trigger value="grades">Grades</Tabs.Trigger>
+		<Tabs.List variant="line" class="w-full justify-start">
+			<Tabs.Trigger value="classwork" class="flex-none">Classwork</Tabs.Trigger>
+			<Tabs.Trigger value="stream" class="flex-none">Stream</Tabs.Trigger>
+			<Tabs.Trigger value="people" class="flex-none">People</Tabs.Trigger>
+			<Tabs.Trigger value="grades" class="flex-none">Grades</Tabs.Trigger>
 		</Tabs.List>
 		<Tabs.Content value="classwork" class="mt-4">
 			{#if sections.length === 0}
@@ -157,9 +157,7 @@
 				<div class="flex flex-col gap-8">
 					{#each sections as section (section.id ?? 'none')}
 						<section>
-							<h2
-								class="border-b border-outline-variant pb-3 text-headline-sm text-primary sm:text-headline-md"
-							>
+							<h2 class="border-b border-outline-variant pb-2 text-title-lg text-on-surface">
 								{section.name}
 							</h2>
 							<div class="mt-4 segmented">
@@ -200,7 +198,7 @@
 		</Tabs.Content>
 		<Tabs.Content
 			value="stream"
-			class="mt-6 flex flex-col gap-3 *:rounded-2xl *:bg-surface-container-low *:px-5"
+			class="mt-4 flex flex-col gap-3 *:rounded-2xl *:bg-surface-container-low *:px-4"
 		>
 			{#each streamQuery.data as item (item.id)}
 				<Announcement {item} {course} showCourse={false} />
@@ -208,11 +206,11 @@
 				<p class="py-6 text-body-md text-on-surface-variant">No announcements in this course.</p>
 			{/each}
 		</Tabs.Content>
-		<Tabs.Content value="people" class="mt-6">
-			<h2 class="border-b border-outline-variant pb-3 text-headline-sm text-primary">Teachers</h2>
+		<Tabs.Content value="people" class="mt-4">
+			<h2 class="border-b border-outline-variant pb-2 text-title-lg text-on-surface">Teachers</h2>
 			<PersonList people={course.teachers} variant="teacher" />
 			{#if course.students?.length}
-				<h2 class="mt-10 border-b border-outline-variant pb-3 text-headline-sm text-primary">
+				<h2 class="mt-8 border-b border-outline-variant pb-2 text-title-lg text-on-surface">
 					Classmates <span class="text-on-surface-variant tabular-nums"
 						>· {course.studentCount ?? course.students.length}</span
 					>
@@ -220,15 +218,15 @@
 				<PersonList people={course.students} variant="student" />
 			{/if}
 			{#if description}
-				<h2 class="mt-10 border-b border-outline-variant pb-3 text-headline-sm text-primary">
+				<h2 class="mt-8 border-b border-outline-variant pb-2 text-title-lg text-on-surface">
 					{course.descriptionHeading || 'About'}
 				</h2>
-				<p class="mt-2 text-sm text-pretty whitespace-pre-wrap text-muted-foreground">
+				<p class="mt-2 text-body-md text-pretty whitespace-pre-wrap text-on-surface-variant">
 					{description}
 				</p>
 			{/if}
 		</Tabs.Content>
-		<Tabs.Content value="grades" class="mt-6">
+		<Tabs.Content value="grades" class="mt-4">
 			<GradesTab {work} courseId={course.id} />
 		</Tabs.Content>
 	</Tabs.Root>

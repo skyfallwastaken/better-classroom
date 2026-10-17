@@ -115,7 +115,7 @@
 			{/if}
 		</form>
 
-		<p class="mt-6 text-center text-sm text-muted-foreground">
+		<p class="mt-6 text-center text-body-md text-on-surface-variant">
 			{#if mode === 'signin'}
 				New here?
 				<button
@@ -133,7 +133,7 @@
 			{/if}
 		</p>
 	</div>
-	<p class="mt-6 text-center text-xs text-muted-foreground">
+	<p class="mt-6 text-center text-body-sm text-on-surface-variant">
 		<a href="/privacy" class="underline underline-offset-2">Privacy policy</a>
 	</p>
 </div>

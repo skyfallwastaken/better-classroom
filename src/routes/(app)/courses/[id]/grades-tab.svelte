@@ -30,12 +30,12 @@
 	</Empty.Root>
 {:else}
 	<div class="flex flex-wrap items-baseline justify-between gap-2">
-		<h2 class="text-headline-sm">
+		<h2 class="text-title-lg text-on-surface">
 			{pluralize(graded.length, 'graded assignment')}
 		</h2>
 		{#if totals.percent !== null}
-			<p class="text-sm text-muted-foreground tabular-nums">
-				Overall <span class="font-medium text-foreground">{totals.percent}%</span>
+			<p class="text-body-md text-on-surface-variant tabular-nums">
+				Overall <span class="text-title-sm text-on-surface">{totals.percent}%</span>
 				· {totals.earned}/{totals.possible} points
 			</p>
 		{/if}
@@ -46,22 +46,21 @@
 			<li>
 				<a
 					href={`/courses/${courseId}/work/${w.id}`}
-					class="state-layer flex items-center gap-4 rounded-[inherit] px-5 py-3"
+					class="state-layer flex items-center gap-4 rounded-[inherit] px-4 py-3"
 				>
 					<div class="min-w-0 flex-1">
 						<p class="truncate text-title-sm">{w.title}</p>
-						<p class="text-xs text-muted-foreground tabular-nums">
+						<p class="text-body-sm text-on-surface-variant tabular-nums">
 							{w.dueAt !== undefined ? formatDue(w.dueAt, w.hasDueTime) : 'No due date'}{#if w.late}
 								· late{/if}
 						</p>
 					</div>
-					<div class="w-24 shrink-0 text-right text-sm tabular-nums">
-						<span class="font-medium">{w.assignedGrade}</span>{#if w.maxPoints}<span
-								class="text-muted-foreground">/{w.maxPoints}</span
-							>{/if}
+					<div class="w-24 shrink-0 text-right text-body-md tabular-nums">
+						<span class="text-title-sm text-on-surface">{w.assignedGrade}</span
+						>{#if w.maxPoints}<span class="text-on-surface-variant">/{w.maxPoints}</span>{/if}
 					</div>
 					{#if pct !== null}
-						<div class="w-16 shrink-0 text-right text-sm text-muted-foreground tabular-nums">
+						<div class="w-16 shrink-0 text-right text-body-md text-on-surface-variant tabular-nums">
 							{Math.round(pct)}%
 						</div>
 					{/if}

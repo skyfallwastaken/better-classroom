@@ -81,11 +81,11 @@
 	}
 </script>
 
-<SettingsCard class="max-w-lg">
+<SettingsCard>
 	<div class="flex items-start justify-between gap-4 px-5 py-4">
 		<div>
-			<h2 class="text-base font-semibold tracking-tight">Browser notifications</h2>
-			<p class="mt-1 text-sm text-pretty text-muted-foreground">
+			<h2 class="text-title-md">Browser notifications</h2>
+			<p class="mt-1 text-body-md text-pretty text-on-surface-variant">
 				Get a notification when a new assignment or post lands during a sync.
 				{#if notifications.enabled && notifications.mode === 'in-page'}
 					This browser has no push service, so these only appear while the app is open in a tab.
@@ -113,12 +113,14 @@
 		{/if}
 	</div>
 	{#if notifications.permission === 'denied'}
-		<p class="mx-5 mb-4 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+		<p
+			class="mx-5 mb-4 rounded-xl bg-error-container px-4 py-3 text-body-md text-on-error-container"
+		>
 			Your browser has blocked notifications for this site. Allow them in the site settings to turn
 			this on.
 		</p>
 	{:else if notifications.enabled}
-		<div class="border-t px-5 py-3">
+		<div class="border-t border-outline-variant px-5 py-3">
 			<Button variant="outline" size="sm" disabled={testing} onclick={testNotification}>
 				Send a test
 			</Button>

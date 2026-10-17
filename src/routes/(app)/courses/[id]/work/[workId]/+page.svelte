@@ -51,7 +51,7 @@
 		if (w.status === 'graded' && w.assignedGrade !== undefined)
 			return {
 				text: (w.maxPoints ? `${w.assignedGrade}/${w.maxPoints}` : String(w.assignedGrade)) + late,
-				tone: 'text-primary'
+				tone: 'text-on-surface'
 			};
 		if (w.status === 'missing') return { text: 'Missing', tone: 'text-error' };
 		if (w.status === 'turnedIn' && w.late) return { text: 'Done late', tone: 'text-warning' };

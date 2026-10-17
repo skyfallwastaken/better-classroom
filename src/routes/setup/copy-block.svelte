@@ -18,12 +18,12 @@
 
 <div class="overflow-hidden rounded-xl bg-surface-container-high">
 	<div class="flex items-center gap-2 bg-surface-container-highest py-1.5 pr-1.5 pl-4">
-		<code class="text-xs font-medium">{name}</code>
-		<span class="text-xs whitespace-nowrap text-muted-foreground">{lines} lines</span>
+		<code class="text-label-md">{name}</code>
+		<span class="text-body-sm whitespace-nowrap text-on-surface-variant">{lines} lines</span>
 		<Button
 			variant="ghost"
 			size="xs"
-			class="ml-auto text-muted-foreground"
+			class="ml-auto text-on-surface-variant"
 			aria-expanded={expanded}
 			onclick={() => (expanded = !expanded)}
 		>
@@ -33,14 +33,14 @@
 			/>
 			{expanded ? 'Hide' : 'Show'}
 		</Button>
-		<Button variant={copied ? 'secondary' : 'default'} size="xs" onclick={copy}>
+		<Button variant={copied ? 'secondary' : 'outline'} size="xs" onclick={copy}>
 			{#if copied}<CheckIcon data-icon="inline-start" />Copied{:else}<ContentCopyIcon
 					data-icon="inline-start"
 				/>Copy {name}{/if}
 		</Button>
 	</div>
 	{#if expanded}
-		<pre class="max-h-72 overflow-auto p-3 text-[11px] leading-4 whitespace-pre"><code
+		<pre class="max-h-72 overflow-auto p-3 text-label-sm font-normal whitespace-pre"><code
 				>{source}</code
 			></pre>
 	{/if}

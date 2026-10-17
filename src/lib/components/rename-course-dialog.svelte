@@ -58,7 +58,7 @@
 				/>
 			</div>
 			<fieldset class="grid gap-2">
-				<legend class="text-sm font-medium">Color</legend>
+				<legend class="text-title-sm">Color</legend>
 				<div class="flex flex-wrap gap-2">
 					{#each COLOR_NAMES as name (name)}
 						<button

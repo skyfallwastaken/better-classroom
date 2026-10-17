@@ -12,6 +12,7 @@
 	import * as ToggleGroup from '#lib/components/ui/toggle-group/index.js';
 	import * as Empty from '#lib/components/ui/empty/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
+	import { Toggle } from '#lib/components/ui/toggle/index.js';
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { Kbd, KbdGroup } from '#lib/components/ui/kbd/index.js';
 	import { formatRelative } from '#lib/format.ts';
@@ -152,7 +153,6 @@
 		<ToggleGroup.Root
 			type="single"
 			variant="outline"
-			size="sm"
 			bind:value={filter}
 			onValueChange={(v) => !v && (filter = 'all')}
 		>
@@ -160,13 +160,9 @@
 			<ToggleGroup.Item value="announcements">Posts</ToggleGroup.Item>
 			<ToggleGroup.Item value="materials">Materials</ToggleGroup.Item>
 		</ToggleGroup.Root>
-		<Button variant="outline" size="sm" onclick={() => (showDone = !showDone)}
-			>{showDone ? 'Hide done' : 'Show done'}</Button
-		>
+		<Toggle variant="outline" bind:pressed={showDone}>Show done</Toggle>
 		{#if visible.some((i) => !dismissed.has(i.key))}
-			<Button size="sm" onclick={doneAll}
-				><DoneAllIcon data-icon="inline-start" />Mark all done</Button
-			>
+			<Button onclick={doneAll}><DoneAllIcon data-icon="inline-start" />Mark all done</Button>
 		{/if}
 	{/snippet}
 </PageHeader>
@@ -197,7 +193,7 @@
 							{#if item.kind === 'announcement'}
 								<Announcement item={item.announcement} course={item.course} clamp />
 							{:else}
-								<div class="flex items-start gap-3 py-2">
+								<div class="flex items-start gap-4 py-4">
 									<span
 										class="flex size-10 shrink-0 items-center justify-center rounded-full bg-tertiary-container text-on-tertiary-container"
 										><MenuBookIcon class="size-6" /></span
@@ -211,10 +207,10 @@
 											<Badge variant="secondary">Material</Badge>
 										</div>
 										<p
-											class="mt-0.5 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
+											class="mt-0.5 flex flex-wrap items-center gap-1.5 text-body-md text-on-surface-variant"
 										>
 											<CourseDot id={item.course.id} />
-											<a href={`/courses/${item.course.id}`} class="hover:text-foreground"
+											<a href={`/courses/${item.course.id}`} class="hover:text-on-surface"
 												>{displayName(item.course)}</a
 											>
 											<span aria-hidden="true">·</span>
@@ -229,7 +225,7 @@
 								</div>
 							{/if}
 						</div>
-						<div class="shrink-0 pt-4">
+						<div class="shrink-0 self-center">
 							{#if isDone}
 								<Button variant="ghost" size="sm" onclick={() => undo(item)}
 									><UndoIcon data-icon="inline-start" />Undo</Button
@@ -249,7 +245,7 @@
 		</WindowVirtualizer>
 	</div>
 	<p
-		class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground max-sm:hidden"
+		class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-body-sm text-on-surface-variant max-sm:hidden"
 	>
 		<span><KbdGroup><Kbd>J</Kbd><Kbd>K</Kbd></KbdGroup> move</span>
 		<span><Kbd>E</Kbd> done / undo</span>

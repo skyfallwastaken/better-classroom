@@ -32,7 +32,7 @@
 			{#if showCourse}
 				<a
 					href={`/courses/${item.courseId}`}
-					class="flex items-center gap-1.5 text-muted-foreground hover:text-foreground"
+					class="flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface"
 				>
 					<CourseDot id={item.courseId} />{displayName(course)}
 				</a>
@@ -40,7 +40,7 @@
 			{#if showCourse}
 				<a
 					href={`/courses/${item.courseId}?tab=stream#a-${item.id}`}
-					class="text-muted-foreground tabular-nums hover:text-foreground hover:underline"
+					class="text-on-surface-variant tabular-nums hover:text-on-surface hover:underline"
 					title="View in course stream"
 				>
 					<time datetime={new Date(item.createdAt).toISOString()}
@@ -50,7 +50,7 @@
 			{:else}
 				<time
 					datetime={new Date(item.createdAt).toISOString()}
-					class="text-muted-foreground tabular-nums">{formatRelative(item.createdAt)}</time
+					class="text-on-surface-variant tabular-nums">{formatRelative(item.createdAt)}</time
 				>
 			{/if}
 		</div>

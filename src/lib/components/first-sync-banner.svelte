@@ -29,7 +29,7 @@
 {#if unsynced}
 	<div
 		role="status"
-		class="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-yellow-500 bg-yellow-300 px-4 py-2 text-sm font-medium text-yellow-950 dark:bg-yellow-400"
+		class="flex flex-wrap items-center gap-x-3 gap-y-2 bg-warning-container px-4 py-2 text-label-lg text-on-warning-container"
 	>
 		{#if running}
 			<ProgressActivityIcon class="size-4 shrink-0 animate-spin" />
@@ -45,7 +45,7 @@
 			<Button
 				size="sm"
 				variant="outline"
-				class="h-7 border-yellow-700/40 bg-yellow-100 text-yellow-950 hover:bg-yellow-50"
+				class="border-on-warning-container/40 text-on-warning-container"
 				disabled={starting}
 				onclick={syncNow}
 			>
@@ -60,7 +60,7 @@
 			<Button
 				size="sm"
 				variant="outline"
-				class="h-7 border-yellow-700/40 bg-yellow-100 text-yellow-950 hover:bg-yellow-50"
+				class="border-on-warning-container/40 text-on-warning-container"
 				disabled={starting}
 				onclick={syncNow}
 			>

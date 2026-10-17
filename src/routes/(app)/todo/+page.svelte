@@ -142,7 +142,8 @@
 	};
 </script>
 
-<Tabs.Root value={tab} onValueChange={setTab} class="-mt-8">
+<h1 class="sr-only">To-do</h1>
+<Tabs.Root value={tab} onValueChange={setTab}>
 	<Tabs.List variant="line" class="w-full justify-start">
 		<Tabs.Trigger value="assigned" class="flex-none">Assigned</Tabs.Trigger>
 		<Tabs.Trigger value="missing" class="flex-none">Missing</Tabs.Trigger>
@@ -150,7 +151,7 @@
 	</Tabs.List>
 </Tabs.Root>
 
-<div class="mx-auto mt-6 max-w-3xl">
+<div class="mt-4">
 	<div class="flex flex-wrap items-center justify-between gap-3">
 		<Select.Root type="single" value={course} onValueChange={setCourse}>
 			<Select.Trigger class="w-full sm:w-96" aria-label="Class">{courseLabel}</Select.Trigger>
@@ -183,7 +184,7 @@
 					class="size-20 rounded-[40%] bg-tertiary-container text-on-tertiary-container [&_svg]:size-10!"
 					><CelebrationIcon /></Empty.Media
 				>
-				<Empty.Title class="text-headline-sm">{EMPTY[tab].title}</Empty.Title>
+				<Empty.Title>{EMPTY[tab].title}</Empty.Title>
 				<Empty.Description>{EMPTY[tab].description}</Empty.Description>
 			</Empty.Header>
 		</Empty.Root>

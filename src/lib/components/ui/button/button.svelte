@@ -20,15 +20,15 @@
 			},
 			size: {
 				default:
-					'h-10 gap-2 px-6 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4',
-				xs: "h-7 gap-1 px-3 text-label-md active:not-aria-[haspopup]:rounded-sm has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
-				sm: "h-8 gap-1.5 px-4 active:not-aria-[haspopup]:rounded-sm has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-4",
+					'h-10 gap-2 px-6 pointer-coarse:h-11 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4',
+				xs: "h-7 pointer-coarse:h-11 gap-1 px-3 text-label-md active:not-aria-[haspopup]:rounded-sm has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
+				sm: "h-8 pointer-coarse:h-11 gap-1.5 px-4 active:not-aria-[haspopup]:rounded-sm has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-4",
 				lg: "h-14 gap-2 px-7 text-title-md active:not-aria-[haspopup]:rounded-lg has-data-[icon=inline-end]:pr-6 has-data-[icon=inline-start]:pl-6 [&_svg:not([class*='size-'])]:size-6",
-				icon: 'size-10 [&_svg:not([class*=size-])]:size-6',
+				icon: 'size-10 pointer-coarse:size-11 [&_svg:not([class*=size-])]:size-6',
 				'icon-xs':
-					"size-7 active:not-aria-[haspopup]:rounded-sm [&_svg:not([class*='size-'])]:size-4",
+					"size-7 pointer-coarse:size-11 active:not-aria-[haspopup]:rounded-sm [&_svg:not([class*='size-'])]:size-4",
 				'icon-sm':
-					"size-8 active:not-aria-[haspopup]:rounded-sm [&_svg:not([class*='size-'])]:size-5",
+					"size-8 pointer-coarse:size-11 active:not-aria-[haspopup]:rounded-sm [&_svg:not([class*='size-'])]:size-5",
 				'icon-lg':
 					"size-12 active:not-aria-[haspopup]:rounded-lg [&_svg:not([class*='size-'])]:size-6"
 			}

@@ -29,7 +29,7 @@
 <form class="mt-4 max-w-xl" onsubmit={(e) => e.preventDefault()} role="search">
 	<div class="relative">
 		<SearchIcon
-			class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+			class="pointer-events-none absolute top-1/2 left-4 size-6 -translate-y-1/2 text-on-surface-variant"
 		/>
 		<Input
 			name="q"
@@ -38,21 +38,21 @@
 			oninput={onInput}
 			placeholder="Search assignments, materials, announcements…"
 			aria-label="Search"
-			class="h-10 pl-9 max-sm:text-base/6"
+			class="h-12 rounded-full border-0 bg-surface-container-highest pl-12 text-body-lg"
 			autofocus
 		/>
 	</div>
 </form>
 
 {#if trimmed}
-	<p class="mt-4 text-sm text-muted-foreground tabular-nums">
+	<p class="mt-4 text-body-md text-on-surface-variant tabular-nums">
 		{#if loading && !hits.length}Searching…{:else}{hits.length} result{hits.length === 1 ? '' : 's'} for
 			“{trimmed}”{/if}
 	</p>
 {/if}
 
 {#if trimmed && hits.length === 0 && !loading}
-	<Empty.Root class="mt-6 border border-dashed">
+	<Empty.Root class="mt-6">
 		<Empty.Header>
 			<Empty.Media variant="icon"><SearchIcon /></Empty.Media>
 			<Empty.Title>No results</Empty.Title>
@@ -60,19 +60,28 @@
 		</Empty.Header>
 	</Empty.Root>
 {:else if hits.length}
-	<div class="mt-2 flex flex-col divide-y divide-border/60">
+	<div class="mt-4 segmented">
 		{#each hits as hit (hit.doc.kind + hit.doc.id)}
 			{@const Icon = kindIcon[hit.doc.kind]}
-			<Item.Root size="sm" class="-mx-3 rounded-none py-3">
+			<Item.Root
+				size="sm"
+				class="state-layer gap-4 border-0 px-4 py-3 transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-xl [a]:hover:bg-transparent"
+			>
 				{#snippet child({ props })}
 					<a href={hit.doc.href} {...props}>
-						<Item.Media variant="icon" class="text-muted-foreground"><Icon /></Item.Media>
+						<span
+							aria-hidden="true"
+							class="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-container-highest text-on-surface-variant [&_svg]:size-6"
+							><Icon /></span
+						>
 						<Item.Content>
-							<Item.Title class="line-clamp-1">{hit.doc.title}</Item.Title>
+							<Item.Title class="line-clamp-1 text-title-sm">{hit.doc.title}</Item.Title>
 							{#if hit.doc.snippet && hit.doc.kind !== 'announcement'}
-								<p class="line-clamp-2 text-sm text-muted-foreground">{hit.doc.snippet}</p>
+								<p class="line-clamp-2 text-body-md text-on-surface-variant">{hit.doc.snippet}</p>
 							{/if}
-							<Item.Description class="flex items-center gap-1.5">
+							<Item.Description
+								class="flex items-center gap-1.5 text-body-md text-on-surface-variant"
+							>
 								<CourseDot id={hit.doc.courseId} class="shrink-0" />
 								<span class="truncate">{hit.doc.courseName}</span>
 								<span aria-hidden="true">·</span>

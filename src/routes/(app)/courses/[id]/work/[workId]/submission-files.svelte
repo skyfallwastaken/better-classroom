@@ -5,7 +5,8 @@
 	import { withAuthUser } from '#lib/link-authuser.svelte.ts';
 	import Attachments from '#lib/components/attachments.svelte';
 	import type { Attachment, SubmissionFile } from '#lib/shared/types.ts';
-	import { buttonVariants } from '#lib/components/ui/button/index.js';
+	import { Button, buttonVariants } from '#lib/components/ui/button/index.js';
+	import ConfirmDialog from '#lib/components/confirm-dialog.svelte';
 	import { ProgressActivity as LoaderIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
 	import { AttachFile as AttachFileIcon } from '@material-symbols-svg/svelte/rounded/icons/attach-file';
 	import { Add as AddIcon } from '@material-symbols-svg/svelte/rounded/icons/add';
@@ -19,6 +20,8 @@
 	let filesError = $state<string | null>(null);
 	let uploading = $state(false);
 	let removingFile = $state<string | null>(null);
+	let confirmRemove = $state<string | null>(null);
+	let confirmOpen = $state(false);
 
 	async function loadFiles() {
 		filesError = null;
@@ -86,17 +89,21 @@
 						>{f.title ?? f.driveId}</a
 					>
 					{#if isOpen(work)}
-						<button
-							type="button"
-							class="state-layer flex size-8 items-center justify-center rounded-full text-on-surface-variant hover:text-error disabled:opacity-50"
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							class="hover:text-error"
 							aria-label="Remove file"
 							disabled={removingFile === f.driveId}
-							onclick={() => removeFile(f.driveId)}
+							onclick={() => {
+								confirmRemove = f.driveId;
+								confirmOpen = true;
+							}}
 						>
 							{#if removingFile === f.driveId}<LoaderIcon
 									class="size-4 animate-spin"
 								/>{:else}<CloseIcon class="size-5" />{/if}
-						</button>
+						</Button>
 					{/if}
 				</li>
 			{/each}
@@ -118,3 +125,13 @@
 		</label>
 	{/if}
 {/if}
+<ConfirmDialog
+	bind:open={confirmOpen}
+	title="Remove file?"
+	description="It will be detached from your submission. You can add it again later."
+	confirmLabel="Remove"
+	onConfirm={async () => {
+		if (confirmRemove) await removeFile(confirmRemove);
+		confirmRemove = null;
+	}}
+/>

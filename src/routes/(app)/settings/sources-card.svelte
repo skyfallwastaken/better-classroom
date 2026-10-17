@@ -6,14 +6,14 @@
 	let { providers }: { providers: ProviderStatus[] } = $props();
 </script>
 
-<SettingsCard class="mb-6">
-	<div class="border-b px-5 py-4">
-		<h2 class="text-base font-semibold tracking-tight">Sources</h2>
+<SettingsCard>
+	<div class="border-b border-outline-variant px-5 py-4">
+		<h2 class="text-title-md">Sources</h2>
 	</div>
-	<ul role="list" class="divide-y text-sm">
+	<ul role="list" class="divide-y divide-outline-variant text-body-md">
 		{#each providers as provider (provider.id)}
 			<li class="flex flex-wrap items-center gap-x-4 gap-y-1 px-5 py-3">
-				<span class="w-40 font-medium">{provider.label}</span>
+				<span class="w-40 text-title-sm">{provider.label}</span>
 				{#if provider.state === 'off'}<Badge variant="outline">Off</Badge>
 				{:else if provider.state === 'expired'}<Badge variant="destructive">Expired</Badge>
 				{:else if provider.state === 'error'}<Badge variant="destructive">Error</Badge>
@@ -21,7 +21,7 @@
 						>{provider.role === 'records' ? 'Primary' : 'On'}</Badge
 					>
 				{:else}<Badge variant="secondary">Standby</Badge>{/if}
-				<span class="min-w-0 flex-1 truncate text-muted-foreground" title={provider.detail}
+				<span class="min-w-0 flex-1 truncate text-on-surface-variant" title={provider.detail}
 					>{provider.detail}</span
 				>
 			</li>

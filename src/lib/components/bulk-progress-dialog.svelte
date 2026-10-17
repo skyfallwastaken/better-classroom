@@ -33,22 +33,23 @@
 			<Dialog.Description>{summary}</Dialog.Description>
 		</Dialog.Header>
 		<Progress value={items.length ? (finished.length / items.length) * 100 : 0} />
-		<ul role="list" class="-mx-1 max-h-64 overflow-y-auto text-sm">
+		<ul role="list" class="-mx-1 max-h-64 overflow-y-auto text-body-md">
 			{#each items as item (item.id)}
 				<li class="flex items-start gap-2 rounded-md px-1 py-1">
 					<span class="mt-0.5 grid size-4 shrink-0 place-content-center">
 						{#if item.state === 'done'}<CheckIcon class="size-4 text-success" />
 						{:else if item.state === 'failed'}<CloseIcon class="size-4 text-destructive" />
 						{:else if item.state === 'running'}<ProgressActivityIcon
-								class="size-4 animate-spin text-muted-foreground"
+								class="size-4 animate-spin text-on-surface-variant"
 							/>
 						{:else}<span class="size-1.5 rounded-full bg-muted-foreground/40"></span>{/if}
 					</span>
 					<span class="min-w-0 flex-1">
-						<span class="line-clamp-1 {item.state === 'pending' ? 'text-muted-foreground' : ''}"
+						<span class="line-clamp-1 {item.state === 'pending' ? 'text-on-surface-variant' : ''}"
 							>{item.title}</span
 						>
-						{#if item.error}<span class="line-clamp-2 text-xs text-destructive">{item.error}</span
+						{#if item.error}<span class="line-clamp-2 text-body-sm text-destructive"
+								>{item.error}</span
 							>{/if}
 					</span>
 				</li>

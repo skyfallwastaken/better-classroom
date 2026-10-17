@@ -147,7 +147,7 @@
 					onclick={() => (paletteOpen = true)}
 				>
 					<SearchIcon class="size-6 shrink-0" />
-					<span class="text-base max-sm:sr-only">Search</span>
+					<span class="max-sm:sr-only">Search</span>
 					<KbdGroup class="ml-auto max-sm:hidden"><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup>
 				</button>
 				<a
@@ -162,7 +162,7 @@
 		<AppSidebar {courses} {inboxCount} {todoCount} />
 		<Sidebar.Inset class="isolate">
 			<FirstSyncBanner />
-			<main class="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-10">
+			<main class="mx-auto w-full max-w-6xl px-4 py-4 sm:px-6 sm:py-6">
 				{@render children()}
 			</main>
 		</Sidebar.Inset>

@@ -5,6 +5,7 @@
 	import { formatRelative } from '#lib/format.ts';
 	import { Button } from '#lib/components/ui/button/index.js';
 	import RichText from '#lib/components/rich-text.svelte';
+	import ConfirmDialog from '#lib/components/confirm-dialog.svelte';
 	import type { Comment } from '#lib/shared/types.ts';
 	import { ProgressActivity as LoaderIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
 	import { Delete as DeleteIcon } from '@material-symbols-svg/svelte/rounded/icons/delete';
@@ -20,6 +21,8 @@
 	let commentDraft = $state('');
 	let posting = $state(false);
 	let removing = $state<string | null>(null);
+	let confirmDelete = $state<string | null>(null);
+	let confirmOpen = $state(false);
 
 	async function loadComments() {
 		commentsError = null;
@@ -74,21 +77,25 @@
 {:else}
 	<ul role="list" class="mt-3 space-y-3">
 		{#each comments as c (c.id)}
-			<li class="group text-sm">
+			<li class="group text-body-md">
 				<div class="flex items-baseline justify-between gap-2">
-					<span class="font-medium">{c.mine ? 'You' : (c.author?.name ?? 'Teacher')}</span>
-					<span class="flex items-center gap-2 text-xs text-muted-foreground">
+					<span class="text-title-sm">{c.mine ? 'You' : (c.author?.name ?? 'Teacher')}</span>
+					<span class="flex items-center gap-2 text-body-sm text-on-surface-variant">
 						{#if c.createdAt}{formatRelative(c.createdAt)}{/if}
 						{#if c.mine}
-							<button
-								type="button"
-								class="rounded p-0.5 opacity-0 transition-opacity group-hover:opacity-100 hover:text-destructive focus-visible:opacity-100"
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								class="opacity-0 transition-opacity group-hover:opacity-100 hover:text-destructive focus-visible:opacity-100 pointer-coarse:opacity-100"
 								aria-label="Delete comment"
 								disabled={removing === c.id}
-								onclick={() => removeComment(c.id)}
+								onclick={() => {
+									confirmDelete = c.id;
+									confirmOpen = true;
+								}}
 							>
-								<DeleteIcon class="size-4" />
-							</button>
+								{#if removing === c.id}<LoaderIcon class="animate-spin" />{:else}<DeleteIcon />{/if}
+							</Button>
 						{/if}
 					</span>
 				</div>
@@ -123,3 +130,13 @@
 		</Button>
 	</form>
 {/if}
+<ConfirmDialog
+	bind:open={confirmOpen}
+	title="Delete comment?"
+	description="This can't be undone."
+	confirmLabel="Delete"
+	onConfirm={async () => {
+		if (confirmDelete) await removeComment(confirmDelete);
+		confirmDelete = null;
+	}}
+/>

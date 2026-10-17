@@ -55,10 +55,10 @@
 
 <PageHeader title={`${greeting()}${firstName ? `, ${firstName}` : ''}`} description={subtitle} />
 
-<div class="mt-10 grid gap-12 *:min-w-0 lg:grid-cols-[3fr_2fr]">
+<div class="mt-6 grid gap-8 *:min-w-0 lg:grid-cols-[3fr_2fr]">
 	<section>
 		<div class="flex items-baseline justify-between">
-			<h2 class="text-headline-sm">Up next</h2>
+			<h2 class="text-title-lg text-on-surface">Up next</h2>
 			<Button variant="ghost" size="sm" href="/todo" class="text-primary">View all</Button>
 		</div>
 		{#if groups.length === 0}
@@ -74,7 +74,7 @@
 				{#each groups as group (group.key)}
 					<div>
 						<h3
-							class={`px-1 text-title-sm ${group.key === 'missing' ? 'text-error' : 'text-on-surface-variant'}`}
+							class={`px-4 text-title-sm ${group.key === 'missing' ? 'text-error' : 'text-on-surface-variant'}`}
 						>
 							{group.label}
 						</h3>
@@ -89,8 +89,8 @@
 		{/if}
 	</section>
 	<section>
-		<h2 class="text-headline-sm">Stream</h2>
-		<div class="mt-4 flex flex-col gap-3 *:rounded-2xl *:bg-surface-container-low *:px-5">
+		<h2 class="text-title-lg text-on-surface">Stream</h2>
+		<div class="mt-4 flex flex-col gap-3 *:rounded-2xl *:bg-surface-container-low *:px-4">
 			{#each stream.data as row (row.a.id)}
 				<Announcement item={row.a} course={row.c} clamp />
 			{:else}

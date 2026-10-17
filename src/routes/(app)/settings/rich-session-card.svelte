@@ -7,6 +7,8 @@
 	import { Sync as SyncIcon } from '@material-symbols-svg/svelte/rounded/icons/sync';
 	import { Power as PowerIcon } from '@material-symbols-svg/svelte/rounded/icons/power';
 	import { ProgressActivity as ProgressActivityIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
+	import { Textarea } from '#lib/components/ui/textarea/index.js';
+	import ConfirmDialog from '#lib/components/confirm-dialog.svelte';
 	import SettingsCard from './settings-card.svelte';
 
 	let { initial }: { initial: PageData['rich'] } = $props();
@@ -17,6 +19,7 @@
 	let savingCookie = $state(false);
 	// svelte-ignore state_referenced_locally
 	let cookieOpen = $state(!initial.configured);
+	let forgetOpen = $state(false);
 
 	async function saveCookie() {
 		if (!cookieDraft.trim()) return;
@@ -76,10 +79,12 @@
 	);
 </script>
 
-<SettingsCard class="mt-6">
-	<div class="flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
+<SettingsCard>
+	<div
+		class="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant px-5 py-4"
+	>
 		<div class="flex items-center gap-3">
-			<h2 class="text-base font-semibold tracking-tight">Post formatting</h2>
+			<h2 class="text-title-md">Post formatting</h2>
 			{#if !rich.configured}<Badge variant="outline">Off</Badge>
 			{:else if rich.status && !rich.status.ok}<Badge variant="destructive"
 					>{rich.status.expired ? 'Session expired' : 'Error'}</Badge
@@ -91,15 +96,21 @@
 				<Button variant="outline" size="sm" onclick={refreshRich}>
 					<SyncIcon data-icon="inline-start" />Refresh
 				</Button>
-				<Button variant="outline" size="sm" onclick={() => (cookieOpen = !cookieOpen)}>
-					{cookieOpen ? 'Cancel' : 'Replace cookie'}
+				<Button
+					variant="outline"
+					size="sm"
+					aria-expanded={cookieOpen}
+					disabled={cookieOpen}
+					onclick={() => (cookieOpen = true)}
+				>
+					Replace cookie
 				</Button>
-				<Button variant="destructive" size="sm" onclick={forgetCookie}>Forget</Button>
+				<Button variant="outline" size="sm" onclick={() => (forgetOpen = true)}>Forget</Button>
 			</div>
 		{/if}
 	</div>
-	<div class="space-y-3 px-5 py-4 text-sm">
-		<p class="max-w-prose text-pretty text-muted-foreground">
+	<div class="space-y-3 px-5 py-4 text-body-md">
+		<p class="max-w-prose text-pretty text-on-surface-variant">
 			The Classroom API strips bold, underline and lists from posts. With a signed-in Classroom
 			session the app can read the formatted version the web app uses. The cookie stays in the local
 			database and is only ever sent to classroom.google.com.
@@ -107,40 +118,40 @@
 		{#if rich.configured}
 			<dl class="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3 lg:grid-cols-5">
 				<div>
-					<dt class="text-muted-foreground">Cookie saved</dt>
-					<dd class="mt-1 font-medium tabular-nums">
+					<dt class="text-on-surface-variant">Cookie saved</dt>
+					<dd class="mt-1 text-title-sm tabular-nums">
 						{rich.savedAt ? formatRelative(rich.savedAt) : '–'}
 					</dd>
 				</div>
 				<div>
-					<dt class="text-muted-foreground">Kept alive</dt>
-					<dd class="mt-1 font-medium tabular-nums">
+					<dt class="text-on-surface-variant">Kept alive</dt>
+					<dd class="mt-1 text-title-sm tabular-nums">
 						{keptAliveAt ? formatRelative(keptAliveAt) : '–'}
 					</dd>
 				</div>
 				<div>
-					<dt class="text-muted-foreground">Account slot</dt>
-					<dd class="mt-1 font-medium tabular-nums">/u/{rich.authuser ?? 0}/</dd>
+					<dt class="text-on-surface-variant">Account slot</dt>
+					<dd class="mt-1 text-title-sm tabular-nums">/u/{rich.authuser ?? 0}/</dd>
 				</div>
 				<div>
-					<dt class="text-muted-foreground">Last run</dt>
-					<dd class="mt-1 font-medium tabular-nums">
+					<dt class="text-on-surface-variant">Last run</dt>
+					<dd class="mt-1 text-title-sm tabular-nums">
 						{rich.status ? formatRelative(rich.status.at) : '–'}
 					</dd>
 				</div>
 				<div>
-					<dt class="text-muted-foreground">Posts updated</dt>
-					<dd class="mt-1 font-medium tabular-nums">{rich.status?.updated ?? 0}</dd>
+					<dt class="text-on-surface-variant">Posts updated</dt>
+					<dd class="mt-1 text-title-sm tabular-nums">{rich.status?.updated ?? 0}</dd>
 				</div>
 			</dl>
 			{#if rich.status && !rich.status.ok}
-				<p class="rounded-lg bg-destructive/10 px-3 py-2 text-destructive">
+				<p class="rounded-xl bg-error-container px-4 py-3 text-body-md text-on-error-container">
 					{rich.status.message}
 				</p>
 			{/if}
 		{/if}
 		{#if cookieOpen}
-			<ol class="max-w-prose list-decimal space-y-1 pl-5 text-muted-foreground">
+			<ol class="max-w-prose list-decimal space-y-1 pl-5 text-on-surface-variant">
 				<li>
 					Open classroom.google.com in a browser profile you use for nothing else, signed in with
 					your school account. Google rotates the session cookie from any open Google tab, and two
@@ -157,24 +168,40 @@
 					below.
 				</li>
 			</ol>
-			<textarea
+			<Textarea
 				bind:value={cookieDraft}
-				rows="4"
+				rows={4}
 				spellcheck="false"
+				aria-label="Classroom cookie"
 				placeholder="SID=…; HSID=…; SSID=…; APISID=…; SAPISID=…; …"
-				class="w-full rounded-lg border bg-background px-3 py-2 font-mono text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring"
-			></textarea>
-			<div class="flex items-center gap-2">
+				class="field-sizing-fixed font-mono text-body-sm md:text-body-sm"
+			/>
+			<div class="flex flex-wrap items-center gap-2">
 				<Button size="sm" onclick={saveCookie} disabled={savingCookie || !cookieDraft.trim()}>
 					{#if savingCookie}<ProgressActivityIcon
 							data-icon="inline-start"
 							class="animate-spin"
 						/>{:else}<PowerIcon data-icon="inline-start" />{/if}Save and test
 				</Button>
-				<span class="text-xs text-muted-foreground"
+				{#if rich.configured}
+					<Button
+						variant="outline"
+						size="sm"
+						onclick={() => ((cookieOpen = false), (cookieDraft = ''))}>Cancel</Button
+					>
+				{/if}
+				<span class="text-body-sm text-on-surface-variant"
 					>The app keeps the session alive itself. Paste a fresh one when the badge says expired.</span
 				>
 			</div>
 		{/if}
 	</div>
 </SettingsCard>
+
+<ConfirmDialog
+	bind:open={forgetOpen}
+	title="Forget Classroom session?"
+	description="The saved cookie is deleted. Comments and rich formatting on new posts stop working until you paste a new cookie. Posts keep the formatting already fetched."
+	confirmLabel="Forget"
+	onConfirm={forgetCookie}
+/>

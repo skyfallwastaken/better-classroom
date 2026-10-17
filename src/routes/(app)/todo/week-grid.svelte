@@ -53,7 +53,7 @@
 </script>
 
 <div class="mt-6 flex flex-wrap items-center justify-between gap-2">
-	<h2 class="text-headline-sm">{weekLabel}</h2>
+	<h2 class="text-title-lg text-on-surface">{weekLabel}</h2>
 	<div class="flex items-center gap-1">
 		<Button variant="ghost" size="icon" aria-label="Previous week" onclick={() => weekOffset--}
 			><ChevronLeftIcon /></Button
@@ -69,7 +69,7 @@
 {#if week.overdue.length}
 	<section class="mt-4 rounded-2xl bg-error-container/60 px-4 py-3">
 		<h3 class="text-title-sm text-on-error-container">Overdue from before this week</h3>
-		<div class="mt-1 flex flex-col">
+		<div class="mt-2 segmented">
 			{#each week.overdue as w (w.id)}<WorkItem work={w} />{/each}
 		</div>
 	</section>
@@ -82,29 +82,29 @@
 		<section
 			class={`min-w-0 rounded-xl p-2 ${isToday ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container-low'} ${past ? 'opacity-60' : ''}`}
 		>
-			<h3 class="flex items-baseline justify-between text-sm">
+			<h3 class="flex items-baseline justify-between text-body-md">
 				<span class={isToday ? 'text-title-sm' : 'text-title-sm text-on-surface-variant'}
 					>{dayFmt.format(day)}</span
 				>
-				<span class="text-xs text-muted-foreground tabular-nums">{numFmt.format(day)}</span>
+				<span class="text-body-sm text-on-surface-variant tabular-nums">{numFmt.format(day)}</span>
 			</h3>
 			{#if items.length >= 3}
-				<Badge variant="secondary" class="mt-1 text-[10px]">Heavy · {items.length} due</Badge>
+				<Badge variant="secondary" class="mt-1">Heavy · {items.length} due</Badge>
 			{/if}
 			<ul role="list" class="mt-2 flex flex-col gap-1.5">
 				{#each items as w (w.id)}
 					<li>
 						<a
 							href={`/courses/${w.courseId}/work/${w.id}`}
-							class="state-layer block rounded-md bg-surface-container-highest px-2 py-1.5 text-xs text-on-surface transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-lg"
+							class="state-layer block rounded-md bg-surface-container-highest px-2 py-1.5 text-body-sm text-on-surface transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-lg"
 						>
 							<span class="flex items-center gap-1.5">
 								<CourseDot id={w.courseId} class="shrink-0" />
-								<span class="truncate text-muted-foreground">{w.courseName}</span>
+								<span class="truncate text-on-surface-variant">{w.courseName}</span>
 							</span>
 							<span class="mt-0.5 line-clamp-2 font-medium">{w.title}</span>
 							<span class="mt-1 flex flex-wrap items-center gap-1">
-								{#if w.hasDueTime && w.dueAt}<span class="text-muted-foreground tabular-nums"
+								{#if w.hasDueTime && w.dueAt}<span class="text-on-surface-variant tabular-nums"
 										>{formatTime(w.dueAt)}</span
 									>{/if}
 								<StatusBadge work={w} />
@@ -112,7 +112,7 @@
 						</a>
 					</li>
 				{:else}
-					<li class="py-2 text-center text-xs text-muted-foreground">–</li>
+					<li class="py-2 text-center text-body-sm text-on-surface-variant">–</li>
 				{/each}
 			</ul>
 		</section>
@@ -120,8 +120,8 @@
 </div>
 {#if week.undated.length}
 	<section class="mt-6">
-		<h3 class="text-title-sm text-on-surface-variant">No due date</h3>
-		<div class="mt-1 flex flex-col">
+		<h3 class="px-4 text-title-sm text-on-surface-variant">No due date</h3>
+		<div class="mt-2 segmented">
 			{#each week.undated as w (w.id)}<WorkItem work={w} />{/each}
 		</div>
 	</section>

@@ -11,8 +11,8 @@
 			},
 			size: {
 				default:
-					'h-10 min-w-10 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3',
-				sm: "h-8 min-w-8 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-4",
+					'h-10 min-w-10 px-4 pointer-coarse:h-11 pointer-coarse:min-w-11 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3',
+				sm: "h-8 min-w-8 pointer-coarse:h-11 pointer-coarse:min-w-11 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-4",
 				lg: 'h-12 min-w-12 px-5 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4'
 			}
 		},
