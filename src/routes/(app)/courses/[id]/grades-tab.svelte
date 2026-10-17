@@ -46,11 +46,11 @@
 			<li>
 				<a
 					href={`/courses/${courseId}/work/${w.id}`}
-					class="state-layer flex items-center gap-4 rounded-[inherit] px-4 py-3"
+					class="state-layer flex min-h-18 items-center gap-3 rounded-[inherit] px-4 py-2.5 text-on-surface"
 				>
 					<div class="min-w-0 flex-1">
-						<p class="truncate text-title-sm">{w.title}</p>
-						<p class="text-body-sm text-on-surface-variant tabular-nums">
+						<p class="truncate text-body-lg">{w.title}</p>
+						<p class="text-body-md text-on-surface-variant tabular-nums">
 							{w.dueAt !== undefined ? formatDue(w.dueAt, w.hasDueTime) : 'No due date'}{#if w.late}
 								· late{/if}
 						</p>

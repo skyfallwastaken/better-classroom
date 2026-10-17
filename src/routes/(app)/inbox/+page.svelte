@@ -188,7 +188,7 @@
 				<!-- Spacing lives inside the measured row so the virtualizer offsets stay exact. -->
 				<div role="listitem" class="pb-3">
 					<div
-						class={`group flex gap-3 rounded-2xl px-5 py-1 transition-colors ${isDone ? 'opacity-50' : ''} ${index === selected ? 'bg-secondary-container' : 'bg-surface-container-low'}`}
+						class={`group flex gap-3 rounded-md px-4 py-1 transition-colors ${isDone ? 'opacity-50' : ''} ${index === selected ? 'bg-secondary-container' : 'bg-surface-container-low'}`}
 					>
 						<div class="min-w-0 flex-1">
 							{#if item.kind === 'announcement'}

@@ -63,10 +63,7 @@
 	<div class="mt-4 segmented">
 		{#each hits as hit (hit.doc.kind + hit.doc.id)}
 			{@const Icon = kindIcon[hit.doc.kind]}
-			<Item.Root
-				size="sm"
-				class="state-layer gap-4 border-0 px-4 py-3 transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-xl [a]:hover:bg-transparent"
-			>
+			<Item.Root size="sm" class="state-layer min-h-18 [a]:hover:bg-transparent">
 				{#snippet child({ props })}
 					<a href={hit.doc.href} {...props}>
 						<span
@@ -75,13 +72,11 @@
 							><Icon /></span
 						>
 						<Item.Content>
-							<Item.Title class="line-clamp-1 text-title-sm">{hit.doc.title}</Item.Title>
+							<Item.Title class="line-clamp-1">{hit.doc.title}</Item.Title>
 							{#if hit.doc.snippet && hit.doc.kind !== 'announcement'}
 								<p class="line-clamp-2 text-body-md text-on-surface-variant">{hit.doc.snippet}</p>
 							{/if}
-							<Item.Description
-								class="flex items-center gap-1.5 text-body-md text-on-surface-variant"
-							>
+							<Item.Description class="flex items-center gap-1.5">
 								<CourseDot id={hit.doc.courseId} class="shrink-0" />
 								<span class="truncate">{hit.doc.courseName}</span>
 								<span aria-hidden="true">·</span>

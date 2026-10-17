@@ -102,7 +102,7 @@
 	{#if errors.length}
 		<ul
 			role="list"
-			class="mx-5 mb-4 divide-y divide-on-error-container/20 rounded-xl bg-error-container text-body-md text-on-error-container"
+			class="mx-5 mb-4 divide-y divide-on-error-container/20 rounded-md bg-error-container text-body-md text-on-error-container"
 		>
 			{#each errors as line, i (i)}
 				{@const [where, what] = splitError(line)}

@@ -103,8 +103,13 @@
 			</div>
 		</article>
 
+		<!-- M3 elevated cards (Compose ElevatedCardTokens): CornerMedium 12px, surface-container-low,
+		     elevation level 1, 16px padding; Classroom shows both side cards raised -->
 		<aside class="flex flex-col gap-4">
-			<section class="rounded-2xl bg-surface-container p-5" aria-labelledby="your-work">
+			<section
+				class="rounded-md bg-surface-container-low p-4 shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]"
+				aria-labelledby="your-work"
+			>
 				<div class="flex items-baseline justify-between gap-2">
 					<h2 id="your-work" class="text-title-lg text-on-surface">Your work</h2>
 					{#if sub}
@@ -126,7 +131,9 @@
 				{/if}
 			</section>
 			{#if sub}
-				<section class="rounded-2xl bg-surface-container p-5">
+				<section
+					class="rounded-md bg-surface-container-low p-4 shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]"
+				>
 					<PrivateComments work={w} {teacher} />
 				</section>
 			{/if}

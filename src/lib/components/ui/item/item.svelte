@@ -3,16 +3,18 @@
 	import { tv } from '#lib/utils.js';
 
 	export const itemVariants = tv({
-		base: 'rounded-lg border text-sm [a]:hover:bg-surface-container-high group/item flex w-full flex-wrap items-center transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors',
+		// M3 list item (Compose ListTokens): body-large label on on-surface, 16px leading and trailing
+		// space, 12px between slots, 10px top/bottom; links get an on-surface state layer.
+		base: 'border text-body-lg text-on-surface [a]:state-layer group/item flex w-full flex-wrap items-center outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-primary',
 		variants: {
 			variant: {
 				default: 'border-transparent',
-				outline: 'border-border',
-				muted: 'border-transparent bg-surface-container-low'
+				outline: 'rounded-md border-outline-variant',
+				muted: 'rounded-md border-transparent bg-surface-container-low'
 			},
 			size: {
-				default: 'gap-2.5 px-3 py-2.5',
-				sm: 'gap-2.5 px-3 py-2.5',
+				default: 'min-h-14 gap-3 px-4 py-2.5',
+				sm: 'gap-3 px-4 py-2.5',
 				xs: 'gap-2 px-2.5 py-2 in-data-[slot=dropdown-menu-content]:p-0'
 			}
 		},

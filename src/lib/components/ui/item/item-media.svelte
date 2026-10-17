@@ -3,13 +3,13 @@
 	import { tv } from '#lib/utils.js';
 
 	export const itemMediaVariants = tv({
-		base: 'gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start flex shrink-0 items-center justify-center [&_svg]:pointer-events-none',
+		base: 'gap-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none',
 		variants: {
 			variant: {
 				default: 'bg-transparent',
-				icon: "[&_svg:not([class*='size-'])]:size-4",
+				icon: "text-on-surface-variant [&_svg:not([class*='size-'])]:size-6",
 				image:
-					'size-10 overflow-hidden rounded-sm group-data-[size=sm]/item:size-8 group-data-[size=xs]/item:size-6 [&_img]:size-full [&_img]:object-cover'
+					'size-14 overflow-hidden rounded-sm group-data-[size=sm]/item:size-10 group-data-[size=xs]/item:size-6 [&_img]:size-full [&_img]:object-cover'
 			}
 		},
 		defaultVariants: {

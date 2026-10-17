@@ -33,10 +33,15 @@
 			/>
 			{expanded ? 'Hide' : 'Show'}
 		</Button>
-		<Button variant={copied ? 'secondary' : 'outline'} size="xs" onclick={copy}>
+		<Button
+			variant={copied ? 'secondary' : 'outline'}
+			size="xs"
+			aria-label={copied ? 'Copied' : `Copy ${name}`}
+			onclick={copy}
+		>
 			{#if copied}<CheckIcon data-icon="inline-start" />Copied{:else}<ContentCopyIcon
 					data-icon="inline-start"
-				/>Copy {name}{/if}
+				/>Copy{/if}
 		</Button>
 	</div>
 	{#if expanded}

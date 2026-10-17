@@ -67,7 +67,7 @@
 	</div>
 </div>
 {#if week.overdue.length}
-	<section class="mt-4 rounded-2xl bg-error-container/60 px-4 py-3">
+	<section class="mt-4 rounded-lg bg-error-container/60 px-4 py-3">
 		<h3 class="text-title-sm text-on-error-container">Overdue from before this week</h3>
 		<div class="mt-2 segmented">
 			{#each week.overdue as w (w.id)}<WorkItem work={w} />{/each}
@@ -80,7 +80,7 @@
 		{@const isToday = day === today}
 		{@const past = day < today}
 		<section
-			class={`min-w-0 rounded-xl p-2 ${isToday ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container-low'} ${past ? 'opacity-60' : ''}`}
+			class={`min-w-0 rounded-lg p-2 ${isToday ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container-low'} ${past ? 'opacity-60' : ''}`}
 		>
 			<h3 class="flex items-baseline justify-between text-body-md">
 				<span class={isToday ? 'text-title-sm' : 'text-title-sm text-on-surface-variant'}
@@ -96,7 +96,7 @@
 					<li>
 						<a
 							href={`/courses/${w.courseId}/work/${w.id}`}
-							class="state-layer block rounded-md bg-surface-container-highest px-2 py-1.5 text-body-sm text-on-surface transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-lg"
+							class="state-layer block rounded-sm bg-surface-container-highest px-2 py-1.5 text-body-sm text-on-surface transition-[border-radius] duration-150 ease-[cubic-bezier(0.31,0.94,0.34,1)] hover:rounded-md"
 						>
 							<span class="flex items-center gap-1.5">
 								<CourseDot id={w.courseId} class="shrink-0" />

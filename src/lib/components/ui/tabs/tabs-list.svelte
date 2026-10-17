@@ -7,7 +7,8 @@
 		variants: {
 			variant: {
 				default: 'cn-tabs-list-variant-default bg-surface-container-high',
-				line: 'cn-tabs-list-variant-line gap-0 bg-transparent border-b border-outline-variant'
+				// 1px outline-variant divider drawn inside the 48px row so the 3px indicator overlaps it (Compose TabRow).
+				line: 'cn-tabs-list-variant-line gap-0 bg-transparent shadow-[inset_0_-1px_0_var(--md-outline-variant)]'
 			}
 		},
 		defaultVariants: {

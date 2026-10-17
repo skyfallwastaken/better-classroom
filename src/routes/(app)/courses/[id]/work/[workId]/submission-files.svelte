@@ -78,7 +78,7 @@
 		<ul role="list" class="mb-3 space-y-2 text-body-md">
 			{#each files as f (f.driveId)}
 				<li
-					class="group flex items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-low py-2 pr-2 pl-3"
+					class="group flex items-center gap-3 rounded-md border border-outline-variant py-2 pr-2 pl-3"
 				>
 					<AttachFileIcon class="size-5 shrink-0 text-on-surface-variant" />
 					<a

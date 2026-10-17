@@ -16,7 +16,7 @@
 	data-slot="breadcrumb-separator"
 	role="presentation"
 	aria-hidden="true"
-	class={cn('[&>svg]:size-3.5', className)}
+	class={cn('flex min-w-2 items-center text-on-surface-variant [&>svg]:size-6', className)}
 	{...restProps}
 >
 	{#if children}

@@ -16,7 +16,9 @@
 	data-slot="card"
 	data-size={size}
 	class={cn(
-		'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground [--card-spacing:--spacing(5)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl',
+		// M3 filled card (Compose FilledCardTokens, m3e card): CornerMedium (12px), 16px padding,
+		// surface-container-highest container, body-medium on-surface content.
+		'group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-md bg-surface-container-highest py-(--card-spacing) text-body-md text-on-surface [--card-spacing:--spacing(4)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] *:[img:first-child]:rounded-t-md *:[img:last-child]:rounded-b-md',
 		className
 	)}
 	{...restProps}

@@ -165,10 +165,7 @@
 									{#if entry.kind === 'work'}
 										<WorkItem work={entry.item} showCourse={false} />
 									{:else}
-										<Item.Root
-											size="sm"
-											class="state-layer gap-4 border-0 px-4 py-3 transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-xl [a]:hover:bg-transparent"
-										>
+										<Item.Root size="sm" class="state-layer min-h-18 [a]:hover:bg-transparent">
 											{#snippet child({ props })}
 												<a href={`/courses/${course.id}/material/${entry.item.id}`} {...props}>
 													<span
@@ -176,10 +173,8 @@
 														><MenuBookIcon class="size-6" /></span
 													>
 													<Item.Content>
-														<Item.Title class="line-clamp-1 text-title-sm"
-															>{entry.item.title}</Item.Title
-														>
-														<Item.Description class="text-body-md text-on-surface-variant"
+														<Item.Title class="line-clamp-1">{entry.item.title}</Item.Title>
+														<Item.Description
 															>Material · {pluralize(entry.item.materials.length, 'attachment')} · {formatRelative(
 																entry.item.updatedAt
 															)}</Item.Description
@@ -198,7 +193,7 @@
 		</Tabs.Content>
 		<Tabs.Content
 			value="stream"
-			class="mt-4 flex flex-col gap-3 *:rounded-2xl *:bg-surface-container-low *:px-4"
+			class="mt-4 flex flex-col gap-3 *:rounded-md *:border *:border-outline-variant *:px-4"
 		>
 			{#each streamQuery.data as item (item.id)}
 				<Announcement {item} {course} showCourse={false} />

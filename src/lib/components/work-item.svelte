@@ -12,23 +12,20 @@
 	const isQuestion = $derived(work.workType.endsWith('QUESTION'));
 </script>
 
-<Item.Root
-	variant="default"
-	size="sm"
-	class="state-layer gap-4 border-0 px-4 py-3 transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-xl [a]:hover:bg-transparent"
->
+<!-- M3 two-line list item (Compose ListTokens): 72px, 16px leading/trailing, 12px between, 40px avatar -->
+<Item.Root variant="default" size="sm" class="state-layer min-h-18 [a]:hover:bg-transparent">
 	{#snippet child({ props })}
 		<a href={`/courses/${work.courseId}/work/${work.id}`} {...props}>
 			<CourseAvatar id={work.courseId}>
 				{#if isQuestion}<HelpIcon />{:else}<AssignmentIcon />{/if}
 			</CourseAvatar>
 			<Item.Content>
-				<Item.Title class="line-clamp-1 text-title-sm">
+				<Item.Title class="line-clamp-1">
 					{work.title}{#if isNew(work)}<Badge variant="secondary" class="ml-2 align-middle"
 							>New</Badge
 						>{/if}
 				</Item.Title>
-				<Item.Description class="flex items-center gap-1.5 text-body-md text-on-surface-variant">
+				<Item.Description class="flex items-center gap-1.5">
 					{#if showCourse}
 						<span class="truncate">{work.courseName}</span>
 						<span aria-hidden="true">·</span>

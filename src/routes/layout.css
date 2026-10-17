@@ -170,6 +170,121 @@
 }
 
 /*
+ * M3 Expressive motion scheme springs (Compose ExpressiveMotionTokens), sampled into exact
+ * linear() curves: x(t) of a unit spring with the given damping ratio and stiffness, run until
+ * it stays within 0.2% of rest. Use the matching duration with each easing.
+ *   default effects: damping 1.0, stiffness 1600 (buttons' press morph, no bounce)
+ *   fast spatial:    damping 0.6, stiffness 800  (toggle buttons' press/select morph)
+ *   fast effects:    damping 1.0, stiffness 3800
+ */
+@theme {
+	--ease-spring-default-effects: linear(
+		0,
+		0.049,
+		0.158,
+		0.286,
+		0.413,
+		0.527,
+		0.626,
+		0.707,
+		0.773,
+		0.826,
+		0.868,
+		0.9,
+		0.925,
+		0.943,
+		0.958,
+		0.969,
+		0.977,
+		0.983,
+		0.987,
+		0.991,
+		0.993,
+		0.995,
+		0.996,
+		0.997,
+		1
+	);
+	--duration-spring-default-effects: 212ms;
+	--ease-spring-fast-spatial: linear(
+		0,
+		0.049,
+		0.169,
+		0.326,
+		0.493,
+		0.651,
+		0.789,
+		0.9,
+		0.984,
+		1.041,
+		1.076,
+		1.092,
+		1.094,
+		1.087,
+		1.074,
+		1.059,
+		1.043,
+		1.029,
+		1.016,
+		1.007,
+		1,
+		0.995,
+		0.992,
+		0.991,
+		0.991,
+		0.992,
+		0.993,
+		0.995,
+		0.996,
+		0.998,
+		0.999,
+		1
+	);
+	--duration-spring-fast-spatial: 380ms;
+	--ease-spring-fast-effects: linear(
+		0,
+		0.1,
+		0.288,
+		0.473,
+		0.627,
+		0.744,
+		0.828,
+		0.886,
+		0.925,
+		0.952,
+		0.969,
+		0.98,
+		0.987,
+		0.992,
+		0.995,
+		0.997,
+		1
+	);
+	--duration-spring-fast-effects: 138ms;
+
+	/* M3 focus indicator: 3px outline that briefly grows to 6px as it appears (500ms). */
+	--animate-focus-ring: focus-ring 500ms var(--ease-standard);
+	@keyframes focus-ring {
+		50% {
+			outline-width: 6px;
+		}
+	}
+
+	/* M3 checkbox mark: wipes in left to right (medium4, standard-decelerate). */
+	--animate-checkbox-draw: checkbox-draw 400ms cubic-bezier(0, 0, 0, 1) both;
+	@keyframes checkbox-draw {
+		from {
+			clip-path: inset(0 100% 0 0);
+			opacity: 0.8;
+		}
+		to {
+			clip-path: inset(0);
+			opacity: 1;
+		}
+	}
+}
+
+/*
  * State layers: M3 overlays the content colour on a surface at 8% for hover,
  * 10% for focus and press. `state-layer` paints it with a pseudo-element so it
  * works over any container colour.
@@ -198,8 +313,11 @@
 }
 
 /*
- * M3 Expressive segmented list: items sit 2px apart on a container colour, with
- * large outer corners and small inner ones.
+ * M3 Expressive segmented list (Compose ListTokens / m3e <m3e-list variant="segmented">):
+ * items sit 2px apart (SegmentedGap), outer corners are CornerLarge (16px), inner ones
+ * CornerExtraSmall (4px). Hovered/pressed items morph to CornerMedium (12px), focused and
+ * selected ([data-selected]) ones to CornerLarge, while the list's outer corners stay put.
+ * Shape uses the fast-effects spring, colour the standard 200ms curve.
  */
 @utility segmented {
 	display: flex;
@@ -208,14 +326,29 @@
 	& > * {
 		border-radius: var(--radius-xs);
 		background-color: var(--md-surface-container-low);
+		transition:
+			border-radius 150ms cubic-bezier(0.31, 0.94, 0.34, 1),
+			background-color 200ms var(--ease-standard);
+	}
+	& > :has(:focus-visible),
+	& > :focus-visible {
+		border-radius: var(--radius-lg);
+	}
+	& > :hover,
+	& > :active,
+	& > :has(:active) {
+		border-radius: var(--radius-md);
+	}
+	& > [data-selected] {
+		border-radius: var(--radius-lg);
 	}
 	& > :first-child {
-		border-top-left-radius: var(--radius-xl);
-		border-top-right-radius: var(--radius-xl);
+		border-top-left-radius: var(--radius-lg);
+		border-top-right-radius: var(--radius-lg);
 	}
 	& > :last-child {
-		border-bottom-left-radius: var(--radius-xl);
-		border-bottom-right-radius: var(--radius-xl);
+		border-bottom-left-radius: var(--radius-lg);
+		border-bottom-right-radius: var(--radius-lg);
 	}
 }
 

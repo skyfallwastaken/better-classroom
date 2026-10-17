@@ -90,7 +90,7 @@
 	</section>
 	<section>
 		<h2 class="text-title-lg text-on-surface">Stream</h2>
-		<div class="mt-4 flex flex-col gap-3 *:rounded-2xl *:bg-surface-container-low *:px-4">
+		<div class="mt-4 flex flex-col gap-3 *:rounded-md *:border *:border-outline-variant *:px-4">
 			{#each stream.data as row (row.a.id)}
 				<Announcement item={row.a} course={row.c} clamp />
 			{:else}

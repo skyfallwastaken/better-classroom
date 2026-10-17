@@ -101,29 +101,30 @@
 
 <DbProvider {client}>
 	<Sidebar.Provider>
-		<!-- M3 top app bar spanning the drawer and the content, as in Classroom -->
-		<header
-			class="fixed inset-x-0 top-0 z-20 flex h-16 items-center gap-1 bg-sidebar pr-3 pl-2 sm:pr-4"
-		>
-			<Sidebar.Trigger />
+		<!-- M3 small top app bar (Compose AppBarSmallTokens/AppBarTokens): 64px, 4px leading and
+		     trailing space, title-large title, 24px icons, 32px avatar in a 48px target. It spans
+		     the drawer and the content, as in Classroom. -->
+		<header class="fixed inset-x-0 top-0 z-20 flex h-16 items-center gap-1 bg-sidebar px-1">
+			<Sidebar.Trigger class="size-12 text-on-surface [&_svg]:size-6" />
 			<a
 				href="/"
-				class="flex shrink-0 items-center gap-2.5 rounded-full py-1 pr-3 pl-1.5 text-title-lg text-on-surface-variant hover:text-on-surface"
+				class="state-layer flex h-12 shrink-0 items-center gap-2.5 rounded-full pr-3 pl-1.5 text-title-lg text-on-surface-variant outline-primary focus-visible:outline-2"
 			>
 				<img src={logo} alt="" class="size-8" />
 				<span class="max-sm:sr-only">Classroom</span>
 			</a>
 			{#if crumbs.length}
 				<Breadcrumb.Root class="min-w-0 max-sm:hidden">
-					<Breadcrumb.List class="flex-nowrap text-title-md text-on-surface-variant">
+					<Breadcrumb.List class="flex-nowrap text-title-md">
 						{#each crumbs as crumb, i (i)}
-							<Breadcrumb.Separator class="[&>svg]:size-6" />
+							<Breadcrumb.Separator />
 							<Breadcrumb.Item class="min-w-0">
 								{#if crumb.href && i < crumbs.length - 1}
-									<Breadcrumb.Link href={crumb.href} class="truncate">{crumb.label}</Breadcrumb.Link
+									<Breadcrumb.Link href={crumb.href} class="truncate py-2"
+										>{crumb.label}</Breadcrumb.Link
 									>
 								{:else}
-									<Breadcrumb.Page class="truncate text-on-surface">{crumb.label}</Breadcrumb.Page>
+									<Breadcrumb.Page class="truncate py-2">{crumb.label}</Breadcrumb.Page>
 								{/if}
 							</Breadcrumb.Item>
 						{/each}
@@ -131,28 +132,30 @@
 				</Breadcrumb.Root>
 			{/if}
 			{#if mobileTitle}
-				<span class="min-w-0 truncate text-title-md sm:hidden">{mobileTitle}</span>
+				<span class="min-w-0 truncate text-title-lg text-on-surface sm:hidden">{mobileTitle}</span>
 			{/if}
-			<div class="ml-auto flex items-center gap-2">
+			<div class="ml-auto flex items-center gap-1">
 				{#if syncing}
 					<span
 						class="flex items-center gap-1.5 text-label-md text-on-surface-variant max-sm:hidden"
 						><SyncIcon class="size-4 animate-spin" />Syncing</span
 					>
 				{/if}
-				<!-- M3 search bar: a full-pill surface that opens the command palette -->
+				<!-- M3 search bar (Compose SearchBarTokens): full-pill container, on-surface leading icon,
+				     body-large on-surface-variant supporting text. Kept at 48px so it sits inside the
+				     64px bar, one tone above the bar's surface-container. -->
 				<button
 					type="button"
-					class="state-layer flex h-12 items-center gap-3 rounded-full bg-surface-container-highest px-4 text-body-lg text-on-surface-variant transition-[border-radius] duration-300 ease-spring-gentle active:rounded-xl max-sm:size-12 max-sm:justify-center max-sm:px-0 sm:w-64 lg:w-80"
+					class="state-layer flex h-12 items-center gap-4 rounded-full bg-surface-container-highest px-4 text-body-lg text-on-surface-variant outline-primary focus-visible:outline-2 max-sm:size-12 max-sm:justify-center max-sm:bg-transparent max-sm:px-0 sm:w-64 lg:w-80"
 					onclick={() => (paletteOpen = true)}
 				>
-					<SearchIcon class="size-6 shrink-0" />
+					<SearchIcon class="size-6 shrink-0 text-on-surface" />
 					<span class="max-sm:sr-only">Search</span>
 					<KbdGroup class="ml-auto max-sm:hidden"><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup>
 				</button>
 				<a
 					href="/settings"
-					class="rounded-full p-1 outline-primary hover:bg-on-surface/8 focus-visible:outline-2"
+					class="state-layer rounded-full p-2 text-on-surface outline-primary focus-visible:outline-2"
 					aria-label="Account and settings"
 				>
 					<UserAvatar src={profile?.photoUrl} name={profile?.name} class="size-8" />

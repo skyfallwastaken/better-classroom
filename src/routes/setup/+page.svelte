@@ -98,7 +98,7 @@
 		</p>
 		{#if data.configured && !done}
 			<p
-				class="mt-3 rounded-xl bg-warning-container px-4 py-3 text-body-md text-on-warning-container"
+				class="mt-3 rounded-md bg-warning-container px-4 py-3 text-body-md text-on-warning-container"
 			>
 				Already connected. Finishing this replaces the current connection.
 				<a href="/settings" class="ml-1 font-medium underline underline-offset-2"
@@ -305,7 +305,7 @@
 			{#if result && !result.ok}
 				{@const target = fixStep[result.code]}
 				<div
-					class="mt-3 rounded-xl bg-error-container px-4 py-3 text-body-md text-on-error-container"
+					class="mt-3 rounded-md bg-error-container px-4 py-3 text-body-md text-on-error-container"
 				>
 					<p>{result.message}</p>
 					{#if target !== undefined}

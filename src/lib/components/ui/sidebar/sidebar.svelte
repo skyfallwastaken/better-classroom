@@ -41,7 +41,8 @@
 			data-slot="sidebar"
 			data-mobile="true"
 			class={cn(
-				'max-w-[calc(100vw-3.5rem)] bg-sidebar p-0 text-sidebar-foreground data-[side=left]:w-(--sidebar-width) data-[side=right]:w-(--sidebar-width) [&>button]:hidden',
+				// M3 modal navigation drawer: surface-container-low, CornerLargeEnd (16px).
+				'max-w-[calc(100vw-3.5rem)] bg-surface-container-low p-0 text-sidebar-foreground data-[side=left]:w-(--sidebar-width) data-[side=left]:rounded-r-lg data-[side=right]:w-(--sidebar-width) data-[side=right]:rounded-l-lg [&>button]:hidden',
 				className
 			)}
 			style="--sidebar-width: {SIDEBAR_WIDTH_MOBILE};"

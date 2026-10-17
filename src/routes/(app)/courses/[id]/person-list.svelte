@@ -9,10 +9,10 @@
 
 <ul role="list" class="mt-2 divide-y divide-outline-variant">
 	{#each people as p, i (teacher ? p.userId : (p.email ?? `${p.name}#${i}`))}
-		<li class="flex items-center gap-4 px-4 py-2">
+		<li class="flex min-h-14 items-center gap-3 px-4 py-2 has-[a]:min-h-18 has-[a]:py-2.5">
 			<UserAvatar src={p.photoUrl} name={p.name} class="size-10" />
 			<div class="min-w-0">
-				<p class="truncate text-title-sm text-on-surface">
+				<p class="truncate text-body-lg text-on-surface">
 					{p.name ?? (teacher ? 'Teacher' : 'Classmate')}
 				</p>
 				{#if p.email}<a

@@ -114,7 +114,7 @@
 	</div>
 	{#if notifications.permission === 'denied'}
 		<p
-			class="mx-5 mb-4 rounded-xl bg-error-container px-4 py-3 text-body-md text-on-error-container"
+			class="mx-5 mb-4 rounded-md bg-error-container px-4 py-3 text-body-md text-on-error-container"
 		>
 			Your browser has blocked notifications for this site. Allow them in the site settings to turn
 			this on.

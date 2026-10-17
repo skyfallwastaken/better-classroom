@@ -13,7 +13,10 @@
 <div
 	bind:this={ref}
 	data-slot="item-actions"
-	class={cn('flex items-center gap-2', className)}
+	class={cn(
+		"flex items-center gap-2 text-label-sm text-on-surface-variant [&_svg:not([class*='size-'])]:size-6",
+		className
+	)}
 	{...restProps}
 >
 	{@render children?.()}

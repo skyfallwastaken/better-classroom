@@ -98,7 +98,7 @@
 			</Field.Group>
 
 			{#if message}
-				<p class="rounded-xl bg-error-container px-4 py-3 text-body-md text-on-error-container">
+				<p class="rounded-md bg-error-container px-4 py-3 text-body-md text-on-error-container">
 					{message}
 				</p>
 			{/if}

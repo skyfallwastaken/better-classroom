@@ -71,27 +71,30 @@
 			{#each bucket.items as w (w.id)}
 				{@const s = status(w)}
 				{@const selected = selection.has(w.id)}
-				<li
-					class="group/row relative transition-[border-radius] duration-300 ease-spring-gentle hover:rounded-xl"
-				>
+				<!-- M3 two-line list item (Compose ListTokens): 72px tall, 16px leading/trailing space,
+				     12px between, 10px top/bottom, 40px avatar; selected uses secondary-container -->
+				<li class="group/row relative" data-selected={selected || undefined}>
 					<a
 						href={`/courses/${w.courseId}/work/${w.id}`}
-						class="state-layer flex min-h-18 items-center gap-4 rounded-[inherit] px-4 py-3 transition-[background-color] duration-300 ease-spring-gentle {selected
+						class="state-layer flex min-h-18 items-center gap-3 rounded-[inherit] px-4 py-2.5 transition-[background-color] duration-200 ease-standard {selected
 							? 'bg-secondary-container text-on-secondary-container'
-							: ''}"
+							: 'text-on-surface'}"
 					>
 						<CourseAvatar id={w.courseId}>
 							{#if w.workType.endsWith('QUESTION')}<QuestionIcon />{:else}<AssignmentIcon />{/if}
 						</CourseAvatar>
 						<span class="min-w-0 flex-1">
 							<span class="flex items-center gap-2">
-								<span class="truncate text-title-sm">{w.title}</span>
+								<span class="truncate text-body-lg">{w.title}</span>
 								{#if isNew(w)}<Badge variant="secondary" class="h-5 shrink-0">New</Badge>{/if}
 							</span>
-							<span class="block truncate text-body-md text-on-surface-variant">{w.courseName}</span
+							<span
+								class="block truncate text-body-md {selected
+									? 'text-on-secondary-container'
+									: 'text-on-surface-variant'}">{w.courseName}</span
 							>
 						</span>
-						<span class="shrink-0 text-right text-body-md tabular-nums {s.tone}">{s.text}</span>
+						<span class="shrink-0 text-right text-label-sm tabular-nums {s.tone}">{s.text}</span>
 					</a>
 					<!-- Like Gmail: the avatar turns into a checkbox on hover or once anything is selected.
 					     On touch (coarse pointer) it stays transparent but tappable, so tapping the avatar starts a selection. -->
@@ -101,7 +104,7 @@
 						aria-checked={selected}
 						aria-label={`Select ${w.title}`}
 						class="absolute top-1/2 left-4 flex size-10 -translate-y-1/2 items-center justify-center rounded-full transition-[opacity,border-radius,background-color] duration-300 ease-spring focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-primary {selected
-							? 'rounded-xl bg-primary text-on-primary opacity-100'
+							? 'rounded-md bg-primary text-on-primary opacity-100'
 							: `bg-surface-container-highest text-on-surface-variant ${selection.size ? 'opacity-100' : 'pointer-events-none opacity-0 group-hover/row:pointer-events-auto group-hover/row:opacity-100 focus-visible:pointer-events-auto pointer-coarse:pointer-events-auto'}`}"
 						onclick={(e) => selection.toggle(indexOf(w.id), e.shiftKey)}
 					>

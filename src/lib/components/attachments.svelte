@@ -30,11 +30,7 @@
 	{#each items as a, i (a.url ?? i)}
 		{@const Icon = iconFor(a.type)}
 		{@const thumb = proxied(a.thumbnailUrl)}
-		<Item.Root
-			variant="outline"
-			size="sm"
-			class="overflow-hidden rounded-xl border-outline-variant py-0 pl-0 transition-[border-radius,background-color] duration-300 ease-spring-gentle hover:rounded-2xl"
-		>
+		<Item.Root variant="outline" size="sm" class="min-h-0 gap-3 overflow-hidden py-0 pl-0">
 			{#snippet child({ props })}
 				<a href={withAuthUser(a.url)} target="_blank" rel="noreferrer" {...props}>
 					{#if thumb && !failed.has(thumb)}
@@ -54,12 +50,12 @@
 						>
 					{/if}
 					<Item.Content class="min-w-0">
-						<Item.Title class="block w-full truncate text-title-sm">{a.title || a.url}</Item.Title>
+						<Item.Title class="block w-full truncate text-title-sm text-on-surface"
+							>{a.title || a.url}</Item.Title
+						>
 						<Item.Description>{labelFor(a.type)}</Item.Description>
 					</Item.Content>
-					<Item.Actions class="pr-1 text-on-surface-variant"
-						><OpenInNewIcon class="size-5" /></Item.Actions
-					>
+					<Item.Actions><OpenInNewIcon class="size-5" /></Item.Actions>
 				</a>
 			{/snippet}
 		</Item.Root>
