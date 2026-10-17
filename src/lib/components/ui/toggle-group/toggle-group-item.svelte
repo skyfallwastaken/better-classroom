@@ -23,12 +23,20 @@
 	data-size={ctx.size || size}
 	data-spacing={ctx.spacing}
 	class={cn(
-		// Connected button group: inner corners are small until the segment is selected, then it rounds fully.
-		'shrink-0 group-data-[spacing=0]/toggle-group:rounded-sm focus:z-10 focus-visible:z-10 group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-l-full group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-full group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-r-full group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-full group-data-[spacing=0]/toggle-group:data-[state=on]:rounded-full',
 		toggleVariants({
 			variant: ctx.variant || variant,
 			size: ctx.size || size
 		}),
+		/*
+		 * M3 Expressive connected button group (Compose ButtonGroupDefaults.connected*ButtonShapes):
+		 * outer ends stay round, inner corners are 8dp, tighten to 4dp while pressed, and the
+		 * selected segment becomes a capsule. Radii are finite (28px clamps to half the height)
+		 * so the morph animates instead of jumping from 8px to `infinity`.
+		 */
+		'shrink-0 [--outer:28px] [--r:8px] focus:z-10 focus-visible:z-10 active:[--r:4px] data-[state=on]:not-active:[--r:28px]',
+		'group-data-[spacing=0]/toggle-group:rounded-(--r)',
+		'group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-l-(--outer) group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-r-(--outer)',
+		'group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-(--outer) group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-(--outer)',
 		className
 	)}
 	{value}

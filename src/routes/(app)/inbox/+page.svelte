@@ -161,9 +161,10 @@
 			<ToggleGroup.Item value="materials">Materials</ToggleGroup.Item>
 		</ToggleGroup.Root>
 		<Toggle variant="outline" bind:pressed={showDone}>Show done</Toggle>
-		{#if visible.some((i) => !dismissed.has(i.key))}
-			<Button onclick={doneAll}><DoneAllIcon data-icon="inline-start" />Mark all done</Button>
-		{/if}
+		<!-- Disabled rather than removed so switching filters never shifts the toolbar. -->
+		<Button onclick={doneAll} disabled={!visible.some((i) => !dismissed.has(i.key))}
+			><DoneAllIcon data-icon="inline-start" />Mark all done</Button
+		>
 	{/snippet}
 </PageHeader>
 

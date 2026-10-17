@@ -5,17 +5,17 @@
 
 	export const buttonVariants = tv({
 		// M3 Expressive: fully round at rest, morphing toward a rounded square while pressed.
-		base: "state-layer rounded-full border border-transparent bg-clip-padding text-label-lg font-medium transition-[border-radius,background-color,color,box-shadow] duration-300 ease-spring-gentle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:not-aria-[haspopup]:rounded-md aria-invalid:border-destructive [&_svg:not([class*='size-'])]:size-[1.125rem] group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none select-none disabled:pointer-events-none disabled:opacity-[0.38] [&_svg]:pointer-events-none [&_svg]:shrink-0",
+		base: "state-layer rounded-[28px] border border-transparent bg-clip-padding text-label-lg font-medium transition-[border-radius,background-color,color,box-shadow] duration-300 ease-spring-gentle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:not-aria-[haspopup]:rounded-md aria-invalid:border-destructive [&_svg:not([class*='size-'])]:size-[1.125rem] group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none select-none disabled:pointer-events-none disabled:text-on-surface/38 disabled:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
 		variants: {
 			variant: {
-				default: 'bg-primary text-on-primary hover:shadow-sm',
+				default: 'bg-primary text-on-primary hover:shadow-sm disabled:bg-on-surface/10',
 				outline:
-					'border-outline-variant bg-transparent text-on-surface-variant aria-expanded:bg-secondary-container aria-expanded:text-on-secondary-container',
+					'border-outline-variant bg-transparent text-on-surface-variant disabled:border-on-surface/12 aria-expanded:bg-secondary-container aria-expanded:text-on-secondary-container',
 				secondary:
-					'bg-secondary-container text-on-secondary-container aria-expanded:bg-secondary-container',
+					'bg-secondary-container text-on-secondary-container disabled:bg-on-surface/10 aria-expanded:bg-secondary-container',
 				ghost:
 					'text-on-surface-variant aria-expanded:bg-secondary-container aria-expanded:text-on-secondary-container',
-				destructive: 'bg-error-container text-on-error-container',
+				destructive: 'bg-error-container text-on-error-container disabled:bg-on-surface/10',
 				link: 'text-primary underline-offset-4 before:hidden hover:underline'
 			},
 			size: {

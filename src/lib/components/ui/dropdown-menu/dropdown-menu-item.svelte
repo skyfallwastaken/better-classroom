@@ -20,7 +20,7 @@
 	data-inset={inset}
 	data-variant={variant}
 	class={cn(
-		"group/dropdown-menu-item relative flex min-h-11 cursor-default items-center gap-1.5 rounded-md px-3 py-2 text-label-lg outline-hidden select-none focus:bg-secondary-container focus:text-on-secondary-container not-data-[variant=destructive]:focus:**:text-on-secondary-container data-inset:pl-7 data-[inset]:pl-8 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive",
+		"group/dropdown-menu-item relative flex min-h-11 cursor-default items-center gap-1.5 rounded-md px-3 py-2 text-label-lg outline-hidden select-none focus:bg-on-surface/10 data-inset:pl-7 data-[inset]:pl-8 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive",
 		className
 	)}
 	{...restProps}
