@@ -21,6 +21,7 @@
 
 	// Close first: the caller shows progress on the row itself, and its state is free for the next prompt.
 	async function confirm() {
+		if (!open) return; // a second click while the dialog animates out
 		open = false;
 		try {
 			await onConfirm();

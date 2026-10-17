@@ -21,6 +21,7 @@
 	// svelte-ignore state_referenced_locally
 	let cookieOpen = $state(!initial.configured);
 	let forgetOpen = $state(false);
+	let forgetting = $state(false);
 	let cookieField = $state<HTMLTextAreaElement | null>(null);
 
 	async function saveCookie() {
@@ -65,9 +66,14 @@
 		}
 	}
 	async function forgetCookie() {
-		const res = await fetch('/api/rich', { method: 'DELETE' });
-		if (!res.ok) throw new Error(`Request failed (${res.status})`);
-		rich = (await res.json()) as typeof rich;
+		forgetting = true;
+		try {
+			const res = await fetch('/api/rich', { method: 'DELETE' });
+			if (!res.ok) throw new Error(`Request failed (${res.status})`);
+			rich = (await res.json()) as typeof rich;
+		} finally {
+			forgetting = false;
+		}
 		cookieOpen = true;
 		notify('amber', 'Classroom session removed', {
 			description: 'Posts keep the formatting already fetched; new ones stay plain.'
@@ -110,7 +116,17 @@
 				>
 					Replace cookie
 				</Button>
-				<Button variant="outline" size="sm" onclick={() => (forgetOpen = true)}>Forget</Button>
+				<Button
+					variant="outline"
+					size="sm"
+					disabled={forgetting}
+					onclick={() => (forgetOpen = true)}
+				>
+					{#if forgetting}<ProgressActivityIcon
+							data-icon="inline-start"
+							class="animate-spin"
+						/>{/if}Forget
+				</Button>
 			</div>
 		{/if}
 	</div>
