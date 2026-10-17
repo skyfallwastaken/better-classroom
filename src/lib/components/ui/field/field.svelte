@@ -3,7 +3,7 @@
 	import { tv } from '#lib/utils.js';
 
 	export const fieldVariants = tv({
-		base: 'gap-2 data-[invalid=true]:text-destructive group/field flex w-full',
+		base: 'gap-2 data-[invalid=true]:text-error group/field flex w-full',
 		variants: {
 			orientation: {
 				vertical: 'cn-field-orientation-vertical flex-col [&>*]:w-full [&>.sr-only]:w-auto',

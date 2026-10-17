@@ -10,6 +10,11 @@
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
 </script>
 
-<div bind:this={ref} data-slot="popover-title" class={cn('font-medium', className)} {...restProps}>
+<div
+	bind:this={ref}
+	data-slot="popover-title"
+	class={cn('text-title-sm text-on-surface', className)}
+	{...restProps}
+>
 	{@render children?.()}
 </div>

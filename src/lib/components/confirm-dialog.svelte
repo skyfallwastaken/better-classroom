@@ -38,7 +38,7 @@
 			<Dialog.Description>{description}</Dialog.Description>
 		</Dialog.Header>
 		<Dialog.Footer>
-			<Button variant="outline" onclick={() => (open = false)}>Cancel</Button>
+			<Button variant="ghost" class="text-primary" onclick={() => (open = false)}>Cancel</Button>
 			<Button variant="destructive" onclick={confirm}>{confirmLabel}</Button>
 		</Dialog.Footer>
 	</Dialog.Content>

@@ -25,17 +25,19 @@
 	data-slot="context-menu-checkbox-item"
 	data-inset={inset}
 	class={cn(
-		"relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+		"relative flex min-h-11 shrink-0 cursor-default items-center gap-2 rounded-xs px-3 py-3 text-label-lg text-on-surface outline-hidden transition-[border-radius,background-color] duration-150 ease-standard select-none first:rounded-t-md last:rounded-b-md data-highlighted:bg-on-surface/10 data-inset:pl-10 data-[state=checked]:rounded-md data-[state=checked]:bg-secondary-container data-[state=checked]:text-on-secondary-container data-[state=checked]:data-highlighted:bg-[color-mix(in_srgb,var(--md-secondary-container),var(--md-on-secondary-container)_10%)] data-disabled:pointer-events-none data-disabled:text-on-surface/38 [&_svg]:pointer-events-none [&_svg]:shrink-0 data-disabled:[&_svg]:text-on-surface/38 [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='text-'])]:text-on-surface-variant data-[state=checked]:[&_svg:not([class*='text-'])]:text-on-secondary-container",
 		className
 	)}
 	{...restProps}
 >
 	{#snippet children({ checked })}
-		<span class="pointer-events-none absolute right-2">
-			{#if checked}
+		{#if checked}
+			<span
+				class="pointer-events-none flex animate-in items-center justify-center duration-150 ease-standard fade-in-0 zoom-in-50"
+			>
 				<CheckIcon />
-			{/if}
-		</span>
+			</span>
+		{/if}
 		{@render childrenProp?.()}
 	{/snippet}
 </ContextMenuPrimitive.CheckboxItem>

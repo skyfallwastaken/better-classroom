@@ -15,7 +15,7 @@
 	bind:this={ref}
 	data-slot={dataSlot}
 	class={cn(
-		'flex field-sizing-content min-h-16 w-full rounded-xs border border-outline bg-transparent px-3.5 py-3 text-base transition-[border-color,box-shadow] outline-none placeholder:text-on-surface-variant hover:border-on-surface focus-visible:border-primary focus-visible:shadow-[inset_0_0_0_1px_var(--md-primary)] disabled:cursor-not-allowed disabled:opacity-[0.38] aria-invalid:border-error aria-invalid:shadow-[inset_0_0_0_1px_var(--md-error)] md:text-sm',
+		'flex field-sizing-content min-h-14 w-full rounded-xs border border-outline bg-transparent px-4 py-4 text-body-lg text-on-surface caret-primary transition-[border-color,box-shadow] duration-150 ease-standard outline-none placeholder:text-on-surface-variant hover:border-on-surface focus-visible:border-primary focus-visible:shadow-[inset_0_0_0_1px_var(--md-primary)] disabled:cursor-not-allowed disabled:border-on-surface/12 disabled:text-on-surface/38 disabled:placeholder:text-on-surface/38 aria-invalid:border-error aria-invalid:caret-error aria-invalid:hover:border-on-error-container aria-invalid:focus-visible:border-error aria-invalid:focus-visible:shadow-[inset_0_0_0_1px_var(--md-error)]',
 		className
 	)}
 	bind:value

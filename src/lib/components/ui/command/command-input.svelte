@@ -12,15 +12,16 @@
 	}: CommandPrimitive.InputProps = $props();
 </script>
 
-<div data-slot="command-input-wrapper" class="p-1 pb-0">
+<!-- M3 docked search view header: 56dp, leading search icon, body-large input, outline divider -->
+<div data-slot="command-input-wrapper" class="shrink-0 border-b border-outline">
 	<InputGroup.Root
-		class="h-14! rounded-full! border-transparent! bg-surface-container-highest! shadow-none! *:data-[slot=input-group-addon]:pl-4!"
+		class="h-14 rounded-none border-0 bg-transparent shadow-none! hover:border-0 *:data-[slot=input-group-addon]:pl-5 has-[>[data-align=inline-start]]:[&>input]:pl-3"
 	>
 		<CommandPrimitive.Input
 			{value}
 			data-slot="command-input"
 			class={cn(
-				'w-full text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
+				'h-14 w-full text-body-lg text-on-surface caret-primary outline-hidden placeholder:text-on-surface-variant disabled:cursor-not-allowed disabled:opacity-38',
 				className
 			)}
 			{...restProps}
@@ -30,7 +31,7 @@
 			{/snippet}
 		</CommandPrimitive.Input>
 		<InputGroup.Addon>
-			<SearchIcon class="size-4 shrink-0 opacity-50" />
+			<SearchIcon class="size-6 shrink-0 text-on-surface" />
 		</InputGroup.Addon>
 	</InputGroup.Root>
 </div>

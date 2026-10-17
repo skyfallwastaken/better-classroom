@@ -48,17 +48,10 @@
 		<form onsubmit={save} class="grid gap-4">
 			<div class="grid gap-2">
 				<Label for="course-nickname">Nickname</Label>
-				<Input
-					id="course-nickname"
-					name="nickname"
-					bind:value
-					maxlength={80}
-					autofocus
-					class="max-sm:text-base/6"
-				/>
+				<Input id="course-nickname" name="nickname" bind:value maxlength={80} autofocus />
 			</div>
-			<fieldset class="grid gap-2">
-				<legend class="text-title-sm">Color</legend>
+			<fieldset>
+				<legend class="mb-2 text-label-lg text-on-surface">Color</legend>
 				<div class="flex flex-wrap gap-2">
 					{#each COLOR_NAMES as name (name)}
 						<button
@@ -75,7 +68,9 @@
 				</div>
 			</fieldset>
 			<Dialog.Footer>
-				<Button type="button" variant="outline" onclick={() => (course = null)}>Cancel</Button>
+				<Button type="button" variant="ghost" class="text-primary" onclick={() => (course = null)}
+					>Cancel</Button
+				>
 				<Button type="submit" disabled={saving}>Save</Button>
 			</Dialog.Footer>
 		</form>

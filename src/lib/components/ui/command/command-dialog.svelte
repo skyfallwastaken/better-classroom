@@ -33,7 +33,10 @@
 		<Dialog.Description>{description}</Dialog.Description>
 	</Dialog.Header>
 	<Dialog.Content
-		class={cn('top-1/4 translate-y-0 overflow-hidden rounded-2xl! p-0', className)}
+		class={cn(
+			'top-1/4 translate-y-0 gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[720px]',
+			className
+		)}
 		{showCloseButton}
 		{portalProps}
 	>

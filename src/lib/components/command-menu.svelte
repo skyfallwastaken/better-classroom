@@ -63,7 +63,7 @@
 	onValueChange={(v) => v.startsWith('/') && preloadData(v)}
 	title="Search"
 	description="Search classwork, materials and announcements"
-	class="top-[12vh] rounded-xl sm:max-w-2xl"
+	class="top-[12vh] sm:max-w-2xl"
 >
 	<Command.Input bind:value={query} placeholder="Search classwork, announcements, courses…" />
 	<Command.List class="max-h-[60dvh]">
@@ -85,8 +85,8 @@
 						value={`/courses/${course.id}`}
 						onSelect={() => go(`/courses/${course.id}`)}
 					>
-						<CourseDot id={course.id} size="md" class="ml-1" />
-						<span class="ml-1">{displayName(course)}</span>
+						<CourseDot id={course.id} size="md" class="mx-[7px]" />
+						<span>{displayName(course)}</span>
 					</Command.Item>
 				{/each}
 			</Command.Group>
@@ -99,7 +99,7 @@
 						<Icon class="text-on-surface-variant" />
 						<div class="grid min-w-0 flex-1">
 							<span class="truncate">{hit.doc.title}</span>
-							<span class="flex items-center gap-1.5 truncate text-body-sm text-on-surface-variant">
+							<span class="flex items-center gap-1.5 truncate text-body-md text-on-surface-variant">
 								<CourseDot id={hit.doc.courseId} class="shrink-0" />
 								{hit.doc.courseName}
 								{#if hit.doc.dueAt}<span aria-hidden="true">·</span><span class="tabular-nums"

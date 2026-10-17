@@ -27,8 +27,8 @@ export function notify(
 		duration: options.duration ?? 5000,
 		class: tones[tone],
 		descriptionClass: '!text-inherit opacity-80',
-		actionButtonStyle:
-			'background: transparent; color: inherit; font-weight: 600; border-radius: 9999px; text-decoration: underline; text-underline-offset: 3px;',
+		// M3 snackbar actions are inverse-primary text buttons; tonal toasts keep their content colour.
+		actionButtonStyle: `background: transparent; color: ${tones[tone] === SNACKBAR ? 'var(--md-inverse-primary)' : 'inherit'}; font-weight: 500;`,
 		action: options.action
 			? { label: options.action.label, onClick: () => void options.action!.onClick() }
 			: undefined

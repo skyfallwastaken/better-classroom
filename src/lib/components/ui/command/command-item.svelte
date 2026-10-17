@@ -15,13 +15,13 @@
 	bind:ref
 	data-slot="command-item"
 	class={cn(
-		"group/command-item relative flex min-h-11 cursor-default items-center gap-2 rounded-full px-4 py-2 text-label-lg outline-hidden select-none data-selected:bg-secondary-container data-selected:text-on-secondary-container data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-selected:*:[svg]:text-on-secondary-container",
+		"group/command-item relative flex min-h-12 cursor-default items-center gap-3 rounded-md px-3 py-2 text-body-lg text-on-surface outline-hidden transition-[background-color] duration-150 ease-standard select-none data-selected:bg-on-surface/10 data-[disabled=true]:pointer-events-none data-[disabled=true]:text-on-surface/38 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='text-'])]:text-on-surface-variant",
 		className
 	)}
 	{...restProps}
 >
 	{@render children?.()}
 	<CheckIcon
-		class="cn-command-item-indicator ml-auto opacity-0 group-has-[[data-slot=command-shortcut]]/command-item:hidden group-data-[checked=true]/command-item:opacity-100"
+		class="cn-command-item-indicator ml-auto size-5 text-on-surface-variant opacity-0 group-has-[[data-slot=command-shortcut]]/command-item:hidden group-data-[checked=true]/command-item:opacity-100"
 	/>
 </CommandPrimitive.Item>

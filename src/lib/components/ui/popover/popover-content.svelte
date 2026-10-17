@@ -23,7 +23,7 @@
 		{sideOffset}
 		{align}
 		class={cn(
-			'z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-xl bg-surface-container p-4 text-sm text-on-surface shadow-lg outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+			'z-50 flex w-72 origin-(--bits-popover-content-transform-origin) flex-col gap-3 rounded-lg bg-surface-container-high p-4 text-body-md text-on-surface-variant shadow-[0_3px_3px_-2px_rgb(0_0_0/0.2),0_3px_4px_0_rgb(0_0_0/0.14),0_1px_8px_0_rgb(0_0_0/0.12)] outline-hidden duration-150 ease-standard dark:ring-1 dark:ring-outline-variant data-open:animate-in data-open:fade-in-0 data-open:zoom-in-80 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-80',
 			className
 		)}
 		{...restProps}
