@@ -15,7 +15,7 @@
 	data-slot="sidebar-menu-badge"
 	data-sidebar="menu-badge"
 	class={cn(
-		'pointer-events-none absolute right-6 flex h-6 min-w-6 items-center justify-end text-label-lg text-on-surface-variant tabular-nums select-none group-data-[collapsible=icon]:hidden peer-data-[size=default]/menu-button:top-4 peer-data-[size=lg]/menu-button:top-4 peer-data-[size=sm]/menu-button:top-2 peer-data-active/menu-button:text-on-secondary-container',
+		'pointer-events-none absolute top-1/2 right-6 flex h-6 min-w-6 -translate-y-1/2 items-center justify-end text-label-lg text-on-surface-variant tabular-nums select-none group-data-[collapsible=icon]:hidden peer-data-active/menu-button:text-on-secondary-container',
 		className
 	)}
 	{...restProps}
