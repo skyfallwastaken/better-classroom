@@ -1,6 +1,7 @@
 import { test, expect } from 'bun:test';
 import { bucketize, dueLabel } from './todo.ts';
-import type { WorkSummary } from './work.ts';
+import { summarize, type WorkSummary } from './work.ts';
+import type { CourseWork } from './shared/types.ts';
 import type { WorkStatus } from './shared/status.ts';
 
 // Thursday 15 October 2026, midday local time; the week runs Mon 12 – Sun 18.
@@ -64,4 +65,12 @@ test('due labels always name a concrete day', () => {
 	expect(dueLabel({ dueAt: dateOnly(16), hasDueTime: false }, NOW)).toBe('Tomorrow');
 	expect(dueLabel({ dueAt: dateOnly(20), hasDueTime: false }, NOW)).toBe('Tuesday 20 Oct');
 	expect(dueLabel({ dueAt: undefined, hasDueTime: false }, NOW)).toBe('No due date');
+});
+
+test('date-only work stays assigned until its due day ends in local time', () => {
+	const due = { dueAt: dateOnly(15), hasDueTime: false } as CourseWork;
+	const statusAt = (h: number, d = 15) =>
+		summarize(due, undefined, 'Maths', new Date(2026, 9, d, h, 30).getTime()).status;
+	expect(statusAt(23)).toBe('assigned');
+	expect(statusAt(0, 16)).toBe('missing');
 });

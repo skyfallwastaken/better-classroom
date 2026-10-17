@@ -77,7 +77,7 @@
 		const now = Date.now();
 		let n = 0;
 		for (const r of workQuery.data) {
-			if (isOpen({ status: workStatus(r.s ?? undefined, r.w.dueAt, now) })) n++;
+			if (isOpen({ status: workStatus(r.s ?? undefined, r.w, now) })) n++;
 		}
 		return n;
 	});

@@ -2,15 +2,18 @@
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { isDueSoon } from '#lib/format.ts';
 	import { statusLabel, type WorkSummary } from '#lib/work.ts';
+	import { pastDue } from '#lib/shared/status.ts';
 
 	let {
 		work
-	}: { work: Pick<WorkSummary, 'status' | 'late' | 'dueAt' | 'assignedGrade' | 'maxPoints'> } =
-		$props();
+	}: {
+		work: Pick<
+			WorkSummary,
+			'status' | 'late' | 'dueAt' | 'hasDueTime' | 'assignedGrade' | 'maxPoints'
+		>;
+	} = $props();
 	const effective = $derived(
-		work.status === 'assigned' && work.dueAt !== undefined && work.dueAt < Date.now()
-			? 'missing'
-			: work.status
+		work.status === 'assigned' && pastDue(work, Date.now()) ? 'missing' : work.status
 	);
 </script>
 
