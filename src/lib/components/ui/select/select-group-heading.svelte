@@ -15,7 +15,7 @@
 	bind:ref
 	data-slot="select-group-heading"
 	class={cn(
-		'flex min-h-8 items-center px-3 text-label-lg text-on-surface-variant data-inset:pl-10',
+		'flex min-h-8 items-center px-3 text-label-lg text-on-surface-variant data-inset:ps-10',
 		className
 	)}
 	{...restProps}

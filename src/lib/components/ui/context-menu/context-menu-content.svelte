@@ -26,26 +26,3 @@
 		{...restProps}
 	/>
 </ContextMenuPortal>
-
-<style>
-	/* M3 Expressive menu motion (m3e MenuElement: scaleY 0.8 -> 1 on the fast-spatial spring, 100ms fade). */
-	@keyframes -global-md-menu-enter {
-		0% {
-			opacity: 0;
-			transform: scaleY(0.8);
-		}
-		28% {
-			opacity: 1;
-		}
-		100% {
-			opacity: 1;
-			transform: scaleY(1);
-		}
-	}
-	@keyframes -global-md-menu-exit {
-		to {
-			opacity: 0;
-			transform: scaleY(0.8);
-		}
-	}
-</style>

@@ -18,7 +18,7 @@
 		// M3 primary tabs (Compose PrimaryNavigationTabTokens): 48px tall, title-small label,
 		// 16px horizontal padding, on-surface-variant label that turns on-surface on hover and
 		// primary when active; on-surface state layer (primary when active).
-		'group-data-[variant=line]/tabs-list:rounded-none group-data-[variant=line]/tabs-list:px-4 group-data-[variant=line]/tabs-list:hover:text-on-surface group-data-[variant=line]/tabs-list:data-active:text-primary',
+		'group-data-[variant=line]/tabs-list:flex-none group-data-[variant=line]/tabs-list:rounded-none group-data-[variant=line]/tabs-list:px-4 group-data-[variant=line]/tabs-list:hover:text-on-surface group-data-[variant=line]/tabs-list:data-active:text-primary',
 		// Active indicator: 3px primary bar with 3px top corners, as wide as the label (min 24px),
 		// growing from the centre under the label, or beside it when vertical.
 		'after:absolute after:bg-primary after:transition-transform after:duration-300 after:ease-spring-gentle group-data-[variant=default]/tabs-list:after:hidden',

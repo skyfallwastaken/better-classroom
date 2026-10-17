@@ -94,7 +94,11 @@
 									: 'text-on-surface-variant'}">{w.courseName}</span
 							>
 						</span>
-						<span class="shrink-0 text-right text-label-sm tabular-nums {s.tone}">{s.text}</span>
+						<span
+							class="shrink-0 text-right text-label-lg tabular-nums {selected
+								? 'text-on-secondary-container'
+								: s.tone}">{s.text}</span
+						>
 					</a>
 					<!-- Like Gmail: the avatar turns into a checkbox on hover or once anything is selected.
 					     On touch (coarse pointer) it stays transparent but tappable, so tapping the avatar starts a selection. -->

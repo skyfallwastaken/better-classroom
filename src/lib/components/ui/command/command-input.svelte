@@ -21,7 +21,7 @@
 			{value}
 			data-slot="command-input"
 			class={cn(
-				'h-14 w-full text-body-lg text-on-surface caret-primary outline-hidden placeholder:text-on-surface-variant disabled:cursor-not-allowed disabled:opacity-38',
+				'h-14 w-full text-body-lg text-on-surface caret-primary outline-hidden placeholder:text-on-surface-variant disabled:cursor-not-allowed',
 				className
 			)}
 			{...restProps}
@@ -31,7 +31,9 @@
 			{/snippet}
 		</CommandPrimitive.Input>
 		<InputGroup.Addon>
-			<SearchIcon class="size-6 shrink-0 text-on-surface" />
+			<SearchIcon
+				class="size-6 shrink-0 text-on-surface group-has-[:disabled]/input-group:text-on-surface/38"
+			/>
 		</InputGroup.Addon>
 	</InputGroup.Root>
 </div>

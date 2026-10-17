@@ -24,12 +24,14 @@
 	{...restProps}
 >
 	{#snippet children({ selected, highlighted })}
-		<!-- M3 Expressive selectable menu item: the check leads the label once selected -->
-		{#if selected}
-			<CheckIcon
-				class="cn-select-item-indicator-icon animate-in duration-150 ease-standard fade-in-0 zoom-in-50"
-			/>
-		{/if}
+		<!-- M3 Expressive selectable menu item: the check leads the label in a reserved slot so labels never shift -->
+		<span class="flex size-5 shrink-0 items-center justify-center">
+			{#if selected}
+				<CheckIcon
+					class="cn-select-item-indicator-icon animate-in duration-150 ease-standard fade-in-0 zoom-in-50"
+				/>
+			{/if}
+		</span>
 		<span class="flex min-w-0 flex-1 shrink-0 gap-2 whitespace-nowrap">
 			{#if childrenProp}
 				{@render childrenProp({ selected, highlighted })}

@@ -105,7 +105,7 @@
 		     trailing space, title-large title, 24px icons, 32px avatar in a 48px target. It spans
 		     the drawer and the content, as in Classroom. -->
 		<header class="fixed inset-x-0 top-0 z-20 flex h-16 items-center gap-1 bg-sidebar px-1">
-			<Sidebar.Trigger class="size-12 text-on-surface [&_svg]:size-6" />
+			<Sidebar.Trigger class="size-12 text-on-surface [--r:24px] [&_svg]:size-6" />
 			<a
 				href="/"
 				class="state-layer flex h-12 shrink-0 items-center gap-2.5 rounded-full pr-3 pl-1.5 text-title-lg text-on-surface-variant outline-primary focus-visible:outline-2"

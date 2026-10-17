@@ -63,7 +63,7 @@
 	onValueChange={(v) => v.startsWith('/') && preloadData(v)}
 	title="Search"
 	description="Search classwork, materials and announcements"
-	class="top-[12vh] sm:max-w-2xl"
+	class="top-[12vh]"
 >
 	<Command.Input bind:value={query} placeholder="Search classwork, announcements, courses…" />
 	<Command.List class="max-h-[60dvh]">

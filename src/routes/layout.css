@@ -327,17 +327,18 @@
 		border-radius: var(--radius-xs);
 		background-color: var(--md-surface-container-low);
 		transition:
-			border-radius 150ms cubic-bezier(0.31, 0.94, 0.34, 1),
+			border-radius var(--duration-spring-fast-effects) var(--ease-spring-fast-effects),
 			background-color 200ms var(--ease-standard);
-	}
-	& > :has(:focus-visible),
-	& > :focus-visible {
-		border-radius: var(--radius-lg);
 	}
 	& > :hover,
 	& > :active,
 	& > :has(:active) {
 		border-radius: var(--radius-md);
+	}
+	/* After hover so a focused item stays at CornerLarge while the pointer is over it. */
+	& > :has(:focus-visible),
+	& > :focus-visible {
+		border-radius: var(--radius-lg);
 	}
 	& > [data-selected] {
 		border-radius: var(--radius-lg);
@@ -349,6 +350,48 @@
 	& > :last-child {
 		border-bottom-left-radius: var(--radius-lg);
 		border-bottom-right-radius: var(--radius-lg);
+	}
+}
+
+/* M3 Expressive menu motion (m3e MenuElement: scaleY 0.8 -> 1 on the fast-spatial spring, 100ms fade),
+ * shared by select, dropdown and context menus. */
+@keyframes md-menu-enter {
+	0% {
+		opacity: 0;
+		transform: scaleY(0.8);
+	}
+	28% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		transform: scaleY(1);
+	}
+}
+@keyframes md-progress-indeterminate {
+	from {
+		left: -40%;
+	}
+	to {
+		left: 100%;
+	}
+}
+@keyframes md-menu-exit {
+	to {
+		opacity: 0;
+		transform: scaleY(0.8);
+	}
+}
+
+/* Reduced motion: state changes (menus, dialogs, sheets, checkmarks, focus rings, shape morphs)
+ * happen instantly. Animations still run to their end state so `forwards` fills apply. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	::before,
+	::after {
+		animation-duration: 1ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0s !important;
 	}
 }
 

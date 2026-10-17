@@ -13,7 +13,7 @@
 	bind:ref
 	data-slot="dialog-description"
 	class={cn(
-		'text-body-md text-on-surface-variant *:[a]:text-primary *:[a]:underline *:[a]:underline-offset-3',
+		'text-body-md text-on-surface-variant *:[a]:text-primary *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-primary/80',
 		className
 	)}
 	{...restProps}

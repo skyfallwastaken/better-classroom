@@ -6,7 +6,7 @@
 	import { Info as InfoIcon } from '@material-symbols-svg/svelte/rounded/icons/info';
 	import { Warning as WarningIcon } from '@material-symbols-svg/svelte/rounded/icons/warning';
 
-	let { ...restProps }: SonnerProps = $props();
+	let { toastOptions, ...restProps }: SonnerProps = $props();
 </script>
 
 <Sonner
@@ -14,6 +14,7 @@
 	class="toaster group font-sans!"
 	style="--normal-bg: var(--md-inverse-surface); --normal-text: var(--md-inverse-on-surface); --normal-border: transparent; --border-radius: 4px;"
 	toastOptions={{
+		...toastOptions,
 		// M3 snackbar (SnackbarTokens): 48dp single line, 4dp corners, body-medium, level 3.
 		classes: {
 			toast:
@@ -26,7 +27,8 @@
 				'!h-10 !rounded-full !px-3 !text-label-lg !no-underline hover:!bg-current/8 focus-visible:!bg-current/10',
 			cancelButton: '!h-10 !rounded-full !bg-transparent !px-3 !text-label-lg !text-current',
 			closeButton:
-				'!static !order-last !size-10 !shrink-0 !transform-none !rounded-full !border-0 !bg-transparent !text-current hover:!bg-current/8 [&>svg]:!size-6'
+				'!static !order-last !size-10 !shrink-0 !transform-none !rounded-full !border-0 !bg-transparent !text-current hover:!bg-current/8 [&>svg]:!size-6',
+			...toastOptions?.classes
 		}
 	}}
 	{...restProps}
