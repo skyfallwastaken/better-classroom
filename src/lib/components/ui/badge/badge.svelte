@@ -3,15 +3,13 @@
 	import { tv } from '#lib/utils.js';
 
 	export const badgeVariants = tv({
-		base: 'h-6 gap-1 rounded-full border border-transparent px-2.5 py-0.5 text-label-md font-medium transition-all has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3! group/badge inline-flex w-fit shrink-0 items-center justify-center overflow-hidden whitespace-nowrap transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none',
+		base: 'h-6 gap-1 rounded-full border border-transparent px-2.5 text-label-md tracking-[0.5px] has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-4! group/badge inline-flex w-fit shrink-0 items-center justify-center overflow-hidden whitespace-nowrap transition-colors duration-200 ease-standard outline-none focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(color:--md-secondary) aria-invalid:border-error [&>svg]:pointer-events-none [a]:state-layer',
 		variants: {
 			variant: {
-				default: 'bg-primary-container text-on-primary-container [a]:hover:bg-primary-container/80',
-				secondary:
-					'bg-secondary-container text-on-secondary-container [a]:hover:bg-secondary-container/80',
-				destructive:
-					'bg-error-container text-on-error-container focus-visible:ring-destructive/20 [a]:hover:bg-error-container/80',
-				outline: 'border-outline-variant text-on-surface-variant [a]:hover:bg-muted',
+				default: 'bg-primary-container text-on-primary-container',
+				secondary: 'bg-secondary-container text-on-secondary-container',
+				destructive: 'bg-error-container text-on-error-container',
+				outline: 'border-outline-variant text-on-surface-variant',
 				ghost: 'hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50',
 				link: 'text-primary underline-offset-4 hover:underline'
 			}

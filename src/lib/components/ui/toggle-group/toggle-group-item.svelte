@@ -34,7 +34,7 @@
 		 * finite value lets the morph animate, and a larger one would make the browser scale
 		 * down every corner on the end segments, inner ones included.
 		 */
-		'shrink-0 [--outer:20px] [--r:8px] focus:z-10 focus-visible:z-10 active:[--r:4px] data-[size=lg]:[--outer:24px] data-[size=sm]:[--outer:16px] data-[state=on]:not-active:[--r:var(--outer)] pointer-coarse:not-data-[size=lg]:[--outer:22px]',
+		'shrink-0 [--outer:20px] [--r:8px] focus:z-10 focus-visible:z-10 active:[--r:4px] data-[size=lg]:[--outer:28px] data-[size=sm]:[--outer:16px] data-[state=on]:not-active:[--r:var(--outer)] pointer-coarse:not-data-[size=lg]:[--outer:22px]',
 		'group-data-[spacing=0]/toggle-group:rounded-(--r)',
 		'group-data-horizontal/toggle-group:data-[spacing=0]:first:rounded-l-(--outer) group-data-horizontal/toggle-group:data-[spacing=0]:last:rounded-r-(--outer)',
 		'group-data-vertical/toggle-group:data-[spacing=0]:first:rounded-t-(--outer) group-data-vertical/toggle-group:data-[spacing=0]:last:rounded-b-(--outer)',
