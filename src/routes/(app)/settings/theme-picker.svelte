@@ -43,6 +43,12 @@
 		clearTimeout(previewTimer);
 		previewTimer = setTimeout(endPreview, 150);
 	}
+	// Leaving Settings mid-preview (a link or shortcut) must put the saved theme back.
+	// ($effect cleanup rather than onDestroy: it only runs in the browser, never during SSR.)
+	$effect(() => () => {
+		clearTimeout(previewTimer);
+		endPreview();
+	});
 	function focusOutGroup(e: FocusEvent) {
 		const group = e.currentTarget as HTMLElement;
 		if (!group.contains(e.relatedTarget as Node | null)) leaveGroup();
