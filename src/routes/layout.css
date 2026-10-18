@@ -1,72 +1,49 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn-svelte/tailwind.css';
-@import '@fontsource-variable/valley-sans';
+@import '@fontsource-variable/google-sans-flex/standard.css';
 
 @custom-variant dark (&:where([data-mode='dark'], [data-mode='dark'] *));
 
+/*
+ * Material 3 colour roles (--md-*) are generated from the seed colour in
+ * src/lib/themes.ts. The shadcn variables below are aliases onto those roles so
+ * every primitive follows the dynamic scheme in both modes.
+ */
 :root {
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.205 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
-	--radius: 0.625rem;
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.145 0 0);
-	--sidebar-primary: oklch(0.205 0 0);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.97 0 0);
-	--sidebar-accent-foreground: oklch(0.205 0 0);
-	--sidebar-border: oklch(0.922 0 0);
-	--sidebar-ring: oklch(0.708 0 0);
-}
-
-html[data-mode='dark'] {
-	--background: oklch(0.145 0 0);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.205 0 0);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.205 0 0);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.922 0 0);
-	--primary-foreground: oklch(0.205 0 0);
-	--secondary: oklch(0.269 0 0);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.269 0 0);
-	--muted-foreground: oklch(0.708 0 0);
-	--accent: oklch(0.269 0 0);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
-	--sidebar: oklch(0.205 0 0);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.269 0 0);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.556 0 0);
+	--background: var(--md-surface);
+	--foreground: var(--md-on-surface);
+	--card: var(--md-surface-container-low);
+	--card-foreground: var(--md-on-surface);
+	--popover: var(--md-surface-container);
+	--popover-foreground: var(--md-on-surface);
+	--primary: var(--md-primary);
+	--primary-foreground: var(--md-on-primary);
+	--secondary: var(--md-secondary-container);
+	--secondary-foreground: var(--md-on-secondary-container);
+	--muted: var(--md-surface-container-high);
+	--muted-foreground: var(--md-on-surface-variant);
+	--accent: var(--md-surface-container-highest);
+	--accent-foreground: var(--md-on-surface);
+	--destructive: var(--md-error);
+	--border: var(--md-outline-variant);
+	--input: var(--md-outline);
+	--ring: var(--md-primary);
+	--sidebar: var(--md-surface-container);
+	--sidebar-foreground: var(--md-on-surface);
+	--sidebar-primary: var(--md-primary);
+	--sidebar-primary-foreground: var(--md-on-primary);
+	--sidebar-accent: var(--md-secondary-container);
+	--sidebar-accent-foreground: var(--md-on-secondary-container);
+	--sidebar-border: var(--md-outline-variant);
+	--sidebar-ring: var(--md-primary);
+	--radius: 1rem;
 }
 
 @theme inline {
-	--font-sans: 'Valley Sans Variable', ui-sans-serif, system-ui, sans-serif;
-	--font-sans--font-feature-settings: 'ss01', 'cv01';
+	--font-sans:
+		'Google Sans Flex Variable', 'Google Sans', 'Roboto', ui-sans-serif, system-ui, sans-serif;
+
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -93,13 +70,329 @@ html[data-mode='dark'] {
 	--color-card: var(--card);
 	--color-foreground: var(--foreground);
 	--color-background: var(--background);
-	--radius-sm: calc(var(--radius) * 0.6);
-	--radius-md: calc(var(--radius) * 0.8);
-	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) * 1.4);
-	--radius-2xl: calc(var(--radius) * 1.8);
-	--radius-3xl: calc(var(--radius) * 2.2);
-	--radius-4xl: calc(var(--radius) * 2.6);
+
+	/* Material 3 roles that have no shadcn equivalent */
+	--color-on-primary: var(--md-on-primary);
+	--color-primary-container: var(--md-primary-container);
+	--color-on-primary-container: var(--md-on-primary-container);
+	--color-inverse-primary: var(--md-inverse-primary);
+	--color-secondary-container: var(--md-secondary-container);
+	--color-on-secondary-container: var(--md-on-secondary-container);
+	--color-tertiary: var(--md-tertiary);
+	--color-on-tertiary: var(--md-on-tertiary);
+	--color-tertiary-container: var(--md-tertiary-container);
+	--color-on-tertiary-container: var(--md-on-tertiary-container);
+	--color-error: var(--md-error);
+	--color-on-error: var(--md-on-error);
+	--color-error-container: var(--md-error-container);
+	--color-on-error-container: var(--md-on-error-container);
+	--color-surface: var(--md-surface);
+	--color-surface-dim: var(--md-surface-dim);
+	--color-surface-bright: var(--md-surface-bright);
+	--color-surface-container-lowest: var(--md-surface-container-lowest);
+	--color-surface-container-low: var(--md-surface-container-low);
+	--color-surface-container: var(--md-surface-container);
+	--color-surface-container-high: var(--md-surface-container-high);
+	--color-surface-container-highest: var(--md-surface-container-highest);
+	--color-on-surface: var(--md-on-surface);
+	--color-on-surface-variant: var(--md-on-surface-variant);
+	--color-inverse-surface: var(--md-inverse-surface);
+	--color-inverse-on-surface: var(--md-inverse-on-surface);
+	--color-outline: var(--md-outline);
+	--color-outline-variant: var(--md-outline-variant);
+	--color-scrim: var(--md-scrim);
+	--color-success: var(--md-success);
+	--color-on-success: var(--md-on-success);
+	--color-success-container: var(--md-success-container);
+	--color-on-success-container: var(--md-on-success-container);
+	--color-warning: var(--md-warning);
+	--color-on-warning: var(--md-on-warning);
+	--color-warning-container: var(--md-warning-container);
+	--color-on-warning-container: var(--md-on-warning-container);
+	/* Set by [data-course-color] */
+	--color-course: var(--course);
+	--color-on-course: var(--on-course);
+	--color-course-container: var(--course-container);
+	--color-on-course-container: var(--on-course-container);
+
+	/* Material 3 shape scale */
+	--radius-xs: 4px;
+	--radius-sm: 8px;
+	--radius-md: 12px;
+	--radius-lg: 16px;
+	--radius-xl: 20px;
+	--radius-2xl: 28px;
+	--radius-3xl: 32px;
+	--radius-4xl: 48px;
+
+	/* Material 3 type scale */
+	--text-display-lg: 3.5625rem;
+	--text-display-lg--line-height: 4rem;
+	--text-display-md: 2.8125rem;
+	--text-display-md--line-height: 3.25rem;
+	--text-display-sm: 2.25rem;
+	--text-display-sm--line-height: 2.75rem;
+	--text-headline-lg: 2rem;
+	--text-headline-lg--line-height: 2.5rem;
+	--text-headline-md: 1.75rem;
+	--text-headline-md--line-height: 2.25rem;
+	--text-headline-sm: 1.5rem;
+	--text-headline-sm--line-height: 2rem;
+	--text-title-lg: 1.375rem;
+	--text-title-lg--line-height: 1.75rem;
+	--text-title-md: 1rem;
+	--text-title-md--line-height: 1.5rem;
+	--text-title-md--font-weight: 500;
+	--text-title-sm: 0.875rem;
+	--text-title-sm--line-height: 1.25rem;
+	--text-title-sm--font-weight: 500;
+	--text-body-lg: 1rem;
+	--text-body-lg--line-height: 1.5rem;
+	--text-body-md: 0.875rem;
+	--text-body-md--line-height: 1.25rem;
+	--text-body-sm: 0.75rem;
+	--text-body-sm--line-height: 1rem;
+	--text-label-lg: 0.875rem;
+	--text-label-lg--line-height: 1.25rem;
+	--text-label-lg--font-weight: 500;
+	--text-label-md: 0.75rem;
+	--text-label-md--line-height: 1rem;
+	--text-label-md--font-weight: 500;
+	--text-label-sm: 0.6875rem;
+	--text-label-sm--line-height: 1rem;
+	--text-label-sm--font-weight: 500;
+
+	/* Material 3 Expressive motion: springs approximated as cubic béziers */
+	--ease-spring: cubic-bezier(0.42, 1.67, 0.21, 0.9);
+	--ease-spring-gentle: cubic-bezier(0.38, 1.21, 0.22, 1);
+	--ease-standard: cubic-bezier(0.2, 0, 0, 1);
+	--ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+/*
+ * M3 Expressive motion scheme springs (Compose ExpressiveMotionTokens), sampled into exact
+ * linear() curves: x(t) of a unit spring with the given damping ratio and stiffness, run until
+ * it stays within 0.2% of rest. Use the matching duration with each easing.
+ *   default effects: damping 1.0, stiffness 1600 (buttons' press morph, no bounce)
+ *   fast spatial:    damping 0.6, stiffness 800  (toggle buttons' press/select morph)
+ *   fast effects:    damping 1.0, stiffness 3800
+ */
+@theme {
+	--ease-spring-default-effects: linear(
+		0,
+		0.049,
+		0.158,
+		0.286,
+		0.413,
+		0.527,
+		0.626,
+		0.707,
+		0.773,
+		0.826,
+		0.868,
+		0.9,
+		0.925,
+		0.943,
+		0.958,
+		0.969,
+		0.977,
+		0.983,
+		0.987,
+		0.991,
+		0.993,
+		0.995,
+		0.996,
+		0.997,
+		1
+	);
+	--duration-spring-default-effects: 212ms;
+	--ease-spring-fast-spatial: linear(
+		0,
+		0.049,
+		0.169,
+		0.326,
+		0.493,
+		0.651,
+		0.789,
+		0.9,
+		0.984,
+		1.041,
+		1.076,
+		1.092,
+		1.094,
+		1.087,
+		1.074,
+		1.059,
+		1.043,
+		1.029,
+		1.016,
+		1.007,
+		1,
+		0.995,
+		0.992,
+		0.991,
+		0.991,
+		0.992,
+		0.993,
+		0.995,
+		0.996,
+		0.998,
+		0.999,
+		1
+	);
+	--duration-spring-fast-spatial: 380ms;
+	--ease-spring-fast-effects: linear(
+		0,
+		0.1,
+		0.288,
+		0.473,
+		0.627,
+		0.744,
+		0.828,
+		0.886,
+		0.925,
+		0.952,
+		0.969,
+		0.98,
+		0.987,
+		0.992,
+		0.995,
+		0.997,
+		1
+	);
+	--duration-spring-fast-effects: 138ms;
+
+	/* M3 focus indicator: 3px outline that briefly grows to 6px as it appears (500ms). */
+	--animate-focus-ring: focus-ring 500ms var(--ease-standard);
+	@keyframes focus-ring {
+		50% {
+			outline-width: 6px;
+		}
+	}
+
+	/* M3 checkbox mark: wipes in left to right (medium4, standard-decelerate). */
+	--animate-checkbox-draw: checkbox-draw 400ms cubic-bezier(0, 0, 0, 1) both;
+	@keyframes checkbox-draw {
+		from {
+			clip-path: inset(0 100% 0 0);
+			opacity: 0.8;
+		}
+		to {
+			clip-path: inset(0);
+			opacity: 1;
+		}
+	}
+}
+
+/*
+ * State layers: M3 overlays the content colour on a surface at 8% for hover,
+ * 10% for focus and press. `state-layer` paints it with a pseudo-element so it
+ * works over any container colour.
+ */
+@utility state-layer {
+	position: relative;
+	isolation: isolate;
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		border-radius: inherit;
+		background: currentColor;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 150ms var(--ease-standard);
+	}
+	&:hover::before {
+		opacity: 0.08;
+	}
+	&:focus-visible::before,
+	&:active::before {
+		opacity: 0.1;
+	}
+}
+
+/*
+ * M3 Expressive segmented list (Compose ListTokens / m3e <m3e-list variant="segmented">):
+ * items sit 2px apart (SegmentedGap), outer corners are CornerLarge (16px), inner ones
+ * CornerExtraSmall (4px). Hovered/pressed items morph to CornerMedium (12px), focused and
+ * selected ([data-selected]) ones to CornerLarge, while the list's outer corners stay put.
+ * Shape uses the fast-effects spring, colour the standard 200ms curve.
+ */
+@utility segmented {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	& > * {
+		border-radius: var(--radius-xs);
+		background-color: var(--md-surface-container-low);
+		transition:
+			border-radius var(--duration-spring-fast-effects) var(--ease-spring-fast-effects),
+			background-color 200ms var(--ease-standard);
+	}
+	& > :hover,
+	& > :active,
+	& > :has(:active) {
+		border-radius: var(--radius-md);
+	}
+	/* After hover so a focused item stays at CornerLarge while the pointer is over it. */
+	& > :has(:focus-visible),
+	& > :focus-visible {
+		border-radius: var(--radius-lg);
+	}
+	& > [data-selected] {
+		border-radius: var(--radius-lg);
+	}
+	& > :first-child {
+		border-top-left-radius: var(--radius-lg);
+		border-top-right-radius: var(--radius-lg);
+	}
+	& > :last-child {
+		border-bottom-left-radius: var(--radius-lg);
+		border-bottom-right-radius: var(--radius-lg);
+	}
+}
+
+/* M3 Expressive menu motion (m3e MenuElement: scaleY 0.8 -> 1 on the fast-spatial spring, 100ms fade),
+ * shared by select, dropdown and context menus. */
+@keyframes md-menu-enter {
+	0% {
+		opacity: 0;
+		transform: scaleY(0.8);
+	}
+	28% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		transform: scaleY(1);
+	}
+}
+@keyframes md-progress-indeterminate {
+	from {
+		left: -40%;
+	}
+	to {
+		left: 100%;
+	}
+}
+@keyframes md-menu-exit {
+	to {
+		opacity: 0;
+		transform: scaleY(0.8);
+	}
+}
+
+/* Reduced motion: state changes (menus, dialogs, sheets, checkmarks, focus rings, shape morphs)
+ * happen instantly. Animations still run to their end state so `forwards` fills apply. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	::before,
+	::after {
+		animation-duration: 1ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0s !important;
+	}
 }
 
 @layer base {
@@ -107,16 +400,26 @@ html[data-mode='dark'] {
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-sidebar text-foreground;
 	}
 	html {
 		@apply font-sans;
 		color-scheme: light dark;
+		font-optical-sizing: auto;
 	}
 	html[data-mode='light'] {
 		color-scheme: light;
 	}
 	html[data-mode='dark'] {
 		color-scheme: dark;
+	}
+	h1,
+	h2,
+	h3 {
+		letter-spacing: 0;
+	}
+	::selection {
+		background: var(--md-primary-container);
+		color: var(--md-on-primary-container);
 	}
 }

@@ -13,10 +13,7 @@
 <span
 	bind:this={ref}
 	data-slot="command-shortcut"
-	class={cn(
-		'ml-auto text-xs tracking-widest text-muted-foreground group-data-selected/command-item:text-foreground',
-		className
-	)}
+	class={cn('ml-auto text-label-sm text-on-surface-variant', className)}
 	{...restProps}
 >
 	{@render children?.()}

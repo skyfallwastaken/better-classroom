@@ -5,18 +5,18 @@
 	import SettingsCard from './settings-card.svelte';
 </script>
 
-<SettingsCard class="mt-6">
+<SettingsCard>
 	<div class="flex flex-wrap items-start justify-between gap-4 px-5 py-4">
 		<div>
-			<h2 class="text-base font-semibold tracking-tight">Google account for links</h2>
-			<p class="mt-1 max-w-prose text-sm text-pretty text-muted-foreground">
+			<h2 class="text-title-md">Google account for links</h2>
+			<p class="mt-1 max-w-prose text-body-md text-pretty text-on-surface-variant">
 				Signed into more than one Google account? Enter the number of the one Classroom and Drive
 				links should open in: 0 for the first account you signed into, 1 for the next, and so on.
 				Saved for this browser only.
 			</p>
 		</div>
 		<div class="flex shrink-0 items-center gap-2">
-			<Label for="link-authuser" class="text-muted-foreground">Account number</Label>
+			<Label for="link-authuser" class="text-on-surface-variant">Account number</Label>
 			<Input
 				id="link-authuser"
 				type="number"

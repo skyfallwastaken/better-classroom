@@ -3,19 +3,16 @@
 	import { useLiveQuery, eq } from '@tanstack/svelte-db';
 	import { courses, courseWork, submissions } from '#lib/db/collections.ts';
 	import { topicById } from '#lib/db/queries.ts';
-	import { gradePercent, statusLabel, summarize } from '#lib/work.ts';
-	import { Button } from '#lib/components/ui/button/index.js';
+	import { gradePercent, statusLabel, summarize, type WorkSummary } from '#lib/work.ts';
 	import { Progress } from '#lib/components/ui/progress/index.js';
-	import { Separator } from '#lib/components/ui/separator/index.js';
-	import StatusBadge from '#lib/components/status-badge.svelte';
+	import { Badge } from '#lib/components/ui/badge/index.js';
 	import Attachments from '#lib/components/attachments.svelte';
 	import RichText from '#lib/components/rich-text.svelte';
-	import { formatDateLong, formatDateTime, formatDue, formatRelative } from '#lib/format.ts';
+	import PostHeader from '#lib/components/post-header.svelte';
+	import { formatDate, formatDateLong, formatRelative, formatTime } from '#lib/format.ts';
 	import { displayName } from '#lib/course.ts';
-	import CourseDot from '#lib/components/course-dot.svelte';
-	import { withAuthUser } from '#lib/link-authuser.svelte.ts';
-	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
-	import FactsGrid from './facts-grid.svelte';
+	import { Assignment as AssignmentIcon } from '@material-symbols-svg/svelte/rounded/icons/assignment';
+	import { Help as QuestionIcon } from '@material-symbols-svg/svelte/rounded/icons/help';
 	import SubmissionFiles from './submission-files.svelte';
 	import SubmissionActions from './submission-actions.svelte';
 	import PrivateComments from './private-comments.svelte';
@@ -35,94 +32,110 @@
 		row.data ? summarize(row.data.w, row.data.s ?? undefined, displayName(row.data.c)) : null
 	);
 	const sub = $derived(row.data?.s ?? null);
-	const dueText = $derived(
+	const teacher = $derived(
+		row.data?.w.author?.name ??
+			row.data?.c.teachers.find((t) => t.userId === row.data?.w.creatorUserId)?.name ??
+			row.data?.c.teachers[0]?.name
+	);
+	const due = $derived(
 		!w || w.dueAt === undefined
-			? 'No due date'
+			? null
 			: w.hasDueTime
-				? formatDateTime(w.dueAt)
-				: formatDateLong(w.dueAt, true)
+				? `${formatDate(w.dueAt)}, ${formatTime(w.dueAt)}`
+				: formatDate(w.dueAt, { day: 'numeric', month: 'short' }, true)
 	);
-	const facts = $derived(
-		w
-			? [
-					{
-						label: 'Due',
-						value: dueText,
-						hint: w.dueAt !== undefined ? formatDue(w.dueAt, w.hasDueTime) : undefined
-					},
-					{ label: 'Points', value: w.maxPoints ? String(w.maxPoints) : 'Ungraded' },
-					{ label: 'Topic', value: topicQuery.data?.name ?? '–' },
-					{ label: 'Posted', value: formatRelative(w.createdAt) }
-				]
-			: []
-	);
+
+	/** The status Classroom shows at the top right of "Your work". */
+	function workState(w: WorkSummary): { text: string; tone: string } {
+		const late = w.late ? ' · late' : '';
+		if (w.status === 'graded' && w.assignedGrade !== undefined)
+			return {
+				text: (w.maxPoints ? `${w.assignedGrade}/${w.maxPoints}` : String(w.assignedGrade)) + late,
+				tone: 'text-on-surface'
+			};
+		if (w.status === 'missing') return { text: 'Missing', tone: 'text-error' };
+		if (w.status === 'turnedIn' && w.late) return { text: 'Done late', tone: 'text-warning' };
+		if (w.status === 'turnedIn' || w.status === 'returned')
+			return { text: statusLabel[w.status] + late, tone: 'text-success' };
+		return { text: 'Assigned', tone: 'text-on-surface-variant' };
+	}
 </script>
 
 {#if w}
-	<div class="flex flex-wrap items-start justify-between gap-4">
-		<div class="min-w-0">
-			<a
-				href={`/courses/${w.courseId}`}
-				class="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+	<div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+		<article class="min-w-0">
+			<PostHeader
+				courseId={w.courseId}
+				title={w.title}
+				byline={[teacher, `${formatRelative(w.createdAt)}`].filter(Boolean).join(' • ')}
+				alternateLink={w.alternateLink}
 			>
-				<CourseDot id={w.courseId} />{w.courseName}
-			</a>
-			<h1 class="mt-1 text-2xl font-semibold tracking-tight text-balance">{w.title}</h1>
-			<div class="mt-2 flex items-center gap-2">
-				<StatusBadge work={w} />
-			</div>
-		</div>
-		{#if w.alternateLink}
-			<Button href={withAuthUser(w.alternateLink)} target="_blank" rel="noreferrer"
-				>Open in Classroom <ExternalLinkIcon data-icon="inline-end" /></Button
-			>
-		{/if}
-	</div>
+				{#snippet icon()}
+					{#if w.workType.endsWith('QUESTION')}<QuestionIcon />{:else}<AssignmentIcon />{/if}
+				{/snippet}
+				{#snippet meta()}
+					<span>{w.maxPoints ? `${w.maxPoints} points` : 'Ungraded'}</span>
+					{#if due}
+						<span class="h-4 w-px bg-outline-variant" aria-hidden="true"></span>
+						<span title={w.dueAt ? formatDateLong(w.dueAt, !w.hasDueTime) : undefined}
+							>Due {due}</span
+						>
+					{/if}
+					{#if topicQuery.data}
+						<Badge variant="outline" class="ml-auto">{topicQuery.data.name}</Badge>
+					{/if}
+				{/snippet}
+			</PostHeader>
 
-	<FactsGrid {facts} />
-
-	<div class="mt-8 grid gap-10 lg:grid-cols-[3fr_2fr]">
-		<div>
-			{#if w.description}
-				<h2 class="text-base font-semibold tracking-tight">Instructions</h2>
-				<RichText
-					text={w.description}
-					html={w.html}
-					class="mt-2 max-w-[70ch] text-sm text-pretty break-words"
-				/>
-			{:else}
-				<p class="text-sm text-muted-foreground">No instructions were given.</p>
-			{/if}
-			{#if w.materials.length}
-				<h2 class="mt-8 text-base font-semibold tracking-tight">Attachments</h2>
-				<div class="mt-2 max-w-lg"><Attachments items={w.materials} /></div>
-			{/if}
-		</div>
-		<aside>
-			<h2 class="text-base font-semibold tracking-tight">Your work</h2>
-			{#if sub}
-				<p class="mt-1 text-sm text-muted-foreground">
-					{statusLabel[w.status]}{#if sub.late}
-						· late{/if} · updated {formatRelative(sub.updatedAt)}
-				</p>
-				{#if w.assignedGrade !== undefined && w.maxPoints}
-					<div class="mt-4">
-						<div class="flex items-baseline justify-between text-sm">
-							<span class="text-muted-foreground">Grade</span>
-							<span class="font-medium tabular-nums"
-								>{w.assignedGrade}<span class="text-muted-foreground">/{w.maxPoints}</span></span
-							>
-						</div>
-						<Progress value={gradePercent(w) ?? 0} class="mt-2" />
-					</div>
+			<div class="mt-6 sm:pl-16">
+				{#if w.description}
+					<RichText
+						text={w.description}
+						html={w.html}
+						class="max-w-[70ch] text-body-lg text-pretty break-words text-on-surface"
+					/>
+				{:else}
+					<p class="text-body-lg text-on-surface-variant">No instructions were given.</p>
 				{/if}
-				<Separator class="my-4" />
-				<SubmissionFiles work={w} fallback={sub.attachments} />
-				<SubmissionActions work={w} submission={sub} />
-				<Separator class="my-6" />
-				<PrivateComments work={w} />
-			{:else}
-				<p class="mt-1 text-sm text-muted-foreground">No submission record yet.</p>
+				{#if w.materials.length}
+					<div class="mt-6"><Attachments items={w.materials} /></div>
+				{/if}
+			</div>
+		</article>
+
+		<!-- M3 elevated cards (Compose ElevatedCardTokens): CornerMedium 12px, surface-container-low,
+		     elevation level 1, 16px padding; Classroom shows both side cards raised -->
+		<aside class="flex flex-col gap-4">
+			<section
+				class="rounded-md bg-surface-container-low p-4 shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]"
+				aria-labelledby="your-work"
+			>
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 id="your-work" class="text-title-lg text-on-surface">Your work</h2>
+					{#if sub}
+						{@const state = workState(w)}
+						<span class="text-label-lg {state.tone}">{state.text}</span>
+					{/if}
+				</div>
+				{#if sub}
+					{#if w.assignedGrade !== undefined && w.maxPoints}
+						<Progress value={gradePercent(w) ?? 0} class="mt-3 h-1.5" />
+					{/if}
+					<p class="mt-1 text-body-sm text-on-surface-variant">
+						Updated {formatRelative(sub.updatedAt)}
+					</p>
+					<div class="mt-4"><SubmissionFiles work={w} fallback={sub.attachments} /></div>
+					<SubmissionActions work={w} submission={sub} />
+				{:else}
+					<p class="mt-2 text-body-md text-on-surface-variant">No submission record yet.</p>
+				{/if}
+			</section>
+			{#if sub}
+				<section
+					class="rounded-md bg-surface-container-low p-4 shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)]"
+				>
+					<PrivateComments work={w} {teacher} />
+				</section>
 			{/if}
 		</aside>
 	</div>

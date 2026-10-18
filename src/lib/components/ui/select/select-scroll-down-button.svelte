@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Select as SelectPrimitive } from 'bits-ui';
-	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+	import { KeyboardArrowDown as KeyboardArrowDownIcon } from '@material-symbols-svg/svelte/rounded/icons/keyboard-arrow-down';
 	import { cn, type WithoutChildrenOrChild } from '#lib/utils.js';
 
 	let {
@@ -14,10 +14,10 @@
 	bind:ref
 	data-slot="select-scroll-down-button"
 	class={cn(
-		"bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4",
+		"bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-container-high py-1 text-on-surface-variant [&_svg:not([class*='size-'])]:size-5",
 		className
 	)}
 	{...restProps}
 >
-	<ChevronDownIcon />
+	<KeyboardArrowDownIcon />
 </SelectPrimitive.ScrollDownButton>

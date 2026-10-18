@@ -4,9 +4,9 @@
 	import { Progress } from '#lib/components/ui/progress/index.js';
 	import { pluralize } from '#lib/text.ts';
 	import type { Progress as ItemProgress } from '#lib/submissions.ts';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import XIcon from '@lucide/svelte/icons/x';
-	import Loader2Icon from '@lucide/svelte/icons/loader-2';
+	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
+	import { Close as CloseIcon } from '@material-symbols-svg/svelte/rounded/icons/close';
+	import { ProgressActivity as ProgressActivityIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
 
 	let {
 		open = $bindable(false),
@@ -33,22 +33,22 @@
 			<Dialog.Description>{summary}</Dialog.Description>
 		</Dialog.Header>
 		<Progress value={items.length ? (finished.length / items.length) * 100 : 0} />
-		<ul role="list" class="-mx-1 max-h-64 overflow-y-auto text-sm">
+		<ul role="list" class="-mx-1 max-h-64 overflow-y-auto text-body-md">
 			{#each items as item (item.id)}
 				<li class="flex items-start gap-2 rounded-md px-1 py-1">
-					<span class="mt-0.5 grid size-4 shrink-0 place-content-center">
-						{#if item.state === 'done'}<CheckIcon class="size-4 text-emerald-600" />
-						{:else if item.state === 'failed'}<XIcon class="size-4 text-destructive" />
-						{:else if item.state === 'running'}<Loader2Icon
-								class="size-4 animate-spin text-muted-foreground"
+					<span class="grid size-5 shrink-0 place-content-center">
+						{#if item.state === 'done'}<CheckIcon class="size-5 text-success" />
+						{:else if item.state === 'failed'}<CloseIcon class="size-5 text-error" />
+						{:else if item.state === 'running'}<ProgressActivityIcon
+								class="size-5 animate-spin text-on-surface-variant"
 							/>
-						{:else}<span class="size-1.5 rounded-full bg-muted-foreground/40"></span>{/if}
+						{:else}<span class="size-1.5 rounded-full bg-on-surface-variant/38"></span>{/if}
 					</span>
 					<span class="min-w-0 flex-1">
-						<span class="line-clamp-1 {item.state === 'pending' ? 'text-muted-foreground' : ''}"
+						<span class="line-clamp-1 {item.state === 'pending' ? 'text-on-surface-variant' : ''}"
 							>{item.title}</span
 						>
-						{#if item.error}<span class="line-clamp-2 text-xs text-destructive">{item.error}</span
+						{#if item.error}<span class="line-clamp-2 text-body-sm text-error">{item.error}</span
 							>{/if}
 					</span>
 				</li>
@@ -56,7 +56,7 @@
 		</ul>
 		{#if !busy}
 			<Dialog.Footer>
-				<Button size="sm" onclick={() => (open = false)}>Close</Button>
+				<Button variant="ghost" class="text-primary" onclick={() => (open = false)}>Close</Button>
 			</Dialog.Footer>
 		{/if}
 	</Dialog.Content>

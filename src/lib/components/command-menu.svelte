@@ -5,11 +5,11 @@
 	import { formatDue } from '#lib/format.ts';
 	import { displayName, type CourseRef as Course } from '#lib/course.ts';
 	import CourseDot from '#lib/components/course-dot.svelte';
-	import HouseIcon from '@lucide/svelte/icons/house';
-	import ListChecksIcon from '@lucide/svelte/icons/list-checks';
-	import InboxIcon from '@lucide/svelte/icons/inbox';
-	import SettingsIcon from '@lucide/svelte/icons/settings';
-	import SearchIcon from '@lucide/svelte/icons/search';
+	import { Home as HomeIcon } from '@material-symbols-svg/svelte/rounded/icons/home';
+	import { Checklist as ChecklistIcon } from '@material-symbols-svg/svelte/rounded/icons/checklist';
+	import { Inbox as InboxIcon } from '@material-symbols-svg/svelte/rounded/icons/inbox';
+	import { Settings as SettingsIcon } from '@material-symbols-svg/svelte/rounded/icons/settings';
+	import { Search as SearchIcon } from '@material-symbols-svg/svelte/rounded/icons/search';
 
 	let { open = $bindable(false), courses }: { open?: boolean; courses: Course[] } = $props();
 
@@ -19,9 +19,9 @@
 	const hits = $derived(search.hits);
 	const loading = $derived(search.loading);
 	const pages = [
-		{ href: '/', label: 'Home', icon: HouseIcon },
+		{ href: '/', label: 'Home', icon: HomeIcon },
 		{ href: '/inbox', label: 'Inbox', icon: InboxIcon },
-		{ href: '/todo', label: 'To-do', icon: ListChecksIcon },
+		{ href: '/todo', label: 'To-do', icon: ChecklistIcon },
 		{ href: '/settings', label: 'Settings', icon: SettingsIcon }
 	];
 	const matches = (label: string) => {
@@ -63,7 +63,7 @@
 	onValueChange={(v) => v.startsWith('/') && preloadData(v)}
 	title="Search"
 	description="Search classwork, materials and announcements"
-	class="top-[12vh] rounded-xl sm:max-w-2xl"
+	class="top-[12vh]"
 >
 	<Command.Input bind:value={query} placeholder="Search classwork, announcements, courses…" />
 	<Command.List class="max-h-[60dvh]">
@@ -72,7 +72,7 @@
 			<Command.Group heading="Pages">
 				{#each pageHits as p (p.href)}
 					<Command.Item value={p.href} onSelect={() => go(p.href)}>
-						<p.icon class="text-muted-foreground" />
+						<p.icon class="text-on-surface-variant" />
 						<span>{p.label}</span>
 					</Command.Item>
 				{/each}
@@ -85,8 +85,8 @@
 						value={`/courses/${course.id}`}
 						onSelect={() => go(`/courses/${course.id}`)}
 					>
-						<CourseDot id={course.id} size="md" class="ml-1" />
-						<span class="ml-1">{displayName(course)}</span>
+						<CourseDot id={course.id} size="md" class="mx-[7px]" />
+						<span>{displayName(course)}</span>
 					</Command.Item>
 				{/each}
 			</Command.Group>
@@ -96,10 +96,10 @@
 				{#each results as hit (hit.doc.kind + hit.doc.id)}
 					{@const Icon = kindIcon[hit.doc.kind]}
 					<Command.Item value={hit.doc.href} onSelect={() => go(hit.doc.href)}>
-						<Icon class="text-muted-foreground" />
+						<Icon class="text-on-surface-variant" />
 						<div class="grid min-w-0 flex-1">
 							<span class="truncate">{hit.doc.title}</span>
-							<span class="flex items-center gap-1.5 truncate text-xs text-muted-foreground">
+							<span class="flex items-center gap-1.5 truncate text-body-md text-on-surface-variant">
 								<CourseDot id={hit.doc.courseId} class="shrink-0" />
 								{hit.doc.courseName}
 								{#if hit.doc.dueAt}<span aria-hidden="true">·</span><span class="tabular-nums"
@@ -116,7 +116,7 @@
 				value={`/search?q=${encodeURIComponent(trimmed)}`}
 				onSelect={() => go(`/search?q=${encodeURIComponent(trimmed)}`)}
 			>
-				<SearchIcon class="text-muted-foreground" />
+				<SearchIcon class="text-on-surface-variant" />
 				<span>See all results for “{trimmed}”</span>
 			</Command.Item>
 		{/if}

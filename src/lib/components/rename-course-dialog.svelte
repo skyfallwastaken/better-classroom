@@ -6,8 +6,8 @@
 	import { setCoursePrefs } from '#lib/api.ts';
 	import type { CourseRef as Course } from '#lib/course.ts';
 	import { courseColorName } from '#lib/course-colors.svelte.ts';
-	import { COLOR_CLASS, COLOR_NAMES, hashedColor, type ColorName } from '#lib/shared/colors.ts';
-	import CheckIcon from '@lucide/svelte/icons/check';
+	import { COLOR_NAMES, hashedColor, type ColorName } from '#lib/shared/colors.ts';
+	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
 
 	let { course = $bindable(null) }: { course?: Course | null } = $props();
 	let value = $state('');
@@ -48,17 +48,10 @@
 		<form onsubmit={save} class="grid gap-4">
 			<div class="grid gap-2">
 				<Label for="course-nickname">Nickname</Label>
-				<Input
-					id="course-nickname"
-					name="nickname"
-					bind:value
-					maxlength={80}
-					autofocus
-					class="max-sm:text-base/6"
-				/>
+				<Input id="course-nickname" name="nickname" bind:value maxlength={80} autofocus />
 			</div>
-			<fieldset class="grid gap-2">
-				<legend class="text-sm font-medium">Color</legend>
+			<fieldset>
+				<legend class="mb-2 text-label-lg text-on-surface">Color</legend>
 				<div class="flex flex-wrap gap-2">
 					{#each COLOR_NAMES as name (name)}
 						<button
@@ -66,7 +59,8 @@
 							aria-label={name}
 							aria-pressed={color === name}
 							onclick={() => (color = name)}
-							class={`flex size-7 items-center justify-center rounded-full text-white ring-offset-2 ring-offset-background transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${COLOR_CLASS[name]} ${color === name ? 'ring-2 ring-foreground/60' : ''}`}
+							data-course-color={name}
+							class="flex size-10 items-center justify-center rounded-full bg-course text-on-course transition-[border-radius,transform] duration-300 ease-spring hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary aria-pressed:rounded-md"
 						>
 							{#if color === name}<CheckIcon class="size-4" />{/if}
 						</button>
@@ -74,7 +68,9 @@
 				</div>
 			</fieldset>
 			<Dialog.Footer>
-				<Button type="button" variant="outline" onclick={() => (course = null)}>Cancel</Button>
+				<Button type="button" variant="ghost" class="text-primary" onclick={() => (course = null)}
+					>Cancel</Button
+				>
 				<Button type="submit" disabled={saving}>Save</Button>
 			</Dialog.Footer>
 		</form>

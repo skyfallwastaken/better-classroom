@@ -41,7 +41,8 @@
 			data-slot="sidebar"
 			data-mobile="true"
 			class={cn(
-				'w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden',
+				// M3 modal navigation drawer: surface-container-low, CornerLargeEnd (16px).
+				'max-w-[calc(100vw-3.5rem)] bg-surface-container-low p-0 text-sidebar-foreground data-[side=left]:w-(--sidebar-width) data-[side=left]:rounded-r-lg data-[side=right]:w-(--sidebar-width) data-[side=right]:rounded-l-lg [&>button]:hidden',
 				className
 			)}
 			style="--sidebar-width: {SIDEBAR_WIDTH_MOBILE};"
@@ -70,7 +71,7 @@
 		<div
 			data-slot="sidebar-gap"
 			class={cn(
-				'relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear',
+				'relative w-(--sidebar-width) bg-transparent transition-[width] duration-300 ease-emphasized',
 				'group-data-[collapsible=offcanvas]:w-0',
 				'group-data-[side=right]:rotate-180',
 				variant === 'floating' || variant === 'inset'
@@ -81,14 +82,14 @@
 		<div
 			data-slot="sidebar-container"
 			class={cn(
-				'fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
+				'fixed top-16 bottom-0 z-10 hidden h-[calc(100svh-4rem)] w-(--sidebar-width) transition-[left,right,width] duration-300 ease-emphasized md:flex',
 				side === 'left'
 					? 'start-0 group-data-[collapsible=offcanvas]:start-[calc(var(--sidebar-width)*-1)]'
 					: 'end-0 group-data-[collapsible=offcanvas]:end-[calc(var(--sidebar-width)*-1)]',
 				// Adjust the padding for floating and inset variants.
 				variant === 'floating' || variant === 'inset'
 					? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
-					: 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-e group-data-[side=right]:border-s',
+					: 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
 				className
 			)}
 			{...restProps}

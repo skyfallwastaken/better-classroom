@@ -12,6 +12,7 @@
 	import * as ToggleGroup from '#lib/components/ui/toggle-group/index.js';
 	import * as Empty from '#lib/components/ui/empty/index.js';
 	import { Button } from '#lib/components/ui/button/index.js';
+	import { Toggle } from '#lib/components/ui/toggle/index.js';
 	import { Badge } from '#lib/components/ui/badge/index.js';
 	import { Kbd, KbdGroup } from '#lib/components/ui/kbd/index.js';
 	import { formatRelative } from '#lib/format.ts';
@@ -19,11 +20,11 @@
 	import { pluralize } from '#lib/text.ts';
 	import CourseDot from '#lib/components/course-dot.svelte';
 	import type { Announcement as AnnouncementRow, Course, Material } from '#lib/shared/types.ts';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import UndoIcon from '@lucide/svelte/icons/undo-2';
-	import PartyPopperIcon from '@lucide/svelte/icons/party-popper';
-	import BookOpenIcon from '@lucide/svelte/icons/book-open';
-	import CheckCheckIcon from '@lucide/svelte/icons/check-check';
+	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
+	import { Undo as UndoIcon } from '@material-symbols-svg/svelte/rounded/icons/undo';
+	import { Celebration as CelebrationIcon } from '@material-symbols-svg/svelte/rounded/icons/celebration';
+	import { MenuBook as MenuBookIcon } from '@material-symbols-svg/svelte/rounded/icons/menu-book';
+	import { DoneAll as DoneAllIcon } from '@material-symbols-svg/svelte/rounded/icons/done-all';
 
 	const announcementQuery = useLiveQuery({ query: inboxAnnouncements });
 	const materialQuery = useLiveQuery({ query: inboxMaterials });
@@ -152,7 +153,6 @@
 		<ToggleGroup.Root
 			type="single"
 			variant="outline"
-			size="sm"
 			bind:value={filter}
 			onValueChange={(v) => !v && (filter = 'all')}
 		>
@@ -160,21 +160,18 @@
 			<ToggleGroup.Item value="announcements">Posts</ToggleGroup.Item>
 			<ToggleGroup.Item value="materials">Materials</ToggleGroup.Item>
 		</ToggleGroup.Root>
-		<Button variant="outline" size="sm" onclick={() => (showDone = !showDone)}
-			>{showDone ? 'Hide done' : 'Show done'}</Button
+		<Toggle variant="outline" bind:pressed={showDone}>Show done</Toggle>
+		<!-- Disabled rather than removed so switching filters never shifts the toolbar. -->
+		<Button onclick={doneAll} disabled={!visible.some((i) => !dismissed.has(i.key))}
+			><DoneAllIcon data-icon="inline-start" />Mark all done</Button
 		>
-		{#if visible.some((i) => !dismissed.has(i.key))}
-			<Button size="sm" onclick={doneAll}
-				><CheckCheckIcon data-icon="inline-start" />Mark all done</Button
-			>
-		{/if}
 	{/snippet}
 </PageHeader>
 
 {#if visible.length === 0}
-	<Empty.Root class="mt-6 border border-dashed">
+	<Empty.Root class="mt-6 bg-surface-container-low">
 		<Empty.Header>
-			<Empty.Media variant="icon"><PartyPopperIcon /></Empty.Media>
+			<Empty.Media variant="icon"><CelebrationIcon /></Empty.Media>
 			<Empty.Title>{justCleared ? 'Inbox zero!' : 'Nothing here'}</Empty.Title>
 			<Empty.Description
 				>{showDone
@@ -188,60 +185,68 @@
 		<WindowVirtualizer bind:this={virtualizer} data={visible} getKey={(i) => i.key} ssrCount={12}>
 			{#snippet children(item, index)}
 				{@const isDone = dismissed.has(item.key)}
-				<div
-					role="listitem"
-					class={`group -mx-3 flex gap-3 rounded-lg border-b border-border/60 px-3 py-4 ${isDone ? 'opacity-50' : ''} ${index === selected ? 'bg-accent/60' : ''}`}
-				>
-					<div class="min-w-0 flex-1">
-						{#if item.kind === 'announcement'}
-							<Announcement item={item.announcement} course={item.course} clamp />
-						{:else}
-							<div class="flex items-start gap-3 py-2">
-								<BookOpenIcon class="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-								<div class="min-w-0 flex-1">
-									<div class="flex flex-wrap items-center gap-2">
-										<a
-											href={`/courses/${item.course.id}/material/${item.material.id}`}
-											class="font-medium hover:underline">{item.material.title}</a
-										>
-										<Badge variant="secondary">Material</Badge>
-									</div>
-									<p
-										class="mt-0.5 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
+				<!-- Spacing lives inside the measured row so the virtualizer offsets stay exact. -->
+				<div role="listitem" class="pb-3">
+					<div
+						class={`group flex gap-3 rounded-md px-4 py-1 transition-colors ${isDone ? 'opacity-50' : ''} ${index === selected ? 'bg-secondary-container' : 'bg-surface-container-low'}`}
+					>
+						<div class="min-w-0 flex-1">
+							{#if item.kind === 'announcement'}
+								<Announcement item={item.announcement} course={item.course} clamp />
+							{:else}
+								<div class="flex items-start gap-4 py-4">
+									<span
+										class="flex size-10 shrink-0 items-center justify-center rounded-full bg-tertiary-container text-on-tertiary-container"
+										><MenuBookIcon class="size-6" /></span
 									>
-										<CourseDot id={item.course.id} />
-										<a href={`/courses/${item.course.id}`} class="hover:text-foreground"
-											>{displayName(item.course)}</a
-										>
-										<span aria-hidden="true">·</span>
-										<span>posted {formatRelative(item.material.createdAt)}</span>
-									</p>
-									{#if item.material.materials.length}
-										<div class="mt-3 max-w-md">
-											<Attachments items={item.material.materials.slice(0, 3)} />
+									<div class="min-w-0 flex-1">
+										<div class="flex flex-wrap items-center gap-2">
+											<a
+												href={`/courses/${item.course.id}/material/${item.material.id}`}
+												class="text-title-sm hover:underline">{item.material.title}</a
+											>
+											<Badge variant="secondary">Material</Badge>
 										</div>
-									{/if}
+										<p
+											class="mt-0.5 flex flex-wrap items-center gap-1.5 text-body-md text-on-surface-variant"
+										>
+											<CourseDot id={item.course.id} />
+											<a href={`/courses/${item.course.id}`} class="hover:text-on-surface"
+												>{displayName(item.course)}</a
+											>
+											<span aria-hidden="true">·</span>
+											<span>posted {formatRelative(item.material.createdAt)}</span>
+										</p>
+										{#if item.material.materials.length}
+											<div class="mt-3 max-w-2xl">
+												<Attachments items={item.material.materials.slice(0, 3)} />
+											</div>
+										{/if}
+									</div>
 								</div>
-							</div>
-						{/if}
-					</div>
-					<div class="shrink-0 pt-3">
-						{#if isDone}
-							<Button variant="ghost" size="sm" onclick={() => undo(item)}
-								><UndoIcon data-icon="inline-start" />Undo</Button
-							>
-						{:else}
-							<Button variant="outline" size="sm" onclick={() => done(item)} aria-label="Mark done"
-								><CheckIcon data-icon="inline-start" />Done</Button
-							>
-						{/if}
+							{/if}
+						</div>
+						<div class="shrink-0 self-center">
+							{#if isDone}
+								<Button variant="ghost" size="sm" onclick={() => undo(item)}
+									><UndoIcon data-icon="inline-start" />Undo</Button
+								>
+							{:else}
+								<Button
+									variant="outline"
+									size="sm"
+									onclick={() => done(item)}
+									aria-label="Mark done"><CheckIcon data-icon="inline-start" />Done</Button
+								>
+							{/if}
+						</div>
 					</div>
 				</div>
 			{/snippet}
 		</WindowVirtualizer>
 	</div>
 	<p
-		class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground max-sm:hidden"
+		class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-body-sm text-on-surface-variant max-sm:hidden"
 	>
 		<span><KbdGroup><Kbd>J</Kbd><Kbd>K</Kbd></KbdGroup> move</span>
 		<span><Kbd>E</Kbd> done / undo</span>

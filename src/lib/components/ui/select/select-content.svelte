@@ -27,7 +27,7 @@
 		{preventScroll}
 		data-slot="select-content"
 		class={cn(
-			'relative isolate z-50 min-w-36 overflow-x-hidden overflow-y-auto rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95',
+			'relative isolate z-50 min-w-28 overflow-x-hidden overflow-y-auto rounded-lg bg-surface-container-high text-on-surface shadow-[0_3px_3px_-2px_rgb(0_0_0/0.2),0_3px_4px_0_rgb(0_0_0/0.14),0_1px_8px_0_rgb(0_0_0/0.12)] outline-none data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom motion-reduce:animate-none dark:ring-1 dark:ring-outline-variant data-open:animate-[md-menu-enter_350ms_cubic-bezier(0.27,1.06,0.18,1)] data-closed:animate-[md-menu-exit_100ms_cubic-bezier(0.2,0,0,1)_forwards]',
 			className
 		)}
 		{...restProps}
@@ -35,7 +35,7 @@
 		<SelectScrollUpButton />
 		<SelectPrimitive.Viewport
 			class={cn(
-				'h-(--bits-select-anchor-height) w-full min-w-(--bits-select-anchor-width) scroll-my-1'
+				'flex h-(--bits-select-anchor-height) w-full min-w-(--bits-select-anchor-width) scroll-my-1 flex-col gap-0.5 p-1'
 			)}
 		>
 			{@render children?.()}

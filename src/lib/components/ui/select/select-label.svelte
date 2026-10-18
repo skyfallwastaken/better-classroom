@@ -13,7 +13,10 @@
 <div
 	bind:this={ref}
 	data-slot="select-label"
-	class={cn('px-1.5 py-1 text-xs text-muted-foreground', className)}
+	class={cn(
+		'flex min-h-8 items-center px-3 text-label-lg text-on-surface-variant data-inset:ps-10',
+		className
+	)}
 	{...restProps}
 >
 	{@render children?.()}

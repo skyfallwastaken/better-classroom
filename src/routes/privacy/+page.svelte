@@ -1,10 +1,14 @@
 <div class="mx-auto w-full max-w-2xl px-4 py-12">
-	<a href="/login" class="text-sm text-muted-foreground underline underline-offset-2">← Sign in</a>
-	<h1 class="mt-6 text-3xl font-semibold tracking-tight">Privacy Policy</h1>
-	<p class="mt-2 text-sm text-muted-foreground">Better Classroom · Effective 16 September 2026</p>
+	<a href="/login" class="text-body-md text-on-surface-variant underline underline-offset-2"
+		>← Sign in</a
+	>
+	<h1 class="mt-6 text-headline-md text-on-surface">Privacy Policy</h1>
+	<p class="mt-2 text-body-md text-on-surface-variant">
+		Better Classroom · Effective 16 September 2026
+	</p>
 
 	<div
-		class="mt-8 space-y-6 text-[15px] leading-7 [&_a]:underline [&_a]:underline-offset-2 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-[13px] [&_h2]:mt-8 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_ul]:list-disc [&_ul]:pl-6"
+		class="mt-8 space-y-6 text-body-lg text-on-surface [&_a]:underline [&_a]:underline-offset-2 [&_code]:rounded [&_code]:bg-surface-container-high [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-body-md [&_h2]:mt-8 [&_h2]:text-title-lg [&_ul]:list-disc [&_ul]:pl-6"
 	>
 		<p>
 			Better Classroom is a personal application built and operated by Mahad Kalam ("I", "me"). It
@@ -100,8 +104,8 @@
 			<a href="mailto:mahadkalam1234@gmail.com">mahadkalam1234@gmail.com</a>.
 		</p>
 
-		<hr class="border-border" />
-		<p class="text-sm text-muted-foreground">
+		<hr class="border-outline-variant" />
+		<p class="text-body-md text-on-surface-variant">
 			Better Classroom is an independent project and is not affiliated with or endorsed by Google or
 			by any school.
 		</p>

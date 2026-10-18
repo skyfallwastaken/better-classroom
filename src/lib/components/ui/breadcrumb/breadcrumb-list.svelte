@@ -14,7 +14,8 @@
 	bind:this={ref}
 	data-slot="breadcrumb-list"
 	class={cn(
-		'flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground',
+		// m3e breadcrumb: label-large items separated by 24px on-surface-variant chevrons.
+		'flex flex-wrap items-center gap-0 text-label-lg wrap-break-word text-on-surface-variant',
 		className
 	)}
 	{...restProps}

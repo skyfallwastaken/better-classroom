@@ -1,4 +1,4 @@
-import { COLOR_CLASS, hashedColor, type ColorName } from '#lib/shared/colors.ts';
+import { hashedColor, type ColorName } from '#lib/shared/colors.ts';
 
 export const colorOverrides = $state<Record<string, ColorName>>({});
 
@@ -14,8 +14,4 @@ export function syncColorOverrides(courses: { id: string; color?: string }[]) {
 
 export function courseColorName(id: string): ColorName {
 	return colorOverrides[id] ?? hashedColor(id);
-}
-
-export function courseColor(id: string) {
-	return COLOR_CLASS[courseColorName(id)];
 }

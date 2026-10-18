@@ -16,7 +16,11 @@
 
 	const attrs = $derived({
 		'data-slot': 'breadcrumb-link',
-		class: cn('transition-colors hover:text-foreground', className),
+		// m3e breadcrumb item button: 40px full-pill, 12px inline padding, primary label and state layer.
+		class: cn(
+			'state-layer block h-10 rounded-full px-3 py-2.5 text-primary outline-primary focus-visible:outline-2',
+			className
+		),
 		href,
 		...restProps
 	});

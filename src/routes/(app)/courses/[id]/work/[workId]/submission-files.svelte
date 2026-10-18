@@ -5,9 +5,12 @@
 	import { withAuthUser } from '#lib/link-authuser.svelte.ts';
 	import Attachments from '#lib/components/attachments.svelte';
 	import type { Attachment, SubmissionFile } from '#lib/shared/types.ts';
-	import LoaderIcon from '@lucide/svelte/icons/loader-circle';
-	import PaperclipIcon from '@lucide/svelte/icons/paperclip';
-	import XIcon from '@lucide/svelte/icons/x';
+	import { Button, buttonVariants } from '#lib/components/ui/button/index.js';
+	import ConfirmDialog from '#lib/components/confirm-dialog.svelte';
+	import { ProgressActivity as LoaderIcon } from '@material-symbols-svg/svelte/rounded/icons/progress-activity';
+	import { AttachFile as AttachFileIcon } from '@material-symbols-svg/svelte/rounded/icons/attach-file';
+	import { Add as AddIcon } from '@material-symbols-svg/svelte/rounded/icons/add';
+	import { Close as CloseIcon } from '@material-symbols-svg/svelte/rounded/icons/close';
 
 	let { work, fallback }: { work: WorkSummary; fallback: Attachment[] } = $props();
 
@@ -17,6 +20,8 @@
 	let filesError = $state<string | null>(null);
 	let uploading = $state(false);
 	let removingFile = $state<string | null>(null);
+	let confirmRemove = $state<string | null>(null);
+	let confirmOpen = $state(false);
 
 	async function loadFiles() {
 		filesError = null;
@@ -62,20 +67,20 @@
 
 {#if filesError}
 	{#if fallback.length}
-		<Attachments items={fallback} />
+		<Attachments items={fallback} class="sm:grid-cols-1" />
 	{:else}
-		<p class="text-sm text-muted-foreground">Nothing attached yet.</p>
+		<p class="text-body-md text-on-surface-variant">Nothing attached yet.</p>
 	{/if}
 {:else if files === null}
-	<p class="text-sm text-muted-foreground">Loading files…</p>
+	<p class="text-body-md text-on-surface-variant">Loading files…</p>
 {:else}
-	{#if files.length === 0}
-		<p class="text-sm text-muted-foreground">Nothing attached yet.</p>
-	{:else}
-		<ul role="list" class="space-y-1.5 text-sm">
+	{#if files.length}
+		<ul role="list" class="mb-3 space-y-2 text-body-md">
 			{#each files as f (f.driveId)}
-				<li class="group flex items-center gap-2 rounded-lg border px-3 py-2">
-					<PaperclipIcon class="size-3.5 shrink-0 text-muted-foreground" />
+				<li
+					class="group flex items-center gap-3 rounded-md border border-outline-variant py-2 pr-2 pl-3"
+				>
+					<AttachFileIcon class="size-5 shrink-0 text-on-surface-variant" />
 					<a
 						href={withAuthUser(f.url ?? `https://drive.google.com/file/d/${f.driveId}/view`)}
 						target="_blank"
@@ -84,31 +89,50 @@
 						>{f.title ?? f.driveId}</a
 					>
 					{#if isOpen(work)}
-						<button
-							type="button"
-							class="rounded p-0.5 text-muted-foreground hover:text-destructive disabled:opacity-50"
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							class="hover:text-error"
 							aria-label="Remove file"
 							disabled={removingFile === f.driveId}
-							onclick={() => removeFile(f.driveId)}
+							onclick={() => {
+								confirmRemove = f.driveId;
+								confirmOpen = true;
+							}}
 						>
 							{#if removingFile === f.driveId}<LoaderIcon
-									class="size-3.5 animate-spin"
-								/>{:else}<XIcon class="size-3.5" />{/if}
-						</button>
+									class="size-4 animate-spin"
+								/>{:else}<CloseIcon class="size-5" />{/if}
+						</Button>
 					{/if}
 				</li>
 			{/each}
 		</ul>
+	{:else}
+		<p class="mb-3 text-body-md text-on-surface-variant">Nothing attached yet.</p>
 	{/if}
 	{#if isOpen(work)}
 		<label
-			class="mt-2 inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-foreground underline-offset-2 hover:underline"
+			class="{buttonVariants({
+				variant: 'outline'
+			})} w-full cursor-pointer text-primary has-focus-visible:outline-2 has-focus-visible:outline-primary"
 		>
-			{#if uploading}<LoaderIcon class="size-3.5 animate-spin" />{:else}<PaperclipIcon
-					class="size-3.5"
+			{#if uploading}<LoaderIcon data-icon="inline-start" class="animate-spin" />{:else}<AddIcon
+					data-icon="inline-start"
 				/>{/if}
 			{uploading ? 'Uploading…' : 'Add file'}
 			<input type="file" class="sr-only" disabled={uploading} onchange={uploadFile} />
 		</label>
 	{/if}
 {/if}
+<ConfirmDialog
+	bind:open={confirmOpen}
+	title="Remove file?"
+	description="It will be detached from your submission. You can add it again later."
+	confirmLabel="Remove"
+	onConfirm={() => {
+		const id = confirmRemove;
+		confirmRemove = null;
+		if (id) return removeFile(id);
+	}}
+/>

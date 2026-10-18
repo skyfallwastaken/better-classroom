@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
+	import { ChevronRight as ChevronRightIcon } from '@material-symbols-svg/svelte/rounded/icons/chevron-right';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLLiAttributes } from 'svelte/elements';
 
@@ -16,7 +16,7 @@
 	data-slot="breadcrumb-separator"
 	role="presentation"
 	aria-hidden="true"
-	class={cn('[&>svg]:size-3.5', className)}
+	class={cn('flex min-w-2 items-center text-on-surface-variant [&>svg]:size-6', className)}
 	{...restProps}
 >
 	{#if children}

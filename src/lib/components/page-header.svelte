@@ -10,8 +10,8 @@
 
 <div class="flex flex-wrap items-start justify-between gap-4">
 	<div class="min-w-0">
-		<h1 class="text-2xl font-semibold tracking-tight text-balance">{title}</h1>
-		{#if description}<p class="mt-1 text-sm text-pretty text-muted-foreground">
+		<h1 class="text-headline-md text-balance text-on-surface">{title}</h1>
+		{#if description}<p class="mt-1 text-body-md text-pretty text-on-surface-variant">
 				{description}
 			</p>{/if}
 		{#if children}<div class="mt-2">{@render children()}</div>{/if}

@@ -3,7 +3,7 @@
 	import { formatDue } from '#lib/format.ts';
 	import { pluralize } from '#lib/text.ts';
 	import * as Empty from '#lib/components/ui/empty/index.js';
-	import PercentIcon from '@lucide/svelte/icons/percent';
+	import { Percent as PercentIcon } from '@material-symbols-svg/svelte/rounded/icons/percent';
 
 	let { work, courseId }: { work: WorkSummary[]; courseId: string } = $props();
 
@@ -21,7 +21,7 @@
 </script>
 
 {#if graded.length === 0}
-	<Empty.Root class="border border-dashed">
+	<Empty.Root class="bg-surface-container-low">
 		<Empty.Header>
 			<Empty.Media variant="icon"><PercentIcon /></Empty.Media>
 			<Empty.Title>Nothing graded yet</Empty.Title>
@@ -30,38 +30,37 @@
 	</Empty.Root>
 {:else}
 	<div class="flex flex-wrap items-baseline justify-between gap-2">
-		<h2 class="text-base font-semibold tracking-tight">
+		<h2 class="text-title-lg text-on-surface">
 			{pluralize(graded.length, 'graded assignment')}
 		</h2>
 		{#if totals.percent !== null}
-			<p class="text-sm text-muted-foreground tabular-nums">
-				Overall <span class="font-medium text-foreground">{totals.percent}%</span>
+			<p class="text-body-md text-on-surface-variant tabular-nums">
+				Overall <span class="text-title-sm text-on-surface">{totals.percent}%</span>
 				· {totals.earned}/{totals.possible} points
 			</p>
 		{/if}
 	</div>
-	<ul role="list" class="mt-2 divide-y divide-border/60">
+	<ul role="list" class="mt-4 segmented">
 		{#each graded as w (w.id)}
 			{@const pct = gradePercent(w)}
 			<li>
 				<a
 					href={`/courses/${courseId}/work/${w.id}`}
-					class="-mx-3 flex items-center gap-4 rounded-lg px-3 py-3 hover:bg-accent/60"
+					class="state-layer flex min-h-18 items-center gap-3 rounded-[inherit] px-4 py-2.5 text-on-surface"
 				>
 					<div class="min-w-0 flex-1">
-						<p class="truncate text-sm font-medium">{w.title}</p>
-						<p class="text-xs text-muted-foreground tabular-nums">
+						<p class="truncate text-body-lg">{w.title}</p>
+						<p class="text-body-md text-on-surface-variant tabular-nums">
 							{w.dueAt !== undefined ? formatDue(w.dueAt, w.hasDueTime) : 'No due date'}{#if w.late}
 								· late{/if}
 						</p>
 					</div>
-					<div class="w-24 shrink-0 text-right text-sm tabular-nums">
-						<span class="font-medium">{w.assignedGrade}</span>{#if w.maxPoints}<span
-								class="text-muted-foreground">/{w.maxPoints}</span
-							>{/if}
+					<div class="w-24 shrink-0 text-right text-body-md tabular-nums">
+						<span class="text-title-sm text-on-surface">{w.assignedGrade}</span
+						>{#if w.maxPoints}<span class="text-on-surface-variant">/{w.maxPoints}</span>{/if}
 					</div>
 					{#if pct !== null}
-						<div class="w-16 shrink-0 text-right text-sm text-muted-foreground tabular-nums">
+						<div class="w-16 shrink-0 text-right text-body-md text-on-surface-variant tabular-nums">
 							{Math.round(pct)}%
 						</div>
 					{/if}

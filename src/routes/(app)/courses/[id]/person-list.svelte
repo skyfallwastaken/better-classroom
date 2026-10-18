@@ -7,24 +7,17 @@
 	const teacher = $derived(variant === 'teacher');
 </script>
 
-<ul role="list" class="mt-2 divide-y divide-border/60">
+<ul role="list" class="mt-2 divide-y divide-outline-variant">
 	{#each people as p, i (teacher ? p.userId : (p.email ?? `${p.name}#${i}`))}
-		<li class="flex items-center gap-3 {teacher ? 'py-3' : 'py-2.5'}">
-			<UserAvatar
-				src={p.photoUrl}
-				name={p.name}
-				class={teacher ? 'size-9' : 'size-8'}
-				fallbackClass="text-xs"
-			/>
+		<li class="flex min-h-14 items-center gap-3 px-4 py-2 has-[a]:min-h-18 has-[a]:py-2.5">
+			<UserAvatar src={p.photoUrl} name={p.name} class="size-10" />
 			<div class="min-w-0">
-				{#if teacher}
-					<p class="text-sm font-medium">{p.name ?? 'Teacher'}</p>
-				{:else}
-					<p class="truncate text-sm font-medium">{p.name}</p>
-				{/if}
+				<p class="truncate text-body-lg text-on-surface">
+					{p.name ?? (teacher ? 'Teacher' : 'Classmate')}
+				</p>
 				{#if p.email}<a
 						href={`mailto:${p.email}`}
-						class="{teacher ? 'text-sm' : 'text-xs'} text-muted-foreground hover:text-foreground"
+						class="block truncate text-body-md text-on-surface-variant hover:text-on-surface"
 						>{p.email}</a
 					>{/if}
 			</div>

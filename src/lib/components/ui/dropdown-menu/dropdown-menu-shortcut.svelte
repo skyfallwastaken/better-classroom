@@ -14,7 +14,7 @@
 	bind:this={ref}
 	data-slot="dropdown-menu-shortcut"
 	class={cn(
-		'ml-auto text-xs tracking-widest text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground',
+		'ml-auto pl-3 text-label-sm text-on-surface-variant group-data-[variant=destructive]/dropdown-menu-item:text-error',
 		className
 	)}
 	{...restProps}

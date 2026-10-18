@@ -1,35 +1,53 @@
 <script lang="ts" module>
-	import { type VariantProps, tv } from 'tailwind-variants';
-	import { cn, type WithElementRef } from '#lib/utils.js';
+	import type { VariantProps } from 'tailwind-variants';
+	import { cn, tv, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
+	/*
+	 * M3 Expressive common buttons, from Compose material3 tokens (ButtonXSmall/Small/MediumTokens,
+	 * XSmall/Small/MediumIconButtonTokens, Filled/Tonal/Outlined/TextButtonTokens, ButtonDefaults):
+	 *
+	 *            height  padding        gap  icon  label        round -> pressed
+	 *   XS       32      12             4    20    label-large  16 -> 8
+	 *   S        40      16 (icon: 12)  8    20    label-large  20 -> 8
+	 *   M        56      24             8    24    title-medium 28 -> 12
+	 *   icon XS  32      6              -    20                 16 -> 8
+	 *   icon S   40      8              -    24                 20 -> 8
+	 *   icon M   56      16             -    24                 28 -> 12
+	 *
+	 * `--r` is the resting corner radius: exactly half the height rather than "full", so the
+	 * press morph animates over its whole range. `--rp` is the pressed radius. The morph uses
+	 * the DefaultEffects spring Compose uses for buttons (no bounce).
+	 */
 	export const buttonVariants = tv({
-		base: "rounded-lg border border-transparent bg-clip-padding text-sm font-medium focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap transition-all outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+		base: 'state-layer rounded-(--r) border border-transparent bg-clip-padding text-label-lg tracking-[0.1px] [transition:border-radius_var(--duration-spring-default-effects)_var(--ease-spring-default-effects),background-color_200ms_var(--ease-standard),color_200ms_var(--ease-standard),box-shadow_200ms_var(--ease-standard)] focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-(color:--md-secondary) focus-visible:animate-focus-ring active:not-aria-[haspopup]:rounded-(--rp) aria-invalid:border-destructive group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none select-none disabled:pointer-events-none disabled:text-on-surface-variant/38 disabled:shadow-none aria-disabled:pointer-events-none aria-disabled:text-on-surface-variant/38 [&_svg]:pointer-events-none [&_svg]:shrink-0',
 		variants: {
 			variant: {
-				default: 'bg-primary text-primary-foreground hover:bg-primary/80',
+				// Filled and tonal rise to elevation level 1 on hover, back to 0 when pressed.
+				default:
+					'bg-primary text-on-primary hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none disabled:bg-on-surface/10 aria-disabled:bg-on-surface/10',
 				outline:
-					'border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
+					'border-outline-variant bg-transparent text-on-surface-variant disabled:border-outline-variant/10 aria-disabled:border-outline-variant/10 aria-expanded:bg-secondary-container aria-expanded:text-on-secondary-container',
 				secondary:
-					'bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground',
+					'bg-secondary-container text-on-secondary-container hover:shadow-[0_1px_2px_0_rgb(0_0_0/0.3),0_1px_3px_1px_rgb(0_0_0/0.15)] active:shadow-none disabled:bg-on-surface/10 aria-disabled:bg-on-surface/10 aria-expanded:bg-secondary-container',
 				ghost:
-					'hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50',
+					'text-on-surface-variant aria-expanded:bg-secondary-container aria-expanded:text-on-secondary-container',
 				destructive:
-					'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40',
-				link: 'text-primary underline-offset-4 hover:underline'
+					'bg-error-container text-on-error-container disabled:bg-on-surface/10 aria-disabled:bg-on-surface/10',
+				link: 'text-primary underline-offset-4 before:hidden hover:underline'
 			},
 			size: {
 				default:
-					'h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
-				xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-				sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-				lg: 'h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
-				icon: 'size-8',
+					"h-10 gap-2 px-4 [--r:20px] [--rp:8px] pointer-coarse:h-11 pointer-coarse:[--r:22px] has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 pointer-coarse:has-data-[icon=inline-end]:pr-4 pointer-coarse:has-data-[icon=inline-start]:pl-4 [&_svg:not([class*='size-'])]:size-5",
+				xs: "h-8 gap-1 px-3 [--r:16px] [--rp:8px] pointer-coarse:h-11 pointer-coarse:[--r:22px] [&_svg:not([class*='size-'])]:size-5",
+				sm: "h-8 gap-1 px-3 [--r:16px] [--rp:8px] pointer-coarse:h-11 pointer-coarse:[--r:22px] [&_svg:not([class*='size-'])]:size-5",
+				lg: "h-14 gap-2 px-6 text-title-md tracking-[0.15px] [--r:28px] [--rp:12px] [&_svg:not([class*='size-'])]:size-6",
+				icon: "size-10 [--r:20px] [--rp:8px] pointer-coarse:size-11 pointer-coarse:[--r:22px] [&_svg:not([class*='size-'])]:size-6",
 				'icon-xs':
-					"size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
+					"size-8 [--r:16px] [--rp:8px] pointer-coarse:size-11 pointer-coarse:[--r:22px] [&_svg:not([class*='size-'])]:size-5",
 				'icon-sm':
-					'size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg',
-				'icon-lg': 'size-9'
+					"size-8 [--r:16px] [--rp:8px] pointer-coarse:size-11 pointer-coarse:[--r:22px] [&_svg:not([class*='size-'])]:size-5",
+				'icon-lg': "size-14 [--r:28px] [--rp:12px] [&_svg:not([class*='size-'])]:size-6"
 			}
 		},
 		defaultVariants: {

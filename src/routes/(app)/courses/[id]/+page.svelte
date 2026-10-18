@@ -15,11 +15,11 @@
 	import { formatRelative } from '#lib/format.ts';
 	import { courseLabel, displayName } from '#lib/course.ts';
 	import { pluralize } from '#lib/text.ts';
-	import CourseDot from '#lib/components/course-dot.svelte';
+	import { courseColorName } from '#lib/course-colors.svelte.ts';
 	import { withAuthUser } from '#lib/link-authuser.svelte.ts';
-	import ExternalLinkIcon from '@lucide/svelte/icons/external-link';
-	import BookOpenIcon from '@lucide/svelte/icons/book-open';
-	import InboxIcon from '@lucide/svelte/icons/inbox';
+	import { OpenInNew as OpenInNewIcon } from '@material-symbols-svg/svelte/rounded/icons/open-in-new';
+	import { MenuBook as MenuBookIcon } from '@material-symbols-svg/svelte/rounded/icons/menu-book';
+	import { Inbox as InboxIcon } from '@material-symbols-svg/svelte/rounded/icons/inbox';
 	import PersonList from './person-list.svelte';
 	import GradesTab from './grades-tab.svelte';
 
@@ -100,13 +100,22 @@
 </script>
 
 {#if course}
-	<div class="flex flex-wrap items-start justify-between gap-4">
+	<!-- Classroom's class banner, drawn with the course's tonal colours and M3 Expressive shapes -->
+	<div
+		data-course-color={courseColorName(course.id)}
+		class="relative isolate flex min-h-32 flex-wrap items-end justify-between gap-4 overflow-hidden rounded-3xl bg-course-container p-5 text-on-course-container sm:p-6"
+	>
+		<span
+			class="absolute -top-16 -right-10 -z-10 size-64 rotate-12 rounded-[38%] bg-course opacity-25"
+			aria-hidden="true"
+		></span>
+		<span
+			class="absolute -right-4 -bottom-20 -z-10 size-44 rounded-full bg-course opacity-20 max-sm:hidden sm:right-56"
+			aria-hidden="true"
+		></span>
 		<div class="min-w-0">
-			<div class="flex items-center gap-2">
-				<CourseDot id={course.id} size="lg" />
-				<h1 class="text-2xl font-semibold tracking-tight text-balance">{displayName(course)}</h1>
-			</div>
-			<p class="mt-1 text-sm text-muted-foreground">
+			<h1 class="text-headline-lg text-balance sm:text-display-sm">{displayName(course)}</h1>
+			<p class="mt-2 text-title-md opacity-80">
 				{[course.nickname ? course.name : undefined, courseLabel(course.section), course.room]
 					.filter(Boolean)
 					.join(' · ')}{#if openCount}
@@ -115,27 +124,27 @@
 		</div>
 		{#if course.alternateLink}
 			<Button
-				variant="outline"
-				size="sm"
+				variant="secondary"
+				class="bg-surface-container-lowest/70 text-on-surface"
 				href={withAuthUser(course.alternateLink)}
 				target="_blank"
 				rel="noreferrer"
 			>
-				Open in Classroom <ExternalLinkIcon data-icon="inline-end" />
+				Open in Classroom <OpenInNewIcon data-icon="inline-end" />
 			</Button>
 		{/if}
 	</div>
 
 	<Tabs.Root value={tab} onValueChange={setTab} class="mt-6">
-		<Tabs.List variant="line">
-			<Tabs.Trigger value="classwork">Classwork</Tabs.Trigger>
-			<Tabs.Trigger value="stream">Stream</Tabs.Trigger>
-			<Tabs.Trigger value="people">People</Tabs.Trigger>
-			<Tabs.Trigger value="grades">Grades</Tabs.Trigger>
+		<Tabs.List variant="line" class="w-full justify-start">
+			<Tabs.Trigger value="classwork" class="flex-none">Classwork</Tabs.Trigger>
+			<Tabs.Trigger value="stream" class="flex-none">Stream</Tabs.Trigger>
+			<Tabs.Trigger value="people" class="flex-none">People</Tabs.Trigger>
+			<Tabs.Trigger value="grades" class="flex-none">Grades</Tabs.Trigger>
 		</Tabs.List>
 		<Tabs.Content value="classwork" class="mt-4">
 			{#if sections.length === 0}
-				<Empty.Root class="border border-dashed">
+				<Empty.Root class="bg-surface-container-low">
 					<Empty.Header>
 						<Empty.Media variant="icon"><InboxIcon /></Empty.Media>
 						<Empty.Title>No classwork yet</Empty.Title>
@@ -145,20 +154,23 @@
 					</Empty.Header>
 				</Empty.Root>
 			{:else}
-				<div class="divide-y divide-border/60">
+				<div class="flex flex-col gap-8">
 					{#each sections as section (section.id ?? 'none')}
-						<section class="py-5">
-							<h2 class="text-base font-semibold tracking-tight">{section.name}</h2>
-							<div class="mt-1 flex flex-col">
+						<section>
+							<h2 class="border-b border-outline-variant pb-2 text-title-lg text-on-surface">
+								{section.name}
+							</h2>
+							<div class="mt-4 segmented">
 								{#each section.entries as entry (entry.kind + entry.item.id)}
 									{#if entry.kind === 'work'}
 										<WorkItem work={entry.item} showCourse={false} />
 									{:else}
-										<Item.Root size="sm" class="-mx-3">
+										<Item.Root size="sm" class="state-layer min-h-18 [a]:hover:bg-transparent">
 											{#snippet child({ props })}
 												<a href={`/courses/${course.id}/material/${entry.item.id}`} {...props}>
-													<Item.Media variant="icon" class="text-muted-foreground"
-														><BookOpenIcon /></Item.Media
+													<span
+														class="flex size-10 shrink-0 items-center justify-center rounded-full bg-tertiary-container text-on-tertiary-container"
+														><MenuBookIcon class="size-6" /></span
 													>
 													<Item.Content>
 														<Item.Title class="line-clamp-1">{entry.item.title}</Item.Title>
@@ -179,29 +191,32 @@
 				</div>
 			{/if}
 		</Tabs.Content>
-		<Tabs.Content value="stream" class="mt-2 divide-y divide-border/60">
+		<Tabs.Content
+			value="stream"
+			class="mt-4 flex flex-col gap-3 *:rounded-md *:border *:border-outline-variant *:px-4"
+		>
 			{#each streamQuery.data as item (item.id)}
 				<Announcement {item} {course} showCourse={false} />
 			{:else}
-				<p class="py-6 text-sm text-muted-foreground">No announcements in this course.</p>
+				<p class="py-6 text-body-md text-on-surface-variant">No announcements in this course.</p>
 			{/each}
 		</Tabs.Content>
 		<Tabs.Content value="people" class="mt-4">
-			<h2 class="text-base font-semibold tracking-tight">Teachers</h2>
+			<h2 class="border-b border-outline-variant pb-2 text-title-lg text-on-surface">Teachers</h2>
 			<PersonList people={course.teachers} variant="teacher" />
 			{#if course.students?.length}
-				<h2 class="mt-8 text-base font-semibold tracking-tight">
-					Classmates <span class="font-normal text-muted-foreground tabular-nums"
+				<h2 class="mt-8 border-b border-outline-variant pb-2 text-title-lg text-on-surface">
+					Classmates <span class="text-on-surface-variant tabular-nums"
 						>· {course.studentCount ?? course.students.length}</span
 					>
 				</h2>
 				<PersonList people={course.students} variant="student" />
 			{/if}
 			{#if description}
-				<h2 class="mt-8 text-base font-semibold tracking-tight">
+				<h2 class="mt-8 border-b border-outline-variant pb-2 text-title-lg text-on-surface">
 					{course.descriptionHeading || 'About'}
 				</h2>
-				<p class="mt-2 text-sm text-pretty whitespace-pre-wrap text-muted-foreground">
+				<p class="mt-2 text-body-md text-pretty whitespace-pre-wrap text-on-surface-variant">
 					{description}
 				</p>
 			{/if}

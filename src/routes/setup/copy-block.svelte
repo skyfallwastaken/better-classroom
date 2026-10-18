@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Button } from '#lib/components/ui/button/index.js';
-	import CopyIcon from '@lucide/svelte/icons/copy';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+	import { ContentCopy as ContentCopyIcon } from '@material-symbols-svg/svelte/rounded/icons/content-copy';
+	import { Check as CheckIcon } from '@material-symbols-svg/svelte/rounded/icons/check';
+	import { KeyboardArrowDown as KeyboardArrowDownIcon } from '@material-symbols-svg/svelte/rounded/icons/keyboard-arrow-down';
 
 	let { name, source }: { name: string; source: string } = $props();
 	let copied = $state(false);
@@ -16,31 +16,36 @@
 	}
 </script>
 
-<div class="overflow-hidden rounded-lg border bg-muted/40">
-	<div class="flex items-center gap-2 border-b bg-muted/60 py-1.5 pr-1.5 pl-3">
-		<code class="text-xs font-medium">{name}</code>
-		<span class="text-xs text-muted-foreground">{lines} lines</span>
+<div class="overflow-hidden rounded-xl bg-surface-container-high">
+	<div class="flex items-center gap-2 bg-surface-container-highest py-1.5 pr-1.5 pl-4">
+		<code class="text-label-md">{name}</code>
+		<span class="text-body-sm whitespace-nowrap text-on-surface-variant">{lines} lines</span>
 		<Button
 			variant="ghost"
 			size="xs"
-			class="ml-auto text-muted-foreground"
+			class="ml-auto text-on-surface-variant"
 			aria-expanded={expanded}
 			onclick={() => (expanded = !expanded)}
 		>
-			<ChevronDownIcon
+			<KeyboardArrowDownIcon
 				data-icon="inline-start"
 				class={`transition-transform ${expanded ? 'rotate-180' : ''}`}
 			/>
 			{expanded ? 'Hide' : 'Show'}
 		</Button>
-		<Button variant={copied ? 'secondary' : 'default'} size="xs" onclick={copy}>
-			{#if copied}<CheckIcon data-icon="inline-start" />Copied{:else}<CopyIcon
+		<Button
+			variant={copied ? 'secondary' : 'outline'}
+			size="xs"
+			aria-label={copied ? 'Copied' : `Copy ${name}`}
+			onclick={copy}
+		>
+			{#if copied}<CheckIcon data-icon="inline-start" />Copied{:else}<ContentCopyIcon
 					data-icon="inline-start"
-				/>Copy {name}{/if}
+				/>Copy{/if}
 		</Button>
 	</div>
 	{#if expanded}
-		<pre class="max-h-72 overflow-auto p-3 text-[11px] leading-4 whitespace-pre"><code
+		<pre class="max-h-72 overflow-auto p-3 text-label-sm font-normal whitespace-pre"><code
 				>{source}</code
 			></pre>
 	{/if}

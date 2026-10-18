@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Command as CommandPrimitive } from 'bits-ui';
 	import * as InputGroup from '#lib/components/ui/input-group/index.js';
-	import SearchIcon from '@lucide/svelte/icons/search';
+	import { Search as SearchIcon } from '@material-symbols-svg/svelte/rounded/icons/search';
 	import { cn } from '#lib/utils.js';
 
 	let {
@@ -12,15 +12,16 @@
 	}: CommandPrimitive.InputProps = $props();
 </script>
 
-<div data-slot="command-input-wrapper" class="p-1 pb-0">
+<!-- M3 docked search view header: 56dp, leading search icon, body-large input, outline divider -->
+<div data-slot="command-input-wrapper" class="shrink-0 border-b border-outline">
 	<InputGroup.Root
-		class="h-8! rounded-lg! border-input/30 bg-input/30 shadow-none! *:data-[slot=input-group-addon]:pl-2!"
+		class="h-14 rounded-none border-0 bg-transparent shadow-none! hover:border-0 *:data-[slot=input-group-addon]:pl-5 has-[>[data-align=inline-start]]:[&>input]:pl-3"
 	>
 		<CommandPrimitive.Input
 			{value}
 			data-slot="command-input"
 			class={cn(
-				'w-full text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
+				'h-14 w-full text-body-lg text-on-surface caret-primary outline-hidden placeholder:text-on-surface-variant disabled:cursor-not-allowed',
 				className
 			)}
 			{...restProps}
@@ -30,7 +31,9 @@
 			{/snippet}
 		</CommandPrimitive.Input>
 		<InputGroup.Addon>
-			<SearchIcon class="size-4 shrink-0 opacity-50" />
+			<SearchIcon
+				class="size-6 shrink-0 text-on-surface group-has-[:disabled]/input-group:text-on-surface/38"
+			/>
 		</InputGroup.Addon>
 	</InputGroup.Root>
 </div>

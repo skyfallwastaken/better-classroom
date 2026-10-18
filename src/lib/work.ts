@@ -20,7 +20,7 @@ export function summarize(
 	return {
 		...w,
 		courseName,
-		status: workStatus(sub, w.dueAt, now),
+		status: workStatus(sub, w, now),
 		late: sub?.late ?? false,
 		assignedGrade: sub?.assignedGrade,
 		draftGrade: sub?.draftGrade,

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MoreHorizontalIcon from '@lucide/svelte/icons/more-horizontal';
+	import { MoreHoriz as MoreHorizIcon } from '@material-symbols-svg/svelte/rounded/icons/more-horiz';
 	import { cn, type WithElementRef, type WithoutChildren } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -15,9 +15,12 @@
 	data-slot="breadcrumb-ellipsis"
 	role="presentation"
 	aria-hidden="true"
-	class={cn('flex size-5 items-center justify-center [&>svg]:size-4', className)}
+	class={cn(
+		'flex size-10 items-center justify-center text-on-surface-variant [&>svg]:size-5',
+		className
+	)}
 	{...restProps}
 >
-	<MoreHorizontalIcon />
+	<MoreHorizIcon />
 	<span class="sr-only">More</span>
 </span>
