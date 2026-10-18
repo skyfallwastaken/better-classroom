@@ -35,8 +35,12 @@
 	<Dialog.Content
 		class={cn(
 			'top-1/4 translate-y-0 gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[min(720px,calc(100%-3rem))]',
+			// The palette is opened constantly, so it skips the dialog's 500ms slide: a quick fade
+			// and slight zoom in, gone almost instantly on close.
+			'data-open:duration-100 data-open:ease-standard data-open:slide-in-from-top-0! data-open:zoom-in-[0.98] data-closed:duration-75 data-closed:slide-out-to-top-0!',
 			className
 		)}
+		overlayClass="data-open:duration-100 data-closed:duration-75"
 		{showCloseButton}
 		{portalProps}
 	>
