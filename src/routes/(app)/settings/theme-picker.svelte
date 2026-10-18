@@ -1,6 +1,23 @@
 <script lang="ts">
-	import { theme, setMode, setColors } from '#lib/theme.svelte.ts';
-	import { SEEDS, VARIANTS, swatch } from '#lib/themes.ts';
+	import {
+		theme,
+		setMode,
+		setColors,
+		setModeTheme,
+		previewModeTheme,
+		endPreview
+	} from '#lib/theme.svelte.ts';
+	import {
+		PRESETS,
+		SEEDS,
+		VARIANTS,
+		materialPalette,
+		swatch,
+		type Mode,
+		type ModeTheme
+	} from '#lib/themes.ts';
+	import { Badge } from '#lib/components/ui/badge/index.js';
+	import ThemeCard from './theme-card.svelte';
 	import * as ToggleGroup from '#lib/components/ui/toggle-group/index.js';
 	import { RadioGroup } from 'bits-ui';
 	import { BrightnessAuto as BrightnessAutoIcon } from '@material-symbols-svg/svelte/rounded/icons/brightness-auto';
@@ -12,6 +29,24 @@
 
 	const dark = $derived(theme.resolved === 'dark');
 	const custom = $derived(!SEEDS.some((s) => s.hex === theme.seed));
+	/** Colour and Style only drive the modes that use Material You. */
+	const materialActive = $derived(theme[theme.resolved] === 'material');
+
+	// Hovering or focusing a card tries it on; leaving the group (briefly debounced so moving
+	// between cards doesn't flicker) puts the saved theme back.
+	let previewTimer: ReturnType<typeof setTimeout> | undefined;
+	function preview(mode: Mode, value: ModeTheme) {
+		clearTimeout(previewTimer);
+		previewModeTheme(mode, value);
+	}
+	function leaveGroup() {
+		clearTimeout(previewTimer);
+		previewTimer = setTimeout(endPreview, 150);
+	}
+	function focusOutGroup(e: FocusEvent) {
+		const group = e.currentTarget as HTMLElement;
+		if (!group.contains(e.relatedTarget as Node | null)) leaveGroup();
+	}
 </script>
 
 {#snippet dot(seed: string, selected: boolean)}
@@ -59,10 +94,54 @@
 		</ToggleGroup.Root>
 	</div>
 
-	<div class="border-t border-outline-variant px-5 py-4">
+	{#each ['light', 'dark'] as const as mode (mode)}
+		{@const active = theme.resolved === mode}
+		<div class="border-t border-outline-variant px-5 py-4">
+			<div class="flex items-center gap-2">
+				<h2 class="text-title-md">{mode === 'light' ? 'Light theme' : 'Dark theme'}</h2>
+				{#if active}<Badge variant="secondary">In use</Badge>{/if}
+			</div>
+			<RadioGroup.Root
+				aria-label={mode === 'light' ? 'Light theme' : 'Dark theme'}
+				orientation="horizontal"
+				class="mt-3 grid grid-cols-[repeat(auto-fill,minmax(8.5rem,1fr))] gap-2"
+				value={theme[mode]}
+				onValueChange={(v) => v && setModeTheme(mode, v as ModeTheme)}
+				onmouseleave={leaveGroup}
+				onfocusout={focusOutGroup}
+			>
+				<ThemeCard
+					value="material"
+					name="Material You"
+					family="Your colour"
+					palette={materialPalette(theme, mode)}
+					selected={theme[mode] === 'material'}
+					onpreview={() => preview(mode, 'material')}
+				/>
+				{#each PRESETS.filter((p) => p.mode === mode) as preset (preset.id)}
+					<ThemeCard
+						value={preset.id}
+						name={preset.name}
+						family={preset.family === preset.name ? undefined : preset.family}
+						palette={preset.palette}
+						selected={theme[mode] === preset.id}
+						onpreview={() => preview(mode, preset.id)}
+					/>
+				{/each}
+			</RadioGroup.Root>
+		</div>
+	{/each}
+
+	<div
+		class="border-t border-outline-variant px-5 py-4 transition-opacity {materialActive
+			? ''
+			: 'opacity-60 hover:opacity-100'}"
+	>
 		<h2 class="text-title-md">Colour</h2>
 		<p class="mt-1 text-body-md text-on-surface-variant">
-			Material You builds every surface, button and accent from the colour you pick.
+			{materialActive
+				? 'Material You builds every surface, button and accent from the colour you pick.'
+				: `Your ${theme.resolved} theme is a preset. Colour and Style apply to Material You themes.`}
 		</p>
 		<!-- Arrow keys move between presets (roving focus); the custom picker sits beside the group. -->
 		<div class="mt-4 flex flex-wrap gap-2">
@@ -109,7 +188,11 @@
 		</div>
 	</div>
 
-	<div class="border-t border-outline-variant px-5 py-4">
+	<div
+		class="border-t border-outline-variant px-5 py-4 transition-opacity {materialActive
+			? ''
+			: 'opacity-60 hover:opacity-100'}"
+	>
 		<h2 class="text-title-md">Style</h2>
 		<p class="mt-1 text-body-md text-on-surface-variant">
 			How the colour is spread across the palette.
@@ -145,6 +228,6 @@
 		</RadioGroup.Root>
 	</div>
 	<p class="border-t border-outline-variant px-5 py-3 text-body-sm text-on-surface-variant">
-		Saved for this browser only.
+		Hover a theme to try it on. Saved for this browser only.
 	</p>
 </SettingsCard>
